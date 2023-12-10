@@ -1,0 +1,219 @@
+1. What are the different data types present in javascript?
+    a. Primitive types
+       * String
+       * Number
+       * BigInt - This data type is used to store numbers which are above the limitation of the Number data type. It can store large integers and is represented by adding “n” to an integer literal.
+         This is mainly used to compare two big numbers
+         const bigIntA = BigInt(12345678901234567890);
+         console.log(bigIntA); // 12345678901234567168n
+
+       * Boolean
+       * Undefined -  When a variable is declared but not assigned, it has the value of undefined and it’s type is also undefined.
+         var x; // value of x is undefined
+         var y = undefined; // we can also set the value of a variable as undefined
+
+       * Null
+       * Symbol - It is a new data type introduced in the ES6 version of javascript. It is used to store an anonymous and unique value.
+         var symbol1 = Symbol('symbol');
+         var symbol2 = Symbol('symbol');
+         console.log(symbol1 === symbol2); // false
+
+    b. Non-primitive types:
+        Primitive data types can store only a single value. To store multiple and complex values, non-primitive data types are used.
+        * Object - Used to store collection of data.
+        * Type of Array is an Object
+            // Collection of data in key-value pairs
+                var obj1 = {
+                x:  43,
+                y:  "Hello world!",
+                z: function(){
+                    return this.x;
+                }
+                }
+                    
+            // Collection of data as an ordered list
+                var array1 = [5, "Hello", true, 4.1]; 
+
+2. Explain Hoisting in javascript.
+    
+    Hoisting is the default behaviour of javascript where all the variable and function declarations are moved on top.
+    This means that irrespective of where the variables and functions are declared, they are moved on top of the scope. The 
+    * Note - Variable initializations are not hoisted, only variable declarations are hoisted:
+    ** Note - To avoid hoisting, you can run javascript in strict mode by using “use strict” on top of the code:
+
+
+    Examples:
+
+  a. hoistedVariable = 3;
+     console.log(hoistedVariable); // outputs 3 even when the variable is declared after it is initialized	
+     var hoistedVariable;
+
+  b. hoistedFunction();  // Outputs " Hello world! " even when the function is declared after calling
+
+     function hoistedFunction(){ 
+     console.log(" Hello world! ");
+     } 
+
+  c. // Hoisting takes place in the local scope as well
+     function doSomething(){
+     x = 33;
+     console.log(x); // 33
+     var x;
+     } 
+
+  d. var x;
+     console.log(x); // Outputs "undefined" since the initialization of "x" is not hoisted
+     x = 23;
+
+  e. "use strict";
+     x = 23; // Gives an error since 'x' is not declared bcoz of 'use strict'
+     var x; 
+
+3. Difference between “ == “ and “ === “ operators.
+
+     Both are comparison operators. The difference between both the operators is that “==” is used to compare values whereas,
+     “ === “ is used to compare both values and types.
+
+     Eg: 
+     var x = 2;
+     var y = "2";
+     (x == y)  // Returns true since the value of both x and y is the same
+     (x === y) // Returns false since the typeof x is "number" and typeof y is "string
+
+4. Why do we use the word “debugger” in javascript?
+    
+    Debugger is used to stop a code at a particular line and allow to debug,. The remaining section of the code should stop execution before moving on to the next line while debugging.
+
+5. Difference between var, let and const keyword in javascript.
+
+    VAR:
+     Scope: Variables declared with var are function-scoped. This means they are only visible within the function where they are declared, and they are not block-scoped.
+     Hoisting: Variables declared with var are hoisted to the top of their scope. This means you can use the variable before it's declared in the code.
+     Reassignment: Variables declared with var can be reassigned and updated.
+
+     Eg:
+     Scope, Hoisting
+     function exampleVar() {
+     if (true) {
+        var x = 10;
+        console.log(x); // 10
+     }
+     console.log(x); // 10
+     }
+
+     Reassignment
+     function rr(){
+     var y=0
+     console.log(y);
+     var y=1
+     console.log(y);
+     }
+    rr()
+
+    LET:
+     Scope: Variables declared with let are block-scoped, which means they are only visible within the block (like if statements or loops) where they are declared.
+     Hoisting: Variables declared with let are hoisted to the top of their block, but they are not initialized until the actual declaration statement is encountered in the code. This is known as the "temporal dead zone."
+     Reassignment: Variables declared with let can be reassigned, but they can't be re-declared in the same scope.
+     
+     Eg:
+
+     Scope, Hoisting
+     function exampleLet() {
+     if (true) {
+         let y = 20;
+         console.log(y); // 20
+     }
+     // console.log(y); // ReferenceError: y is not defined
+     }
+
+     Reassignment
+     function rr(){
+     let y=0
+     console.log(y);
+     let y=1
+     console.log(y);
+     }
+     // Cannot redeclare block-scoped variable
+
+     CONST:
+     Scope: Variables declared with const are block-scoped, similar to let.
+     Hoisting: Like let, variables declared with const are hoisted to the top of their block, but they are not initialized until the declaration statement is encountered. The "temporal dead zone" also applies
+     Reassignment: Variables declared with const cannot be reassigned after their initial assignment. They are constants.
+     
+     Scope, Hoisting
+     function exampleConst() {
+     if (true) {
+         const z = 30;
+         console.log(z); // 30
+     }
+     // console.log(y); // ReferenceError: y is not defined
+     }
+
+6. var vs let vs const exsmples:
+
+   Scope:
+   function exampleVarScope() {
+    if (true) {
+        var x = 10;
+    }
+    console.log(x); // 10 (accessible outside the block)
+    }
+
+    function exampleLetConstScope() {
+    if (true) {
+        let y = 20;
+        const z = 30;
+    }
+    // console.log(y); // ReferenceError: y is not defined (block-scoped)
+    // console.log(z); // ReferenceError: z is not defined (block-scoped)
+    }
+
+    Hoisting
+
+    function exampleVarHoisting() {
+    console.log(a); // undefined (variable is hoisted)
+    var a = 5;
+    }
+
+    function exampleLetConstHoisting() {
+    // console.log(b); // ReferenceError: Cannot access 'b' before initialization
+    let b = 10;
+    }
+
+    Reassignment
+
+    function exampleVarReassignment() {
+    var x = 10;
+    x = 20; // Reassignment is allowed
+    console.log(x); // 20
+    }
+
+    function exampleLetReassignment() {
+    let y = 30;
+    y = 40; // Reassignment is allowed
+    console.log(y); // 40
+    }
+
+    function exampleConstReassignment() {
+    const z = 50;
+    // z = 60; // TypeError: Assignment to constant variable
+    console.log(z); // 50
+    }
+
+7. what is temporal deadzone
+
+    The Temporal Dead Zone (TDZ) is a concept related to the hoisting behavior of variables declared with let and const in JavaScript.
+    The Temporal Dead Zone is the period between entering scope and the actual variable declaration where accessing the variable results
+    in a ReferenceError. During this time, the variable exists, but you cannot access its value.
+    
+    Eg:
+
+    console.log(x); // ReferenceError: Cannot access 'x' before initialization
+    let x = 5;
+
+    console.log(y); // ReferenceError: Cannot access 'y' before initialization
+    const y = 10;
+
+
+    
+    
