@@ -1,1 +1,3 @@
 JS Interview questions - https://www.interviewbit.com/javascript-interview-questions/
+HTML Interview questions - https://www.interviewbit.com/html-interview-questions/
+React Interview questions - https://www.interviewbit.com/react-interview-questions/

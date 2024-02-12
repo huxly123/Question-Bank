@@ -363,3 +363,57 @@
     }
     doSome(a)
     console.log(a); // [ 1, 2, 4 ]
+
+11. IIFE:(Immediately Invoked Function)
+    
+    An Immediately Invoked Function
+    ( known as IIFE and pronounced as IIFY) is a function that runs as soon as it is defined.
+
+    (function(){ 
+    // Do something;
+    })();
+
+12. What is NaN property in JavaScript?
+
+    NaN property represents the “Not-a-Number” value.
+    It indicates a value that is not a legal number.
+
+    To check if a value is NaN, we use the isNaN() function,
+
+    Note- isNaN() function converts the given value to a Number type, and then equates to NaN.
+
+    isNaN("Hello")  // Returns true
+    isNaN(345)   // Returns false
+    isNaN('1')  // Returns false, since '1' is converted to Number type which results in 0 ( a number) 
+    isNaN(true) // Returns false, since true converted to Number type results in 1 ( a number)
+    isNaN(false) // Returns false
+    isNaN(undefined) // Returns true
+
+13. Explain Higher Order Functions in javascript.
+
+    Functions that operate on other functions, either by taking them as arguments or by returning them, are called higher-order functions.
+    
+    EG:
+    function higherOrder(fn) {
+    fn();
+    }
+    
+    higherOrder(function() { console.log("Hello world") });
+
+    EG:
+    function higherOrder2() {
+    return function() {
+        return "Do something";
+    }
+    }      
+    var x = higherOrder2();
+    x()   // Returns "Do something"
+
+    EG:
+    function higherOrder2() {
+    return function() {
+    console.log("Do something");
+    }
+    }      
+    higherOrder2()() // "Do something"
+
