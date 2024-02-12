@@ -18,7 +18,7 @@
          var symbol2 = Symbol('symbol');
          console.log(symbol1 === symbol2); // false
 
-    b. Non-primitive types:
+    b. Non-primitive types: (Object, Array, Function)
         Primitive data types can store only a single value. To store multiple and complex values, non-primitive data types are used.
         * Object - Used to store collection of data.
         * Type of Array is an Object
@@ -133,7 +133,7 @@
      let y=1
      console.log(y);
      }
-     // Cannot redeclare block-scoped variable
+     // SyntaxError: Cannot redeclare block-scoped variable
 
      CONST:
      Scope: Variables declared with const are block-scoped, similar to let.
@@ -214,6 +214,152 @@
     console.log(y); // ReferenceError: Cannot access 'y' before initialization
     const y = 10;
 
+    console.log(x); //undefined: Doesnt have temporal dead zone
+    var x = 5;
 
+
+8. Explain Implicit Type Coercion and explicit type in javascript.
+   
+    Implicit type coercion in javascript is the automatic conversion of value from one data type to another.
+    It takes place when the operands of an expression are of different data types.
+
+    Eg:
+    // Implicit coercion from number to string
+    const num = 5;
+    const str = "The number is " + num; // "The number is 5"
+
+    // Implicit coercion from string to number
+    const strNum = "10";
+    const sum = strNum + 5; // 15 (string "10" is coerced to a number)
+
+    Explicit coercion, also known as type casting or type conversion, occurs when a developer
+    explicitly converts a value from one type to another using built-in functions or operators. For example:
     
-    
+    // Explicit coercion from string to number
+    const strNum = "10";
+    const num = Number(strNum); // 10
+
+    // Explicit coercion from number to string
+    const num = 5;
+    const str = String(num); // "5"
+
+    Boolean Coercion:
+    Boolean coercion takes place when using logical operators, ternary operators, if statements, and loop checks.
+    To understand boolean coercion in if statements and operators, we need to understand truthy and falsy values.
+
+    If statements:
+
+    var x = 0;
+    var y = 23;
+            
+    if(x) { console.log(x) }   // The code inside this block will not run since the value of x is 0(Falsy)  
+            
+    if(y) { console.log(y) }    // The code inside this block will run since the value of y is 23 (Truthy)
+
+    Logical operators:
+
+    OR ( | | ) operator - If the first value is truthy, then the first value is returned. Otherwise, always the second value gets returned.
+
+    AND ( && ) operator - If both the values are truthy, always the second value is returned. If the first value is falsy then the first value is returned or if the second value is falsy then the second value is returned.
+
+    var x = 220;
+    var y = "Hello";
+    var z = undefined;
+            
+    x | | y    // Returns 220 since the first value is truthy
+            
+    x | | z   // Returns 220 since the first value is truthy
+            
+    x && y    // Returns "Hello" since both the values are truthy
+            
+    y && z   // Returns undefined since the second value is falsy
+            
+    if( x && y ){ 
+    console.log("Code runs" ); // This block runs because x && y returns "Hello" (Truthy)
+    }   
+            
+    if( x || z ){
+    console.log("Code runs");  // This block runs because x || y returns 220(Truthy)
+    }
+
+    Equality Coercion:
+
+    var a = 12;
+    var b = "12";
+    a == b // Returns true because both 'a' and 'b' are converted to the same type and then compared. Hence the operands are equal.
+
+
+    var a = 226;
+    var b = "226";
+
+    a === b // Returns false because coercion does not take place and the  operands are of different types. Hence they are not equal. 
+
+9. Immutable vs Mutable types:
+
+    Immutable types are stored as stack. (Primitive Data types).
+    Whenever it is created by pointing to another variable a new space is generated for it.
+
+    let a = 1
+
+    let b = a
+    a=4
+    console.log(b); // 1
+
+
+    Mutable Types are stored as Heap. (Non- primitive data types).
+    Whenever it is created by pointing to another variable it refers to the reference of the variable. 
+
+    let arr = [0, 1]
+    let obj = {
+        a: 1,
+        b: 2
+    }
+
+    let arr2 = arr
+    let obj2 = obj
+
+    arr.push(1)
+    obj['a'] = 2
+
+    console.log(arr2, obj2); // [ 0, 1, 1 ] { a: 2, b: 2 }
+
+10. Pass by Value vs Pass By Reference
+
+    Pass by Value:
+    If we pass a value(primitive data type) to a function, when we change the value of the argument it will not the change the
+    actual value of the variable
+
+    Eg:
+
+    const a = 1
+
+    function doSome(val){
+    val ++
+    console.log('in', val); // 2
+    }
+    doSome(a)
+    console.log(a); // 1
+
+    Pass By Reference:
+    If we pass a reference(Non-primitive data type) to a function, when we change the value of the argument it will change the
+    actual value of the variable
+
+    Eg:
+
+  1 const a = { val: 1 }
+
+    function doSome(obj){
+    obj.val = 2
+    console.log('in', obj); // { val: 2 }
+    }
+    doSome(a)
+    console.log(a); // { val: 2 }
+
+  2 const a = [1,2]
+
+    function doSome(obj){
+    obj.push(4)
+    console.log('in', obj); // [ 1, 2, 4 ]
+    }
+    doSome(a)
+    console.log(a); // [ 1, 2, 4 ]
