@@ -337,6 +337,7 @@
     val ++
     console.log('in', val); // 2
     }
+    
     doSome(a)
     console.log(a); // 1
 
@@ -416,4 +417,249 @@
     }
     }      
     higherOrder2()() // "Do something"
+
+    Built-in Higher-Order Functions:
+
+    JavaScript provides built-in higher-order functions such as map, filter, and reduce on arrays.
+    These functions take other functions as arguments and apply them to each element of the array.
+    
+    map: Calls a provided function once for each element in an array, and returns a new array with the results.
+
+    eg:
+    const numbers = [1, 2, 3];
+    const squaredNumbers = numbers.map(function(x) {
+    return x * x;
+    });
+    console.log(squaredNumbers); // Output: [1, 4, 9]
+
+
+    filter: Creates a new array with all elements that pass the test implemented by the provided function.
+
+    eg:
+    const numbers = [1, 2, 3, 4, 5];
+    const evenNumbers = numbers.filter(function(x) {
+    return x % 2 === 0;
+    });
+    console.log(evenNumbers); // Output: [2, 4]
+
+
+    reduce: Applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+
+    eg:
+
+    const numbers = [1, 2, 3, 4, 5];
+    const sum = numbers.reduce(function(accumulator, currentValue) {
+    return accumulator + currentValue;
+    }, 0);
+    console.log(sum); // Output: 15
+
+
+    forEach: Executes a provided function once for each array element.
+
+    eg:
+    const numbers = [1, 2, 3];
+    numbers.forEach(function(x) {
+    console.log(x);
+    });
+    // Output:
+    // 1
+    // 2
+    // 3
+
+    some: Checks if at least one element in the array passes the test implemented by the provided function.
+
+    eg:
+    const numbers = [1, 2, 3];
+    const hasEven = numbers.some(function(x) {
+    return x % 2 === 0;
+    });
+    console.log(hasEven); // Output: true
+
+    every: Checks if all elements in the array pass the test implemented by the provided function.
+
+    eg:
+    const numbers = [2, 4, 6];
+    const allEven = numbers.every(function(x) {
+    return x % 2 === 0;
+    });
+    console.log(allEven); // Output: true
+
+    find: Returns the first element in the array that satisfies the provided testing function.
+
+    eg:
+    const numbers = [1, 2, 3, 4, 5];
+    const found = numbers.find(function(x) {
+    return x > 3;
+    });
+    console.log(found); // Output: 4
+
+
+    findIndex: Returns the index of the first element in the array that satisfies the provided testing function.
+
+    eg:
+    const numbers = [10, 20, 30, 40, 50];
+    const index = numbers.findIndex(function(x) {
+    return x > 25;
+    });
+    console.log(index); // Output: 2
+
+    sort: Sorts the elements of an array in place and returns the sorted array.
+
+    eg:
+    const numbers = [3, 1, 5, 2, 4];
+    numbers.sort(function(a, b) {
+    return a - b;
+    });
+    console.log(numbers); // Output: [1, 2, 3, 4, 5]
+
+    flatMap: Maps each element using a mapping function, then flattens the result into a new array.
+
+    eg:
+    const words = ["Hello", "World"];
+    const chars = words.flatMap(function(word) {
+    return word.split("");
+    });
+    console.log(chars); // Output: ["H", "e", "l", "l", "o", "W", "o", "r", "l", "d"]
+
+14. What is this keyword:
+    
+    In JavaScript, the this keyword refers to the context within which a function is executed.
+    The value of this depends on how a function is called, and it can have different meanings in different contexts.
+
+    Global Context:
+
+    console.log(this === window); // true (in a browser)
+
+    Function Context:
+
+    function greet() {
+    console.log(this); // this refers to the global object
+    }
+    greet();
+
+    const person = {
+    name: "John",
+    greet: function() {
+        console.log(this.name); // this refers to the person object
+    }
+    };
+    person.greet();
+
+15. Explain call(), apply() and, bind() methods.
+
+    call():
+
+    The call method allows you to call a function with a specified this value and individual arguments passed as separate arguments.
+
+    const person = {
+    name: "John",
+    greet: function(message) {
+        console.log(`${message}, ${this.name}!`);
+    }
+    };
+
+    const otherPerson = { name: "Jane" };
+
+    // Calling greet with 'person' as 'this' and passing 'Hello' as argument
+    person.greet.call(otherPerson, "Hello");
+    // Output: Hello, Jane!
+
+    apply():
+
+    The apply method is similar to call, but it takes arguments as an array.
+
+    const person = {
+    name: "John",
+    greet: function(message, message2) {
+        console.log(`${message}, ${this.name} ${this.age} ${message2}!`)
+    }
+    };
+
+    const otherPerson = { name: "Jane", age: 24 };
+    person.greet.apply(otherPerson, ["Hello", 'Bye!']); // Hello, Jane 24 Bye!!
+
+    bind():
+
+    The bind method creates a new function that, when called, has its this
+    value set to a specific object, and with any specified arguments.
+
+    const person = {
+        name: "John",
+        greet: function(message, message2) {
+            console.log(`${message}, ${this.name} ${this.age} ${message2}!`);
+        }
+        };
+
+    const obj= {
+        name: 'Akshaya',
+        age: 30
+    }
+
+    const getGreet = person.greet.bind(obj)
+
+    getGreet('hi', 'bye') // hi, Akshaya 30 bye!
+
+16. What is currying in JavaScript
+    
+    Currying is a functional programming technique in JavaScript where a function with multiple arguments is transformed 
+    into a sequence of functions, each taking a single argument. This allows you to partially apply the function with
+    one or more arguments, creating a new function with the remaining arguments.
+ 
+    eg:1
+    function add(x) {
+    return function(y) {
+        return x + y;
+    };
+    }
+
+    const addFive = add(5); // Partial application
+    console.log(addFive(3)); // Output: 8
+
+    eg:2
+    const add = (x, y) => x + y;
+    const curriedAdd = x => y => add(x, y);
+
+    const addFive = curriedAdd(5);
+    console.log(addFive(3)); // Output: 8
+
+    eg:3
+    function multiply(x) {
+    return function(y) {
+        return function(z) {
+        return x * y * z;
+        };
+    };
+    }
+
+    console.log(multiply(2)(3)(4)); // Output: 24
+
+    eg:4
+
+    const formatCurrency = currencySymbol => amount => `${currencySymbol}${amount.toFixed(2)}`;
+
+    const formatUSD = formatCurrency("$");
+    console.log(formatUSD(10.5)); // Output: $10.50
+
+17. what is closures in javascript
+
+
+    A closure in JavaScript is the combination of a function bundled together with references to its
+    surrounding state (the lexical environment). It allows a function to access and manipulate variables 
+    from its outer scope even after the outer function has finished executing.
+
+    function outerFunction() {
+    const outerVariable = 'I am from outer function';
+
+    function innerFunction() {
+        console.log(outerVariable); // Accessing outerVariable from outer scope
+    }
+
+    return innerFunction; // Returning inner function
+    }
+
+    const innerFunc = outerFunction(); // Calling outerFunction returns innerFunction
+
+    innerFunc(); // Calling innerFunction accesses outerVariable through closure
+    // Output: I am from outer function
+
 
