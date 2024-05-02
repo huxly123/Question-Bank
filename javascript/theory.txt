@@ -217,7 +217,6 @@
     console.log(x); //undefined: Doesnt have temporal dead zone
     var x = 5;
 
-
 8. Explain Implicit Type Coercion and explicit type in javascript.
    
     Implicit type coercion in javascript is the automatic conversion of value from one data type to another.
@@ -661,5 +660,4 @@
 
     innerFunc(); // Calling innerFunction accesses outerVariable through closure
     // Output: I am from outer function
-
 
