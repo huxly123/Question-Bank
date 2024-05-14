@@ -389,6 +389,8 @@
     isNaN(false) // Returns false
     isNaN(undefined) // Returns true
 
+    why typeof Nan is number bcoz if we conver "Hi" string to number like this Number("Hi") it return Nan
+
 13. Explain Higher Order Functions in javascript.
 
     Functions that operate on other functions, either by taking them as arguments or by returning them, are called higher-order functions.
@@ -661,3 +663,39 @@
     innerFunc(); // Calling innerFunction accesses outerVariable through closure
     // Output: I am from outer function
 
+18. Shallow copy vs Deep copy
+    
+    Shallow Copy:
+
+    A shallow copy is a copy that only goes one level deep. In other words,
+    it copies the object and all its properties, but any nested objects or arrays 
+    will still reference the same memory location as the original object. 
+    It means that if you make changes to the nested object,
+    it will also affect the original object, as well as the copied object.
+
+    Example:
+
+    const originalObject = { a: 1, b: { c: 2,d: { e:  4}} };
+    const shallowCopy = { ...originalObject };
+
+    shallowCopy.a=2
+    shallowCopy.b.c =3
+    shallowCopy.b.d.e =5
+    console.log(originalObject, shallowCopy);
+    // { a: 1, b: { c: 3, d: { e: 5 } } } { a: 2, b: { c: 3, d: { e: 5 } } }
+
+    Deep Copy:
+    
+    A deep copy is a copy that creates a new object with new memory 
+    locations for all of its properties and nested objects or arrays. 
+    It means that if you make changes to the copied object or any of its 
+    nested objects or arrays, it will not affect the original object.
+
+    const originalObject2 = { a: 1, b: { c: 2,d: { e:  4}} };
+    const deepCopy = JSON.parse(JSON.stringify(originalObject2));
+    deepCopy.a=2
+    deepCopy.b.c =3
+    deepCopy.b.d.e =5
+    console.log(originalObject2, deepCopy);
+    //{ a: 1, b: { c: 2, d: { e: 4 } } } { a: 2, b: { c: 3, d: { e: 5 } } }
+    

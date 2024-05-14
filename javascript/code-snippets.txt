@@ -1,0 +1,20 @@
+1. console.log(NaN == NaN) => false
+   console.log(NaN === NaN) => false
+
+   since Nan come from any string like 
+   Number("hi") => NaN
+   Number("hello") => NaN
+
+2. console.log(1 < 2 < 3) => true
+   1 < 2 => true; In js true = 1
+   So, 1 < 3 = true
+
+   console.log(3 > 2 > 1) => false
+   3 > 2 => true; In js true = 1
+   So, 1 > 1 = false
+
+3. function dd() {}
+   console.log(typeof dd); => function
+
+   class MyClass {}
+   console.log(typeof MyClass); => function

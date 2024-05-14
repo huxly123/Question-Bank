@@ -11,6 +11,8 @@ inheritence (prototype)
 generator
 callback hell
 slice, splice
+shallow vs deep
+spread vs rest
 
 React:
 DOM
