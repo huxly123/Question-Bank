@@ -699,3 +699,246 @@
     console.log(originalObject2, deepCopy);
     //{ a: 1, b: { c: 2, d: { e: 4 } } } { a: 2, b: { c: 3, d: { e: 5 } } }
     
+19. spread operator vs rest operator
+
+  ******* Spread will divide all the elements inside an array into single elements *******
+  ******** rest will combine all the data and make it as an array ********
+
+  Spread operator:
+
+    The spread operator was introduced in JavaScript with ES 6, 
+    which adds several great features that make working with arrays 
+    and function parameters easier. As the name suggests, the spread operator “spreads” 
+    the values in an array or a string across one or more arguments. 
+
+    Eg:
+
+    1) const a = [1,2,3];
+    const b = [3,4,5];
+    const c = [...a , ...b];
+    console.log(c); // [1,2,3,4,5,6]
+
+    2) const myLocations = ["Delhi", "Hyderabad"]
+    const friendsLocations = ["Mumbai", ...myLocations, "Banglore"];
+    console.log(friendsLocations) // ['Mumbai', 'Delhi', 'Hyderabad', 'Banglore']
+
+    const collegeName = "IIT DELHI";
+    ******* Spread will divide all the elements inside an array into single elements
+    console.log([...collegeName]) // ['I', 'I', 'T', ' ', 'D', 'E', 'L', 'H', 'I']
+
+    3) const functionArgs = [1,2,3,4];
+
+    function multiplyNumbers (a, b, c, d) {
+        return a*b*c*d;
+    }
+
+    console.log(multiplyNumbers(...functionArgs)); // 24
+
+    4) const name = { firstName: "Eshaan", lastName: "Sharma" };
+    const bio = { ...name, job: "SDE1" };
+
+    console.log(bio.firstName);// Eshaan
+
+    5) const firstObj = {
+    "firstName" : "Eshaan",
+    "lastName" : "Sharma"
+    }
+
+    const secondObj = {
+        ...firstObj,
+        "age" : "22"
+    }
+
+    console.log(secondObj.firstName);// Eshaan
+
+
+  Rest operator:
+    A rest operator is a type of parameter that gets all of the remaining parameters of a 
+    function call via an Array. It enables us to handle a variety of inputs as parameters 
+    in a function. Because it is used to combine many items, the rest operator is very helpful 
+    during array and object destructuring.
+
+    Eg:
+
+    1) function testRest(...values) {
+    return values;
+    }
+  ******** rest will combine all the data and make it as an array ********
+    console.log(testRest("Eshaan", "Rahul")) // ["Eshaan","Rahul"]
+
+    2) const [firstName, secondName, ...otherInfo] = 
+    ["Rahul", "Mahajan", "Web developer", "Google India", "Male"];
+
+    console.log(otherInfo); // ["Web developer", "Google India", "Male"]
+
+    3)function multipleArg(... args) {
+	let finalArray = args.map(ele => ele * 2);
+	console.log(finalArray);
+    }
+    multipleArg(1, 2); // [2, 4]
+    multipleArg(4, 2, 4); // [8, 4, 8]
+
+  Spread vs rest:
+
+    1)function spreadAndRest (firstArg, secondArg, ...otherArgs) {
+	console.log(firstArg, secondArg);
+    console.log(otherArgs);
+    }
+
+    spreadAndRest(...[1,2,3,4,5,6]);
+    // 1 2
+    // [ 3, 4, 5, 6 ]
+
+    console.log(...[1,2,3,4,5,6]); // 1 2 3 4 5 6 (spread)
+
+20. Slice vs splice
+
+    Slice:
+
+    The term slice literally means to cut something into pieces. 
+    It is used to cut out elements from an array. It does not affect the original array.
+
+    array.slice(start, end)
+
+    start denotes the index at which the array starts slicing.
+    end denotes the index at which the array stops slicing.(doesn't includes the last index in output)
+
+    Eg:
+
+    let arr = [
+    "educative",
+    4,
+    [1,3],
+    {type: "animal"}
+    ];
+    let slicedValues = arr.slice(1,3);
+
+    console.log(slicedValues); // [ 4, [ 1, 3 ] ]
+
+    Splice:
+    ***** splice will modify the array *****
+    Splice, according to the dictionary, means to join things together. 
+    It is used to remove elements from an array or replace them.
+
+    array.splice(start, deleteCount, newElem1, newElem2, ..., newElemN);
+
+    start denotes the index from which the method will start its operation on the array.
+
+    deleteCount denotes the number of values to be deleted from the start. 
+    If the value is 0, nothing will be deleted.
+
+    newElem1 to newElemN denote the values that would be added after the start.
+
+    Eg:
+
+    let arr1 = [145, 'hi', 142]
+
+    let arr2 = arr0.splice(1,1,"hello", 'hey')
+
+    console.log(arr1, arr2); [ 145, 'hello', 'hey', 142 ] -> arr1  [ 'hi' ] -> arr2(it will return affected element)
+
+21. Event Bubbling vs Event Capturing:
+
+    Event Bubbling:
+
+    Event bubbling is an order of event happening from child to parent, it means event bubbles out from child to parent
+
+    Example:
+
+    a)document.querySelector("#grandparent").addEventListener('click',(e)=>{
+    console.log('grandparent');
+    }, false) // false => capturing will not happen
+
+    document.querySelector("#parent").addEventListener('click',(e)=>{
+        console.log('parent');
+    }, false) // false => capturing will not happen
+
+    document.querySelector("#child").addEventListener('click',(e)=>{
+        console.log('child');
+    }, false) // false => capturing will not happen
+
+    output:
+
+    child, parent, grandparent
+
+
+    Event Capturing:
+
+    Event Capturing is an order of event happening from parent to child.
+
+    Example:
+
+    a)document.querySelector("#grandparent").addEventListener('click',(e)=>{
+    console.log('grandparent');
+    }, true) // true => capturing will happen
+
+    document.querySelector("#parent").addEventListener('click',(e)=>{
+        console.log('parent');
+    }, true) // true => capturing will happen
+
+    document.querySelector("#child").addEventListener('click',(e)=>{
+        console.log('child');
+    }, true) // true => capturing will happen
+
+     output:
+
+    grandparent, parent, child
+
+
+    StopPropagation:
+
+    StopPropagation will stop the event action to pass after that component, it can be applied in event bubbling, event capturing.
+
+    a)document.querySelector("#grandparent").addEventListener('click',(e)=>{
+    console.log('grandparent');
+    }, false) // false => capturing will not happen
+
+    document.querySelector("#parent").addEventListener('click',(e)=>{
+        e.stopPropagation()
+        console.log('parent');
+    }, false) // false => capturing will not happen
+
+    document.querySelector("#child").addEventListener('click',(e)=>{
+        console.log('child');
+    }, false) // false => capturing will not happen
+
+    output:
+
+    child, parent
+
+
+    b).querySelector("#grandparent").addEventListener('click',(e)=>{
+    console.log('grandparent');
+    }, true) // true => capturing will not happen
+
+    document.querySelector("#parent").addEventListener('click',(e)=>{
+        e.stopPropagation()
+        console.log('parent');
+    }, true) // true => capturing will not happen
+
+    document.querySelector("#child").addEventListener('click',(e)=>{
+        console.log('child');
+    }, false) // true => capturing will not happen
+
+    output:
+
+    grandparent, parent
+
+    c)document.querySelector("#grandparent").addEventListener('click',(e)=>{
+    e.stopPropagation()
+    console.log('grandparent');
+    }, true) // true => capturing will not happen
+
+    document.querySelector("#parent").addEventListener('click',(e)=>{
+        console.log('parent');
+    }, false) // true => capturing will not happen
+
+    document.querySelector("#child").addEventListener('click',(e)=>{
+        console.log('child');
+    }, false) // true => capturing will not happen
+
+    output:
+
+    grandparent
+
+    ******* we should always look for bubbling and capturing order for stop propogation from parent to child order in DOM  *******

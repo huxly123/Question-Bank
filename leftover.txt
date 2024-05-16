@@ -10,14 +10,12 @@ memory management
 inheritence (prototype)
 generator
 callback hell
-slice, splice
-shallow vs deep
-spread vs rest
 
 React:
 DOM
 Browser Object Model (BOM)
 async/await
+Reconciliation
 memoization (use callback and use memo)
 virual dom
 error boundry
@@ -28,3 +26,6 @@ react patterns
 redux,
 redux-cycle
 web-apps
+react portal
+why react is faster than vanilla js.
+www.google.com load what will happen
