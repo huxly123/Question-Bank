@@ -19,7 +19,7 @@ function duplicates(arr) {
             found = true;
         }
     }
-
+ 
     // Step 3: If no duplicates found, add -1 to the result
     if (!found) {
         result.push(-1);
