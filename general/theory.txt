@@ -1,0 +1,70 @@
+1. Cookies
+   
+    Description: Small pieces of data stored in the browser and sent with every HTTP request to the server.
+    Use Case: Server communication (e.g., session management, authentication).
+    Features:
+    Can be set with an expiration date or session-only.
+    Included in every HTTP request by default (can be secured with HttpOnly and Secure flags).
+    Storage limit: Around 4 KB per cookie.
+    Access: document.cookie.
+    Path: Value: "/"
+    Purpose: Determines the scope of the cookie within the application. By setting the path to /, 
+    the cookie is available to all routes in the application (global scope).
+
+    httpOnly: Ensures that the cookie cannot be accessed through JavaScript's document.cookie.
+    secure: Ensures the cookie is transmitted only over secure HTTPS connections.
+    sameSite= None : Allows the cookie to be sent with requests originating from other domains.If sameSite is set to None,
+    the secure flag must be true (a browser-enforced rule).
+
+2. Local Storage
+    A key-value storage mechanism for storing data in the browser without any expiration time.
+    Data persists even after the browser is closed and reopened.Storage limit: Typically 5-10 MB per origin.
+    window.localStorage
+
+3. Session Storage
+   Similar to Local Storage, but the data is only stored for the duration of the page session (until the tab is closed).
+   Temporary data storage, such as data needed only during a single browsing session.
+   Storage limit: Typically 5 MB per origin.
+   Access: window.sessionStorage.
+
+4. Indexed db
+   IndexedDB is a low-level, client-side database that allows web applications to store large amounts of
+   structured data in the browser.
+   
+   Key Features of IndexedDB:
+   Large Storage Capacity: No significant size limit (limited only by browser and user storage policies).
+   Asynchronous API: Avoids blocking the main thread, improving performance.
+   Structured Data: Supports storing complex data types, such as objects, arrays, and blobs.
+   Indexed Queries: Enables efficient querying by indexing data.
+
+   Use Cases of IndexedDB:
+
+   Offline Applications: Store data locally for apps that need to work offline.
+   Examples: Note-taking apps, task managers, email clients.
+   Caching Large Resources: Cache assets like images, videos, or large datasets.
+
+5. Cached storage
+   
+   Cache Storage is part of the Service Worker API and provides a storage mechanism for storing network
+   requests and their corresponding responses.
+   The Cache Storage API is an asynchronous, key-value storage system where:
+   Key: A URL or Request object.
+   Value: A Response object (including body and headers).
+   Asynchronous: Non-blocking operations for better performance.
+
+   Use Cases of Cache Storage:
+
+   Offline-First Applications:
+   Cache key resources (HTML, CSS, JS) to ensure the app works without an internet connection.
+
+   Caching images, fonts, and other static files to avoid repeated downloads.
+
+   Serve cached resources selectively or fallback to the network if data is unavailable.
+
+
+
+
+service worker api
+web worker
+dynamo db
+Progressive Web Apps (PWAs)

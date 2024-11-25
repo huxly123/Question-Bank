@@ -942,3 +942,77 @@
     grandparent
 
     ******* we should always look for bubbling and capturing order for stop propogation from parent to child order in DOM  *******
+
+22. What is Polyfill
+    A polyfill is a piece of code (usually JavaScript) that provides modern functionality to older browsers or environments
+    that do not natively support it. Essentially, it "fills in the gap" by mimicking the behavior of newer features in environments 
+    that lack them.
+    The Array.prototype.includes method was introduced in ES6 (2015). Older browsers like Internet Explorer do not support it.
+
+    if (!Array.prototype.includes) {
+    Array.prototype.includes = function (searchElement, fromIndex) {
+        // Convert the array-like object to an array
+        const arr = this;
+
+        // Set the starting index
+        const start = fromIndex || 0;
+
+        // Iterate through the array
+        for (let i = Math.max(start, 0); i < arr.length; i++) {
+        if (arr[i] === searchElement) {
+            return true;
+        }
+        }
+
+        return false;
+    };
+    }
+
+23. Explain Reduce Function
+    
+    array.reduce(callback, initialValue)
+
+    callback = (accumulator, currentIndexValue) =>{}
+
+    callback will have two argument accumulator and currentIndexValue, the reduce fn will loop through the array and execute the callback 
+    fn and store the returning value in accumulator in every loop. at last it will return the accumulator.
+    
+    The initialValue will give initialValue to the accumulator at the start of the loop
+
+    const arr = [10, 20, 30];
+    const res = arr.reduce((acc, curr) => {
+    return acc + curr;
+    }, 0);
+    console.log(res); // 60
+
+    const nested = [
+    [1, 2],
+    [2, 4],
+    ];
+    const res1 = nested.reduce((acc, curr) => {
+    return acc.concat(curr);
+    }, []);
+    console.log(res1); // [ 1, 2, 2, 4 ]
+
+24. Write Polyfill of reduce
+    
+    if (!Array.prototype.reduc1) {
+    Array.prototype.reduc1 = function (callback, initialValue) {
+        if (typeof callback !== "function") {
+        throw new TypeError("Callback must be a function");
+        }
+
+        const array = this;
+        const length = array.length;
+        let accumulator = initialValue !== undefined ? initialValue : array[0];
+
+        for (let i = initialValue !== undefined ? 0 : 1; i < length; i++) {
+        if (i in array) {
+            accumulator = callback.call(undefined, accumulator, array[i], i, array);
+        }
+        }
+
+        return accumulator;
+    };
+    }
+

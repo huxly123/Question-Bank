@@ -10,6 +10,8 @@ memory management
 inheritence (prototype)
 generator
 callback hell
+method chaining
+diff arrow fn vs normal fn
 
 React:
 DOM
@@ -29,3 +31,18 @@ web-apps
 react portal
 why react is faster than vanilla js.
 www.google.com load what will happen
+how will you structure a component when it is recursively called
+how is DOM traversed
+life cycle of components
+difference between class and functional components
+virtual dom vs normal dom
+csrf and web security by react
+interceptor
+react fiber
+higher order components
+lazy loadng react
+
+css: 
+positioning in css
+stacking context in css (priority in styles and class)
+cssom
