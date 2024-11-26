@@ -18,3 +18,122 @@
 
    class MyClass {}
    console.log(typeof MyClass); => function
+
+4. for (var i = 0; i < 3; i++) {
+   setTimeout(() => {
+      console.log(i);
+   }, 1);
+   }
+   Output:
+   3
+   3
+   3
+   var is function-scoped, meaning it does not create a new scope for the block inside the for loop.
+   The i variable is shared across all iterations of the loop because it exists in the outer (function/global) scope.
+   By the time the setTimeout callbacks execute (after the loop is complete), the value of i has already reached 3.
+   All the setTimeout callbacks log the same value of i (3), because they reference the same i.
+
+5. for (let i = 0; i < 3; i++) {
+   setTimeout(() => {
+      console.log(i, "i");
+   }, 1);
+   }
+
+   let is block-scoped, meaning each iteration of the for loop creates a new block scope.
+   A new instance of i is created for each iteration. This means the i in each callback refers to the i from its specific iteration.
+   When the setTimeout callbacks execute, they log the value of i as it was in their respective iteration.
+
+6. var a = 1;
+   var a = 2;
+   console.log(a); // 2
+
+7. var a = 1;
+   let a = 2;
+   console.log(a); // Identifier 'a' has already been declared
+
+8. let a = 1;
+   let a = 2;
+   console.log(a); // SyntaxError: Identifier 'a' has already been declared
+
+9. let a = 2;
+   let b = new Number(2);
+
+   console.log(a == b); // true 
+   console.log(a === b); // false (b is an object)
+
+10. function ff() {
+   console.log("dsfs");
+   }
+   ff.ss = "a";
+   console.log(ff.ss); // a
+
+11. let num = 1;
+   console.log(num++); // 1 -> it will print num first increment will happen later
+   console.log(++num); // 3 -> since ++ is at first increment will happen first and value will printed
+   console.log(num);   // 3
+
+12. const a = { a: 1, b: 2, a: 3 };
+   console.log(a); { a: 3, b: 2 } -> last value of a will overide a but the position will be same
+
+13. console.log(!!null); //false
+   console.log(!!""); // false
+   console.log(!!1); // true
+
+14. console.log([..."anit"]); // [ 'a', 'n', 'i', 't' ]
+
+15. console.log(typeof 3 + 4 + "5"); // number45
+
+16. console.log([] == []); // false
+    console.log([] === []); // false 
+    // This condition will always return 'false' since JavaScript compares objects by reference,
+   not value
+
+17. function getInfo(member) {
+      member.name = "anil";
+      }
+
+      const person = { name: "Sarah" };
+
+      getInfo(person);
+
+      console.log(person); // { name: 'anil' }
+
+18. (() => {
+   let x = (y = 2);
+   })();
+
+   console.log(typeof x); // undefined (x will be inside block scope)
+
+19. (() => {
+   let x = (y = 2);
+   })();
+   console.log(typeof x); // undefined
+
+   console.log(typeof y); // number (if you declared like this let x = (y = 2); y will become globally available)
+
+20. (() => {
+   let x = 2;
+   })();
+
+   (() => {
+   let x = 2;
+   })();
+   console.log(typeof x); // undefined (x is inside block scope)
+
+21. (() => {
+   let x = (y = 10);
+   })();
+
+   (() => {
+   let x = (y = 20);
+   })();
+   console.log(y);// 20 (if you declared like this let x = (y = 20); y will become globally available)
+
+22. (() => {
+   var x = 10;
+   })();
+
+   console.log(typeof x); // undefined (since var is functional scope x wont be available outside, 
+                             IMPORTANT compare with above prob to understand difference)
+
+23. console.log(true + +"10"); // 11 (+'10' will change to 10 and 1+10 = 11)

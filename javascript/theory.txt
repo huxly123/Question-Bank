@@ -839,7 +839,7 @@
 
 21. Event Bubbling vs Event Capturing:
 
-    Event Bubbling:
+    Event Bubbling: (default in browser)
 
     Event bubbling is an order of event happening from child to parent, it means event bubbles out from child to parent
 

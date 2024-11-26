@@ -41,6 +41,7 @@ interceptor
 react fiber
 higher order components
 lazy loadng react
+controlled and uncontrolled components
 
 css: 
 positioning in css
