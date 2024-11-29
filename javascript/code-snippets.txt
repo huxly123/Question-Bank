@@ -137,3 +137,9 @@
                              IMPORTANT compare with above prob to understand difference)
 
 23. console.log(true + +"10"); // 11 (+'10' will change to 10 and 1+10 = 11)
+
+24. const [, , a] = [1, 2, 3, 4];
+   console.log(a); // 3
+
+25. const { 2: a } = [1, 2, 3, 4]; (destructuring of array using object)
+   console.log(a); // 3

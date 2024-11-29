@@ -546,6 +546,32 @@
     };
     person.greet();
 
+    This in Arrow Function:
+    
+    In arrow function the this keyword will not take the instance of where it defined, but
+    it will take the lexical scope instance.
+
+    const obj = {
+    a: 1,
+    greet: () => {
+        console.log(this);
+    },
+    };
+
+    obj.greet(); // global Object
+
+    const obj = {
+    a: 1,
+    greet: function () {
+        const y = () => {
+        console.log(this);
+        };
+        y();
+    },
+    };
+
+    obj.greet(); // { a: 1, greet: [Function: greet] } (This is the lexical environment scope)
+
 15. Explain call(), apply() and, bind() methods.
 
     call():
@@ -1016,3 +1042,244 @@
     };
     }
 
+25. Define Classes in JS
+  
+        A class in JavaScript is a blueprint for creating objects that share the same properties and methods.
+        Classes encapsulate data (properties) and behavior (methods), making code more organized and reusable
+        classes are primarily syntactic sugar over JavaScript's existing prototype-based inheritance model.
+
+        class Person {
+        constructor(name, age) {
+            this.name = name; // Property
+            this.age = age;   // Property
+        }
+
+        greet() { // Method
+            console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+        }
+        }
+
+        const person1 = new Person("Alice", 25);
+        person1.greet(); // Output: Hello, my name is Alice and I am 25 years old.
+
+    Static methods:
+
+        Static methods are defined on the class itself, not on its instances. 
+        They are used for utility functions that don't depend on instance-specific data.
+
+        class MathUtils {
+        static add(a, b) {
+            return a + b;
+        }
+        }
+
+        console.log(MathUtils.add(5, 10)); // Output: 15
+
+    Getters and Setters:
+
+        Classes can define custom accessors for properties using get and set.
+
+        class Circle {
+        constructor(radius) {
+            this.radius = radius;
+        }
+
+        get diameter() {
+            return this.radius * 2;
+        }
+
+        set diameter(diameter) {
+            this.radius = diameter / 2;
+        }
+        }
+
+        const circle = new Circle(10);
+        console.log(circle.diameter); // Output: 20
+        circle.diameter = 30;
+        console.log(circle.radius);   // Output: 15
+
+    Private Members:
+
+        Private members are properties or methods that are accessible only within the class where they are defined. 
+        They cannot be accessed or modified outside of the class.
+
+        class Example {
+        #privateProperty = "I am private";
+    
+        #privateMethod() {
+        console.log(this.#privateProperty);
+        }
+    
+        publicMethod() {
+        this.#privateMethod(); // Accessing private method
+        }
+        }
+        
+        const obj = new Example();
+        obj.publicMethod();        // Output: I am private
+        console.log(obj.#privateProperty); // Error: Private field '#privateProperty' must be declared in an enclosing class
+
+    Static Members:
+
+        Static members are properties or methods that belong to the class itself, not to any specific instance of the class. 
+        These can only be accessed using the class name, not through instances.
+
+        class Example {
+        static staticProperty = "I am static";
+
+        static staticMethod() {
+            console.log(this.staticProperty);
+        }
+        }
+
+        Example.staticMethod();          // Output: I am static
+        const obj = new Example();
+        console.log(obj.staticProperty); // Output: undefined (cannot access static property via instance)
+
+26. Inheritance in JavaScript
+
+    1) Prototype-Based Inheritance
+    2) Class-Based Inheritance
+
+    Prototype-Based Inheritance:
+
+        In JavaScript, every object has an internal property called [[Prototype]], which links it to another object
+        This linkage forms a "prototype chain" that allows an object to access properties and methods defined in its prototype.
+        Uses the Object.create() method or __proto__ to establish inheritance.
+        Objects inherit properties and methods directly from other objects.
+
+        const parent = {
+        greet() {
+            console.log("Hello from parent");
+        },
+        };
+
+        const child = Object.create(parent);
+        child.greet(); // Output: Hello from parent
+
+        console.log(child.__proto__ === parent); // Output: true
+
+    Class-Based Inheritance:
+
+        class-based inheritance allows you to use the class and extends keywords to define inheritance
+        Classes can inherit from other classes using the extends keyword.
+        The super keyword allows access to the parent class's constructor and methods.
+
+        class Animal {
+        constructor(name) {
+            this.name = name;
+        }
+
+        speak() {
+            console.log(`${this.name} makes a noise.`);
+        }
+        }
+
+        class Dog extends Animal {
+        speak() {
+            console.log(`${this.name} barks.`);
+        }
+        }
+
+        const dog = new Dog("Rex");
+        dog.speak(); // Output: Rex barks.
+
+    super Keyword:
+
+    In the constructor of a child class, super is used to call the parent class's constructor.
+    This is required when extending a class because the child class must initialize the parent 
+    class's properties before it can use this.
+
+        class Parent {
+        constructor(name) {
+            this.name = name;
+        }
+
+        greet() {
+            console.log(`Hello from ${this.name}`);
+        }
+        }
+
+        class Child extends Parent {
+        constructor(name, age) {
+            super(name); // Call parent constructor
+            this.age = age;
+        }
+
+        greet() {
+            super.greet(); // Call parent method
+            console.log(`I am ${this.age} years old.`);
+        }
+        }
+
+        const child = new Child("Alice", 10);
+        child.greet();
+        // Output:
+        // Hello from Alice
+        // I am 10 years old.
+
+27. Object.create() vs Object.assign()
+
+    Object.create():
+
+    This method will create an empty object and copy other object methods and will store it inside the 
+    prototype
+
+    const proto = {
+    greet() {
+        console.log("Hello");
+    },
+    };
+    const obj = Object.create(proto);
+    console.log(obj); // {}
+
+    console.log(Object.getPrototypeOf(obj)); // { greet: [Function: greet] }
+
+    obj.greet(); // Logs: "Hello"
+
+    Object.assign():
+
+    Copies properties from one or more source objects to a target object.
+
+    Object.assign(target, ...sources)
+
+    const target = { a: 1 };
+    const source = { b: 2, c: 3 };
+    Object.assign(target, source);
+
+    console.log(target); // { a: 1, b: 2, c: 3 }
+
+28. Explain new keyword
+
+    New keyword is used to create instances of objects defined by constructor functions.
+    Create a New Object -> Set the Prototype -> Bind this -> Return the Object
+    if we use this inside a normal function we need to use new keyword to bind the values to this
+
+    function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    }
+
+    const john = new Person("John", 25);
+    console.log(john.name); // "John"
+
+    class Animal {
+    constructor(type) {
+        this.type = type;
+    }
+
+    speak() {
+        console.log(`I am a ${this.type}`);
+    }
+    }
+
+    const dog = new Animal("Dog");
+    dog.speak(); // "I am a Dog"
+
+    The new keyword is used with built-in objects like Date, RegExp, Map, etc.
+
+    const today = new Date();
+    console.log(today);
+
+    const regex = new RegExp("\\w+");
+    console.log(regex.test("word")); // true

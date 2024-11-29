@@ -1,5 +1,5 @@
 JS:
-new keyword
+
 strict mode in javascript
 call stacks
 Excecution context
@@ -7,11 +7,12 @@ jobs and priority queues
 event loop
 shadowing
 memory management
-inheritence (prototype)
 generator
 callback hell
 method chaining
 diff arrow fn vs normal fn
+flattening object
+prototype chaining
 
 React:
 DOM
@@ -23,7 +24,6 @@ virual dom
 error boundry
 hooks
 referencelife cycle events
-cookies, browser-storage, cache
 react patterns
 redux,
 redux-cycle

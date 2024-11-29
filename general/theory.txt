@@ -61,9 +61,20 @@
 
    Serve cached resources selectively or fallback to the network if data is unavailable.
 
+6. How to block the main thread in js
+
+   console.log("Start blocking");
+
+   const start = Date.now();
+   while (Date.now() - start < 5000) {
+   // Busy-wait for 5 seconds
+   }
+
+   console.log("End blocking");
 
 
 
+shared storage
 service worker api
 web worker
 dynamo db
