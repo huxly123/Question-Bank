@@ -143,3 +143,52 @@
 
 25. const { 2: a } = [1, 2, 3, 4]; (destructuring of array using object)
    console.log(a); // 3
+
+26.   function abc() {
+      console.log(abc.xyz);
+      }
+
+      abc();           // First call
+      abc.xyz = 400;   // Assign property `xyz` to the function `abc`
+      abc.xyz = 200;   // Reassign the property `xyz` of the function `abc`
+      abc();           // Second call
+
+      // undefined
+      // 200
+
+27. console.log(parseInt("10+12")); // 10
+    console.log(parseInt("M7F")); // NaN
+    console.log(parseInt("7FM")); // 7
+    console.log(parseInt({ A: 1 })); // NaN
+
+28. console.log(
+   [1, 2].map((ele) => {
+      if (ele > 0) return;
+   })
+   ); // [undefined, undefined]
+
+29. var a = 10;
+   console.log(a); // 10
+   function a() {
+   console.log(33);
+   }
+   console.log(a); // 10 
+
+   Fn will get hoisted first in global and the variable will get hoisted and the variable will override function
+
+30. console.log(Array(1, 9)); // [ 1, 9 ]
+   console.log(Array(2)); // [ <2 empty items> ]
+
+31. console.log(NaN == true); // false
+   console.log(NaN == false); // false
+
+   if (NaN) {
+   console.log("d"); 
+   } else {
+   console.log("fds");         
+   } 
+
+   // fds
+
+32. console.log(null + 20); // 20
+    console.log(undefined + 20); // NaN

@@ -7,17 +7,18 @@ jobs and priority queues
 event loop
 shadowing
 memory management
-generator
-callback hell
 method chaining
 diff arrow fn vs normal fn
 flattening object
 prototype chaining
+callback hell
+async/await
+infinite currying
+script async defer
 
 React:
 DOM
 Browser Object Model (BOM)
-async/await
 Reconciliation
 memoization (use callback and use memo)
 virual dom
@@ -43,7 +44,12 @@ higher order components
 lazy loadng react
 controlled and uncontrolled components
 
+
 css: 
 positioning in css
 stacking context in css (priority in styles and class)
 cssom
+
+webpack 
+tree shaking
+dependency graph

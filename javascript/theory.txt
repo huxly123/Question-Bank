@@ -1283,3 +1283,196 @@
 
     const regex = new RegExp("\\w+");
     console.log(regex.test("word")); // true
+
+29. Generator Function
+
+    Generator functions are special functions in JavaScript that allow you to pause and resume execution at specific points.
+    They provide a powerful way to work with iterators and lazy evaluation.
+
+    function* myGenerator() {
+    yield 1;
+    yield 2;
+    yield 3;
+    }
+    const gen = myGenerator(); // Returns an iterator
+    console.log(gen.next()); // { value: 1, done: false }
+    console.log(gen.next()); // { value: 2, done: false }
+    console.log(gen.next()); // { value: 3, done: false }
+    console.log(gen.next()); // { value: undefined, done: true }
+
+    Use case: 
+
+    function* infiniteNumbers() {
+    let num = 1;
+    while (true) {
+        yield num++;
+    }
+    }
+
+    const numbers = infiniteNumbers();
+    console.log(numbers.next().value); // 1
+    console.log(numbers.next().value); // 2
+    console.log(numbers.next().value); // 3
+
+    Feature:	                       Regular Functions:	                        Generator Functions:
+
+    Execution                          Run from start to finish                     Can pause and resume
+    Return Value                       Single value or undefined                    Iterator object
+    Syntax	                           function	                                    function*
+
+30. Promise
+
+    A Promise in JavaScript is like a guarantee that you'll get a result in the future.
+    It helps handle asynchronous tasks, like fetching data from an API.
+
+    Pending: The promise is still working (like waiting for a delivery).
+    Fulfilled: The task was successful (delivery arrived).
+    Rejected: The task failed (delivery was canceled).
+    You use .then() to handle success, .catch() for errors, and .finally() for anything
+    you want to do when the task is finished, no matter the result.
+
+    const promise = new Promise((resolve, reject) => {
+    const isSuccessful = true;
+    setTimeout(() => {
+        isSuccessful ? resolve("Success!") : reject("Error!");
+    }, 1000);
+    });
+
+    promise
+    .then((result) => console.log(result)) // Logs "Success!" if resolved
+    .catch((error) => console.error(error)) // Logs "Error!" if rejected
+    .finally(() => console.log("Task completed.")); // Runs no matter what
+
+    1)Promise.race():
+
+    Promise.race resolves or rejects as soon as one of the promises in the array resolves or rejects.
+
+    const promise1 = new Promise((resolve) => setTimeout(resolve, 100, "Fast"));
+    const promise2 = new Promise((resolve) => setTimeout(resolve, 500, "Slow"));
+
+    Promise.race([promise1, promise2])
+    .then((value) => {
+        console.log("First resolved:", value); // Logs: "First resolved: Fast"
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+
+    2)Promise.all():
+
+    Promise.all runs multiple promises in parallel and resolves when all promises are fulfilled. 
+    If any promise fails (rejects), the entire Promise.all rejects immediately.
+
+    Use Case: Ideal when you need all tasks completed before proceeding.
+
+    const promise1 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("10");
+    }, 1000);
+    });
+    const promise2 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("20");
+    }, 10);
+    });
+    const promise3 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("30");
+    }, 100);
+    });
+
+    Promise.all([promise1, promise2, promise3])
+    .then((results) => {
+        console.log(results); // [10, 20, 30] OR if one promise rejected then output is (One of the promises failed: 30)
+    })
+    .catch((error) => {
+        console.error("One of the promises failed:", error);
+    });
+
+    3)Promise allSettled:
+
+    Promise.allSettled runs multiple promises in parallel and resolves when all promises 
+    settle (either fulfilled or rejected). It never rejects; instead, it provides an array of results for all promises.
+
+    Use Case: Ideal when you need results of all tasks regardless of success or failure.
+
+    const promise1 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("10");
+    }, 1000);
+    });
+    const promise2 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("20");
+    }, 10);
+    });
+    const promise3 = new Promise((res, rej) => {
+    setTimeout(() => {
+        rej("30");
+    }, 100);
+    });
+
+    Promise.allSettled([promise1, promise2, promise3])
+    .then((results) => {
+        console.log(results);
+    })
+    .catch((error) => {
+        console.error("One of the promises failed:", error);
+    });
+
+  //  [
+  //  { status: 'fulfilled', value: '10' },
+  //  { status: 'fulfilled', value: '20' },
+  //  { status: 'rejected', reason: '30' }
+  //  ]
+
+    4) Promise.any():
+
+    Promise.any resolves as soon as the first promise is fulfilled. If all promises reject, it returns an AggregateError with all rejection reasons.
+
+    Use Case: Use when you need any one successful result.
+
+    const promise1 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("10");
+    }, 1000);
+    });
+    const promise2 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("20");
+    }, 10);
+    });
+    const promise3 = new Promise((res, rej) => {
+    setTimeout(() => {
+        res("30");
+    }, 100);
+    });
+
+    Promise.any([promise1, promise2, promise3])
+    .then((result) => {
+        console.log("First successful result:", result); // "Success in promise2"
+    })
+    .catch((error) => {
+        console.error("All promises failed:", error.errors);
+    });
+
+31. What is Infinite Currying in JavaScript?
+
+     Infinite currying allowing an indefinite number of function calls, where each call passes one argument.
+
+    function add(a) {
+    return function (b) {
+        if (b !== undefined) {
+        return add(a + b); // Keeps currying if more arguments are passed
+        }
+        return a; // Returns the final value when no argument is passed
+    };
+    }
+
+    // Usage
+    console.log(add(1)(2)(3)(4)()); // 10
+    console.log(add(10)(20)(30)()); // 60
+
+
+
+
