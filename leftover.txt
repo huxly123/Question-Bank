@@ -13,8 +13,6 @@ flattening object
 prototype chaining
 callback hell
 async/await
-infinite currying
-script async defer
 
 React:
 DOM
@@ -43,12 +41,16 @@ react fiber
 higher order components
 lazy loadng react
 controlled and uncontrolled components
+stateless vs statefull
 
 
 css: 
 positioning in css
 stacking context in css (priority in styles and class)
 cssom
+
+HTML:
+script async defer
 
 webpack 
 tree shaking

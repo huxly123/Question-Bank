@@ -181,6 +181,8 @@
 
 31. console.log(NaN == true); // false
    console.log(NaN == false); // false
+   console.log(NaN == NaN); // false
+   console.log(NaN === NaN); // false
 
    if (NaN) {
    console.log("d"); 
@@ -192,3 +194,6 @@
 
 32. console.log(null + 20); // 20
     console.log(undefined + 20); // NaN
+
+33. console.log(null == undefined) // true
+   console.log(null === undefined) // false

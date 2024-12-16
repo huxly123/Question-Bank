@@ -1473,6 +1473,36 @@
     console.log(add(1)(2)(3)(4)()); // 10
     console.log(add(10)(20)(30)()); // 60
 
+32. HOF that modify or unmodify the original array
 
+    HOF That modifies the array:
 
+    push()	Adds one or more elements to the end of the array.	New length of the array.
+    pop()	Removes the last element of the array.	The removed element.
+    shift()	Removes the first element of the array.	The removed element.
+    unshift()	Adds one or more elements to the beginning of the array.	New length of the array.
+    splice()	Adds/removes/replaces elements in the array at a specific index.	An array of removed elements.
+    sort()	Sorts the array in place based on a comparison function.	The sorted array (mutated).
+    reverse()	Reverses the order of elements in the array.	The reversed array (mutated).
+    copyWithin()	Copies a sequence of array elements within the array itself.	The modified array.
+    fill()	Fills all or part of the array with a static value.	The modified array.
+
+    HOF That Not modifies the array:
+
+    map()	Transforms each element of the array based on a callback function and returns a new array.	A new array.
+    filter()	Returns a new array containing elements that pass the callback's condition.	A new array.
+    reduce()	Reduces the array to a single value based on the callback function.	A single value.
+    reduceRight()	Like reduce(), but processes the array from right to left.	A single value.
+    concat()	Merges one or more arrays or values into a new array.	A new array.
+    slice()	Extracts a portion of the array into a new array without modifying the original.	A new array.
+    flat()	Flattens nested arrays into a new array.	A new array.
+    flatMap()	Maps and flattens the array in one step, returning a new array.	A new array.
+    join()	Concatenates array elements into a string with a specified delimiter.	A string.
+    find()	Returns the first element that matches the condition in the callback function.	The found element (or undefined).
+    findIndex()	Returns the index of the first element that matches the condition in the callback.	Index of the found element (-1 if none).
+    every()	Checks if all elements pass the callback's condition.	true or false.
+    some()	Checks if at least one element passes the callback's condition.	true or false.
+    includes()	Checks if the array contains a specified value.	true or false.
+    indexOf()	Returns the index of the first occurrence of a value in the array.	Index (or -1 if not found).
+    lastIndexOf()	Returns the index of the last occurrence of a value in the array.	Index (or -1 if not found).
 
