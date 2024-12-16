@@ -1506,3 +1506,26 @@
     indexOf()	Returns the index of the first occurrence of a value in the array.	Index (or -1 if not found).
     lastIndexOf()	Returns the index of the last occurrence of a value in the array.	Index (or -1 if not found).
 
+33. Pure vs Impure Functions:
+
+    A pure function always produces the same output for the same input and has no side effects.
+
+    function add(a, b) {
+    return a + b;
+    }
+
+    console.log(add(2, 3)); // Always outputs 5
+    console.log(add(2, 3)); // Always outputs 5
+
+    An impure function produces different outputs for the same input or causes side effects.
+
+    let counter = 0;
+
+    function incrementCounter() {
+    counter += 1;
+    return counter;
+    }
+
+    console.log(incrementCounter()); // Outputs 1
+    console.log(incrementCounter()); // Outputs 2
+

@@ -1,0 +1,122 @@
+1. Stateless Components
+
+    Stateless components are components that do not manage any state internally.
+    They rely solely on the props passed to them for rendering data or behavior.
+
+2. Statefull Components
+
+    Stateful components are components that manage their own state.
+    They use React hooks like useState or useReducer (or class-based state in older React).
+
+3. Reconciliation
+
+    Reconciliation is React’s smart way of updating the user interface efficiently. 
+    By comparing the old and new virtual DOM, React minimizes changes to the real DOM, 
+    resulting in faster performance and a smoother user experience.
+
+4. Virtual DOM
+
+    The Virtual DOM is a lightweight, in-memory representation (or copy) of the actual DOM (Document Object Model) used in browsers.
+    React uses this virtual DOM to make updates to the UI faster and more efficient. 
+    "virtual DOM tree" which is a JavaScript object representing the real DOM
+    At first the DOM elements will get rendered and then the change in state will update virtual DOM and it will update real DOM
+
+5. Controlled components
+
+    A controlled component is a form element (like <input>, <textarea>, <select>) whose value is controlled by React state.
+
+    function ControlledComponent() {
+    const [name, setName] = useState("");
+
+    const handleChange = (e) => {
+        setName(e.target.value); // Update the state with input's value
+    };
+
+    return (
+        <div>
+        <label>Name: </label>
+        <input 
+            type="text" 
+            value={name} // Controlled by state
+            onChange={handleChange} // Updates state on change
+        />
+        <p>Your name: {name}</p>
+        </div>
+    );
+    }
+
+6.  UnControlled components
+
+    An uncontrolled component is a form element that manages its own state internally.
+    React does not control the value of the input; instead, the DOM itself handles the input value.
+
+    function UncontrolledComponent() {
+    const inputRef = useRef(null);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert("Input Value: " + inputRef.current.value);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+        <label>Name: </label>
+        <input 
+            type="text" 
+            ref={inputRef} // Ref to access input's value
+        />
+        <button type="submit">Submit</button>
+        </form>
+    );
+    }
+
+7. UseCallback:
+
+    useCallback is used to memoize a function so that it retains the same reference across renders unless its dependencies change.
+    Passing functions as props or passing inside useeffect dependency can cause child components and component to re-render unnecessarily.
+    So we memoize the function untill it dependency changes
+
+8. UseMemo:
+
+    useMemo is used to memoize the result of a computation and only recompute it when its dependencies change.So we dont have to 
+    repeat the computation whenever the component re-renders
+
+9. What is a Higher-Order Component (HOC) in React?
+
+    A Higher-Order Component (HOC) is a function that takes a React component as its input and returns a new component.
+    It allows you to reuse component logic across multiple components by wrapping them in the HOC.
+
+10. Pure vs Impure components
+
+    Pure Function Components: Only re-render when props or state change. Optimized with React.memo.
+
+    import React, { memo } from 'react';
+
+    const PureComponent = memo(({ name }) => {
+    console.log('PureComponent Rendered');
+    return <h1>Hello, {name}</h1>;
+    });
+
+    export default function App() {
+    return <PureComponent name="Alice" />;
+    }
+
+    Impure Function Components: Re-render whenever the parent re-renders, regardless of prop or state changes.
+
+    import React, { memo } from 'react';
+
+    const PureComponent = memo(({ name }) => {
+    console.log('PureComponent Rendered');
+    return <h1>Hello, {name}</h1>;
+    });
+
+    function App() {
+    return <PureComponent name="Alice" />;
+    }
+
+11. Virtual DOM vs Real DOM
+
+    Real DOM is the actual UI representation that browsers use, but it is slow and inefficient for frequent updates.
+    
+    Virtual DOM is a lightweight copy of the Real DOM in memory, and React uses it to optimize performance by reducing
+    the number of updates to the Real DOM.

@@ -17,9 +17,6 @@ async/await
 React:
 DOM
 Browser Object Model (BOM)
-Reconciliation
-memoization (use callback and use memo)
-virual dom
 error boundry
 hooks
 referencelife cycle events
@@ -34,14 +31,10 @@ how will you structure a component when it is recursively called
 how is DOM traversed
 life cycle of components
 difference between class and functional components
-virtual dom vs normal dom
 csrf and web security by react
 interceptor
 react fiber
-higher order components
 lazy loadng react
-controlled and uncontrolled components
-stateless vs statefull
 
 
 css: 

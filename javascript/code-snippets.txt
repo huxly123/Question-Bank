@@ -197,3 +197,11 @@
 
 33. console.log(null == undefined) // true
    console.log(null === undefined) // false
+
+34. console.log([] == []); // false -> comparing their references
+   console.log([] == ""); // true  ->  == operator converts both operands to the same type
+   console.log({} == ""); // false -> The empty object {} cannot be directly coerced into a primitive type like a string.
+
+35. const arr = [1, 2, 3];
+   delete arr[0];
+   console.log(arr); // [ <1 empty item>, 2, 3 ]
