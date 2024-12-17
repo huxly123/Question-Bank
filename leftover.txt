@@ -15,7 +15,6 @@ callback hell
 async/await
 
 React:
-DOM
 Browser Object Model (BOM)
 error boundry
 hooks
@@ -25,9 +24,6 @@ redux,
 redux-cycle
 web-apps
 react portal
-why react is faster than vanilla js.
-www.google.com load what will happen
-how will you structure a component when it is recursively called
 how is DOM traversed
 life cycle of components
 difference between class and functional components
@@ -48,3 +44,4 @@ script async defer
 webpack 
 tree shaking
 dependency graph
+www.google.com load what will happen

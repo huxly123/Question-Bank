@@ -1,0 +1,9 @@
+Reverse a Linked List
+Detect Cycle in a Linked List
+Merge Two Sorted Lists
+Merge K Sorted Lists
+Remove Nth Node From End Of List
+Reorder List
+Add 1 to a number represented as linked list
+Find the middle of a given linked list
+Delete last occurrence of an item from linked list

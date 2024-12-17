@@ -1,0 +1,5 @@
+Number of 1 Bits
+Counting Bits
+Missing Number
+Reverse Bits
+Find XOR of all subsets of a set

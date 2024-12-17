@@ -117,6 +117,71 @@
 11. Virtual DOM vs Real DOM
 
     Real DOM is the actual UI representation that browsers use, but it is slow and inefficient for frequent updates.
-    
+
     Virtual DOM is a lightweight copy of the Real DOM in memory, and React uses it to optimize performance by reducing
     the number of updates to the Real DOM.
+
+12. Why react is faster than vanilla js.
+
+    Virtual DOM: React uses a lightweight in-memory copy of the DOM, allowing for more efficient updates.
+    Batching Updates: React groups multiple updates together to reduce the number of reflows/repaints in the browser.
+    Reconciliation: React minimizes the number of DOM updates by calculating the minimal number of changes needed.
+    Declarative UI: React’s declarative syntax allows for more predictable and efficient UI updates.
+    Component Re-rendering Optimization: React ensures that only components that need updating are re-rendered, improving performance.
+    Efficient List Handling: React optimizes list rendering and updates by using keys for better reconciliation.
+
+13. how will you structure a component when it is recursively called?
+
+    Recursively called components are useful for rendering hierarchical or nested data structures in a clean, maintainable way.
+    The key aspects to manage include:
+
+    import React from 'react';
+
+    const Menu = ({ items }) => {
+    if (!items || items.length === 0) return null;
+
+    return (
+        <ul>
+        {items.map((item, index) => (
+            <li key={index}>
+            <a href={item.link}>{item.name}</a>
+
+            {/* If the item has a submenu, render the submenu recursively */}
+            {item.submenu && item.submenu.length > 0 && (
+                <Menu items={item.submenu} />
+            )}
+            </li>
+        ))}
+        </ul>
+    );
+    };
+
+    const App = () => {
+    const menuItems = [
+        {
+        name: 'Home',
+        link: '/home',
+        },
+        {
+        name: 'About',
+        link: '/about',
+        submenu: [
+            { name: 'Team', link: '/about/team' },
+            { name: 'Company', link: '/about/company' },
+        ],
+        },
+        {
+        name: 'Contact',
+        link: '/contact',
+        },
+    ];
+
+    return (
+        <div>
+        <h1>Recursive Menu</h1>
+        <Menu items={menuItems} />
+        </div>
+    );
+    };
+
+    export default App;
