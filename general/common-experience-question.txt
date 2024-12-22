@@ -1,4 +1,12 @@
+1. Tell about the complex problem you had solved
 
+   a) Migration of Gatsby to Next.js
+      I want to redce the build time and increase the page speed by implementing SSG, and auto update
+      build by using ISR
+
+    b) Login issue in connecting app and web
+
+    c) Looping over userList and updating it detail in batch to reduce memory limit
 
 
 
@@ -8,7 +16,7 @@
 
 
 Do you have any interest in any technology
-Tell about the complex problem you had solved
+
 tell about other framework
 explain about your projects
 micro fe architecture (monolith as well)

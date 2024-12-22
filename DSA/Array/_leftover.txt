@@ -1,6 +1,4 @@
-Best Time to Buy and Sell Stock
 Find the Factorial of a large number
-Trapping Rain Water
 Chocolate Distribution Problem
 Insert Interval
 Merge Intervals
