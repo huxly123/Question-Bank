@@ -1,8 +1,0 @@
-Convert Infix expression to Postfix expression
-Next Greater Element
-Delete middle element of a stack
-Check mirror in n-ary tree
-The Celebrity Problem
-Length of the longest valid substring
-Print Right View of a Binary Tree
-Find the first circular tour that visits all petrol pumps

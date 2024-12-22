@@ -1,5 +1,0 @@
-Find the Factorial of a large number
-Chocolate Distribution Problem
-Insert Interval
-Merge Intervals
-Non-overlapping Intervals
