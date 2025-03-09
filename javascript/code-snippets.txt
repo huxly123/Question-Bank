@@ -160,6 +160,7 @@
     console.log(parseInt("M7F")); // NaN
     console.log(parseInt("7FM")); // 7
     console.log(parseInt({ A: 1 })); // NaN
+    console.log(parseInt(10 + 12)); // 22
 
 28. console.log(
    [1, 2].map((ele) => {

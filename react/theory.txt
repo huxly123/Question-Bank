@@ -120,6 +120,8 @@
 
     Virtual DOM is a lightweight copy of the Real DOM in memory, and React uses it to optimize performance by reducing
     the number of updates to the Real DOM.
+    A virtual DOM is typically represented as a tree-like data structure, consisting of nested JavaScript objects called 
+    "vnodes" (virtual nodes)
 
 12. Why react is faster than vanilla js.
 
