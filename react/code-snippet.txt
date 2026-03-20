@@ -1,0 +1,64 @@
+1. Debounce in react:
+
+    export default function useDebounce(value, delay) {
+    const [debounceVal, setDebounceVal] = useState();
+    useEffect(() => {
+        const handler = setTimeout(() => {
+        setDebounceVal(value);
+        }, delay);
+        return () => clearTimeout(handler);
+    }, [value, delay]);
+    return debounceVal;
+    }
+
+2. Throttle in react:
+
+    function useThrottle(value, delay) {
+    const [throttledValue, setThrottledValue] = useState(value);
+    const lastCall = useRef(0);
+
+    useEffect(() => {
+        const now = Date.now();
+
+        if (now - lastCall.current >= delay) {
+            setThrottledValue(value);
+            lastCall.current = now;
+        }
+    }, [value, delay]);
+
+    return throttledValue;
+}
+
+3. Infinite Scroll in react:
+
+     useEffect(() => {
+        const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+            setPage((prev) => prev + 1);
+            }
+        },
+        { threshold: 1 }
+        );
+
+        if (observerRef.current) {
+        observer.observe(observerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+// React
+     <div>
+      <h2>Infinite Scroll</h2>
+      <ul>
+        {data.map((item) => (
+          <li key={item.id}>{item.title}</li>
+        ))}
+      </ul>
+
+      {/* Observer Target */}
+      <div ref={observerRef} style={{ height: "20px", background: "transparent" }}></div>
+
+      {loading && <p>Loading more...</p>}
+    </div>

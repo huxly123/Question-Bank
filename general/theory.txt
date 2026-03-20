@@ -72,6 +72,85 @@
 
    console.log("End blocking");
 
+7. Design Patterns:
+
+   a) MVC Design Pattern (Model-View-Controller):
+
+   The MVC (Model-View-Controller) pattern is a software architectural pattern used for separating 
+   concerns in an application. It helps organize code and improve maintainability.
+
+   Model (M)	Manages the data and business logic
+   View (V)	Handles the UI (User Interface)
+   Controller (C)	Processes user inputs and updates the Model & View
+
+   b) Atomic Design Pattern (Atom-Molecule-Organism):
+
+   Atoms	Smallest UI elements	Button, Input, Label
+   Molecules	Combination of atoms	Search Bar (Input + Button)
+   Organisms	Groups of molecules forming a section	Navbar (Logo + Menu + Search)
+   Templates	Page layouts with organisms	Homepage Layout
+   Pages	Real pages with dynamic content	Homepage with user data
+
+   c) Module Pattern:
+
+   Encapsulate code, avoid global scope pollution
+
+   const CounterModule = (() => {
+   let count = 0;
+
+   return {
+      increment: () => ++count,
+      decrement: () => --count,
+      getCount: () => count,
+   };
+   })();
+
+   console.log(CounterModule.increment()); // 1
+   console.log(CounterModule.getCount());  // 1
+
+   d) Singleton Pattern (Global State):
+
+   Ensures only one instance of an object exists.
+
+   class ThemeManager {
+   constructor() {
+      if (!ThemeManager.instance) {
+         this.theme = "light";
+         ThemeManager.instance = this;
+      }
+      return ThemeManager.instance;
+   }
+   }
+
+   const theme1 = new ThemeManager();
+   const theme2 = new ThemeManager();
+   console.log(theme1 === theme2); // true (same instance)
+
+   e) Higher-Order Component (HOC) in React:
+
+   A HOC is a function that takes a component and returns a new component.
+
+   const withAuth = (Component) => {
+   return (props) => {
+      const isAuthenticated = true; // Mock authentication
+      return isAuthenticated ? <Component {...props} /> : <p>Login required</p>;
+   };
+   };
+
+   const Dashboard = () => <h2>Dashboard</h2>;
+   const ProtectedDashboard = withAuth(Dashboard);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 shared storage

@@ -21,6 +21,14 @@ function printNtoOne(n) {
 
 // printNtoOne(4);
 
+function power(a, b) {
+  if (b === 0) return 1;
+
+  return a * power(a, b - 1);
+}
+
+// console.log(power(2, 5));
+
 function sumArray(arr, index) {
   if (index === arr.length) return 0;
   return arr[index] + sumArray(arr, index + 1);
@@ -33,6 +41,15 @@ function productArray(arr, index) {
   return arr[index] * productArray(arr, index + 1);
 }
 //   console.log(productArray([1, 2, 3, 4], 0));
+
+// Reverse a string
+
+// const str = "abc";
+function reverseString(str) {
+  if (str.length === 0) return "";
+  return rev(str.slice(1)) + str[0];
+}
+// console.log(rev(str));
 
 // const arr = [1, 2, 3, 4, 5];
 function reverseArray(arr, n, res) {

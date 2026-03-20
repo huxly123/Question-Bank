@@ -1,0 +1,6 @@
+1. Optimisation Method:
+
+   a) Pre-fetch a link when hovered or other ui action to pre-load the js file of the next
+      page
+
+      <link rel="prefetch" href="/about.html" as="document" />
