@@ -398,3 +398,64 @@
 
     If yes → allow request.
 
+16. HTTPS and HTTP
+
+    HTTP: (PORT: 80)
+
+    HTTP is a protocol used for communication between a browser (client) and a server.
+    Problem with HTTP
+
+    HTTP data is sent in plain text.
+
+    If someone intercepts the network (public WiFi), they can see:
+
+    username=rahul
+    password=123456
+
+    So HTTP is:
+
+    ❌ Not encrypted
+    ❌ Vulnerable to MITM attacks
+    ❌ Unsafe for login/payment
+
+    Attackers intercept requests using Man-in-the-Middle attacks, such as packet sniffing on public WiFi, fake hotspots, DNS spoofing, or ARP spoofing, allowing them to capture or modify network traffic.
+
+    HTTPS (HTTP Secure): (PORT: 443)
+
+    HTTPS is HTTP + SSL/TLS encryption.
+
+    It encrypts communication between browser and server.
+
+    How HTTPS Works
+    Browser → TLS Handshake → Server
+    Secure encrypted connection established
+    Browser ↔ Server (encrypted data)
+
+    What TLS Does
+
+    TLS (Transport Layer Security):
+
+    Encrypts data
+    Ensures data integrity
+    Verifies server identity using certificates
+
+17. Explain JWT Login Flow
+
+    User Login
+        ↓
+    Frontend → /login
+        ↓
+    Server verifies credentials
+        ↓
+    Server generates JWT
+        ↓
+    JWT returned to frontend
+        ↓
+    Frontend stores token
+        ↓
+    Client sends JWT in API requests
+        ↓
+    Server verifies token
+        ↓
+    Access granted
+
