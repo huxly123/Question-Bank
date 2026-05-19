@@ -1,11 +1,3 @@
-1. Web Rendering Fundamentals
-Critical Rendering Path
-DOM Construction
-CSSOM Construction
-Render Tree
-Layout (Reflow)
-Paint
-Compositing
 
 2. Network Performance
 HTTP/1 vs HTTP/2 vs HTTP/3
@@ -71,6 +63,7 @@ ETag
 Last-Modified
 Service Worker Caching
 Stale-While-Revalidate
+
 9. Core Web Vitals
 LCP (Largest Contentful Paint)
 CLS (Cumulative Layout Shift)

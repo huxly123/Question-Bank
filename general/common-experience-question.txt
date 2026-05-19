@@ -16,7 +16,7 @@
 
 
 Do you have any interest in any technology
-
+where are you strong and weak
 tell about other framework
 explain about your projects
 micro fe architecture (monolith as well)

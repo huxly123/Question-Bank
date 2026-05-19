@@ -1,0 +1,301 @@
+1. Web Rendering Fundamentals
+
+        HTML
+        ↓
+        DOM Construction
+        ↓
+        CSS
+        ↓
+        CSSOM Construction
+        ↓
+        DOM + CSSOM
+        ↓
+        Render Tree
+        ↓
+        Layout (Reflow)
+        ↓
+        Paint
+        ↓
+        Compositing
+        ↓
+        Pixels displayed on screen
+
+    Web rendering is the process where the browser converts HTML, CSS, and JavaScript into visual pixels using DOM, CSSOM, Render Tree, Layout, Paint, and Compositing.
+
+Core Web Vitals:
+
+2. LCP — Largest Contentful Paint
+
+    Definition:
+    Time taken to render the largest visible element in the viewport.
+
+    Usually:
+
+    Hero image
+    Large heading
+    Banner image
+    Video poster
+
+    Good value:
+    ✅ ≤ 2.5 seconds
+
+    Example flow
+
+    User opens page
+    ↓
+    HTML loads
+    ↓
+    Largest element (hero image / heading) renders
+    ↓
+    Time recorded = LCP
+
+    How to Improve
+
+    Optimize images (WebP/AVIF)
+    Use CDN
+    Lazy load non-critical images
+    Reduce render-blocking CSS/JS
+    Improve server response time
+
+3. CLS — Cumulative Layout Shift
+
+    Definition:
+    Measures unexpected layout movement during page load.
+
+    Example:
+
+    User tries to click a button
+    ↓
+    Ad loads above it
+    ↓
+    Button moves
+    ↓
+    User clicks wrong element
+
+    Good value:
+    ✅ ≤ 0.1
+
+    Common causes
+
+    Images without width/height
+    Ads injected dynamically
+    Fonts causing reflow
+    Late loading components
+
+    How to Improve
+
+    Always set image dimensions
+    Reserve space for ads
+    Use font-display: swap
+    Avoid inserting content above existing content
+
+4. INP — Interaction to Next Paint
+
+    Definition:
+    Measures how fast the UI responds after a user interaction.
+
+    Example interaction:
+
+    Click
+    Tap
+    Keyboard input
+
+    Flow:
+
+    User clicks button
+    ↓
+    Browser runs JS event handler
+    ↓
+    UI updates
+    ↓
+    Next frame paints
+    ↓
+    Time measured = INP
+
+    Good value:
+    ✅ ≤ 200 ms
+
+    How to Improve
+
+    Reduce main thread blocking
+    Break large JS tasks:
+
+    Long tasks (>50ms) block the main thread.
+    Break them into smaller chunks so browser can process interactions.
+
+    Bad
+
+    for (let i = 0; i < 1e9; i++) process(i);
+
+    Better
+
+    function chunk() {
+    for (let i = 0; i < 1000; i++) process(i);
+    setTimeout(chunk, 0);
+    }
+
+    a)Use requestIdleCallback:
+
+    Runs non-critical tasks when browser is idle.
+    Prevents blocking user interactions.
+
+    Example
+
+    requestIdleCallback(() => {
+    sendAnalytics();
+    });
+
+    Use for:
+
+    analytics
+    logging
+    background processing
+
+    b)Optimize event handlers:
+
+        Event handlers should execute quickly after user interaction.
+        Avoid heavy computation inside handlers.
+
+        Bad
+
+        button.onclick = () => heavyCalculation();
+
+        Better
+
+        button.onclick = () => {
+        updateUI();
+        setTimeout(heavyCalculation, 0);
+        };
+
+        Tips:
+
+        debounce/throttle events
+        minimize DOM operations
+
+    c)Use code splitting
+
+5. FCP — First Contentful Paint
+
+    Definition:
+    Time taken for the first visible content to appear on the screen.
+
+    Examples:
+
+    Text
+    SVG
+    Image
+    Canvas
+
+    Flow:
+
+    User opens page
+    ↓
+    HTML parsed
+    ↓
+    First visible content appears
+    ↓
+    Time recorded = FCP
+
+    Good value:
+    ✅ ≤ 1.8 seconds
+
+    How to Improve
+
+    a)Inline critical CSS:
+        Critical CSS = CSS required to render above-the-fold content (visible part of page).
+
+        Normally:
+
+        Browser loads HTML
+        ↓
+        Requests CSS file
+        ↓
+        Waits for CSS to download
+        ↓
+        Page renders
+
+        CSS is render-blocking, so FCP is delayed.
+
+        Solution: Inline Critical CSS
+
+        Place important CSS directly inside HTML.
+
+    b)Reduce render blocking resources:
+        Main thread handles JS execution, rendering, and user interactions.
+        Heavy JS blocks the thread → interaction delay → poor INP.
+
+        Example
+
+        button.addEventListener("click", () => {
+        heavyCalculation(); // blocks UI
+        });
+
+        Fix
+
+        Remove unnecessary JS
+        Use async/defer
+        Use Web Workers for heavy tasks
+
+    c)Use preloading
+    d)Use CDN
+
+6. TTFB — Time To First Byte
+
+    Definition:
+    Time taken for the browser to receive the first byte from the server.
+
+    Flow:
+
+    Request sent
+    ↓
+    DNS lookup
+    ↓
+    TCP/TLS handshake
+    ↓
+    Server processing
+    ↓
+    First byte returned
+    ↓
+    TTFB measured
+
+    Good value:
+    ✅ ≤ 800 ms
+
+    How to Improve:
+
+    Faster backend processing
+    CDN caching
+    Edge rendering
+    Server-side caching
+    Optimize database queries
+
+7. Use Code Splitting
+
+    Definition
+    Technique to split large JS bundle into smaller chunks
+    Load chunks only when needed (on demand)
+
+   Types of Code Splitting:
+    1️⃣ Route-based Splitting
+    Load code per page/route
+    const Dashboard = React.lazy(() => import("./Dashboard"));
+
+    👉 Dashboard code loads only when user visits that route
+
+    2️⃣ Component-based Splitting
+    Load heavy components only when required
+    const Chart = React.lazy(() => import("./Chart"));
+
+    👉 Useful for:
+
+    charts
+    modals
+    maps
+    3️⃣ Dynamic Imports
+    Native JS way to load modules lazily
+    import("./utils").then((module) => {
+    module.calculate();
+    });
+
+    👉 Loaded only when executed
+
