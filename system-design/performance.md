@@ -2,6 +2,9 @@
 
 ## 1. Web rendering fundamentals
 
+<details>
+<summary>Answer</summary>
+
 Web rendering is the process where the browser converts HTML, CSS, and JavaScript into visual pixels using the DOM, CSSOM, render tree, layout, paint, and compositing.
 
 ```text
@@ -26,9 +29,15 @@ Compositing
 Pixels displayed on screen
 ```
 
+</details>
+
 ## Core Web Vitals
 
+
 ## 2. LCP — Largest Contentful Paint
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** time taken to render the largest visible element in the viewport.
 
@@ -55,7 +64,12 @@ Time recorded = LCP
 - Reduce render-blocking CSS/JS
 - Improve server response time
 
+</details>
+
 ## 3. CLS — Cumulative Layout Shift
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** measures unexpected layout movement during page load.
 
@@ -85,7 +99,12 @@ User clicks the wrong element
 - Use `font-display: swap`
 - Avoid inserting content above existing content
 
+</details>
+
 ## 4. INP — Interaction to Next Paint
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** measures how fast the UI responds after a user interaction (click, tap, keyboard input).
 
@@ -147,7 +166,12 @@ Tips: debounce/throttle events, minimize DOM operations.
 
 **c) Use code splitting** (see below).
 
+</details>
+
 ## 5. FCP — First Contentful Paint
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** time taken for the first visible content (text, SVG, image, canvas) to appear on screen.
 
@@ -196,7 +220,12 @@ Fixes: remove unnecessary JS, use `async`/`defer`, use Web Workers for heavy tas
 
 **d) Use a CDN.**
 
+</details>
+
 ## 6. TTFB — Time To First Byte
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** time taken for the browser to receive the first byte from the server.
 
@@ -225,7 +254,12 @@ TTFB measured
 - Server-side caching
 - Optimize database queries
 
+</details>
+
 ## 7. Code splitting
+
+<details>
+<summary>Answer</summary>
 
 **Definition:** a technique to split a large JS bundle into smaller chunks that load only when needed (on demand).
 
@@ -256,3 +290,5 @@ import("./utils").then((module) => {
 ```
 
 👉 Loaded only when executed.
+
+</details>

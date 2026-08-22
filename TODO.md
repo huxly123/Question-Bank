@@ -135,11 +135,11 @@ Merged checklist of topics still to cover, grouped by area.
 - [ ] Stale-while-revalidate
 
 **Core Web Vitals**
-- [x] LCP (Largest Contentful Paint)
-- [x] CLS (Cumulative Layout Shift)
-- [x] INP (Interaction to Next Paint)
-- [x] FCP (First Contentful Paint)
-- [x] TTFB (Time To First Byte)
+- [x] [LCP (Largest Contentful Paint)](system-design/performance.md#2-lcp--largest-contentful-paint)
+- [x] [CLS (Cumulative Layout Shift)](system-design/performance.md#3-cls--cumulative-layout-shift)
+- [x] [INP (Interaction to Next Paint)](system-design/performance.md#4-inp--interaction-to-next-paint)
+- [x] [FCP (First Contentful Paint)](system-design/performance.md#5-fcp--first-contentful-paint)
+- [x] [TTFB (Time To First Byte)](system-design/performance.md#6-ttfb--time-to-first-byte)
 
 **Resource loading optimization**
 - [ ] Preload

@@ -2,6 +2,9 @@
 
 ## 1. What are the different data types in JavaScript?
 
+<details>
+<summary>Answer</summary>
+
 **Primitive types** store a single value:
 
 - **String**
@@ -49,7 +52,12 @@ var obj1 = {
 var array1 = [5, "Hello", true, 4.1];
 ```
 
+</details>
+
 ## 2. Explain hoisting in JavaScript
+
+<details>
+<summary>Answer</summary>
 
 Hoisting is JavaScript's default behavior of moving all variable and function **declarations** to the top of their scope. No matter where a variable or function is declared, its declaration is treated as if it were at the top of the scope.
 
@@ -86,7 +94,12 @@ x = 23; // Error: x is not declared
 var x;
 ```
 
+</details>
+
 ## 3. Difference between `==` and `===`
+
+<details>
+<summary>Answer</summary>
 
 Both are comparison operators. `==` compares only values (with type coercion), while `===` compares both value and type.
 
@@ -97,11 +110,21 @@ x == y;  // true  — values are equal after coercion
 x === y; // false — typeof x is "number", typeof y is "string"
 ```
 
+</details>
+
 ## 4. Why do we use the `debugger` keyword?
+
+<details>
+<summary>Answer</summary>
 
 The `debugger` statement stops code execution at that line so you can inspect the program. Execution pauses there and continues only when you step forward while debugging.
 
+</details>
+
 ## 5. Difference between `var`, `let`, and `const`
+
+<details>
+<summary>Answer</summary>
 
 **var**
 - **Scope:** function-scoped — visible anywhere inside the function where it is declared, not block-scoped.
@@ -165,7 +188,12 @@ function exampleConst() {
 }
 ```
 
+</details>
+
 ## 6. `var` vs `let` vs `const` — examples
+
+<details>
+<summary>Answer</summary>
 
 ```js
 // Scope
@@ -216,7 +244,12 @@ function exampleConstReassignment() {
 }
 ```
 
+</details>
+
 ## 7. What is the temporal dead zone?
+
+<details>
+<summary>Answer</summary>
 
 The Temporal Dead Zone (TDZ) is related to the hoisting behavior of `let` and `const`. It is the period between entering a scope and the actual variable declaration, during which accessing the variable throws a `ReferenceError`. The variable exists in that period, but its value cannot be accessed.
 
@@ -231,7 +264,12 @@ console.log(z); // undefined — var has no temporal dead zone
 var z = 5;
 ```
 
+</details>
+
 ## 8. Implicit vs explicit type coercion
+
+<details>
+<summary>Answer</summary>
 
 **Implicit coercion** is the automatic conversion of a value from one data type to another. It happens when the operands of an expression have different types.
 
@@ -303,7 +341,12 @@ var d = "226";
 c === d; // false — no coercion; types differ, so they are not equal
 ```
 
+</details>
+
 ## 9. Immutable vs mutable types
+
+<details>
+<summary>Answer</summary>
 
 **Immutable types** (primitives) are stored on the stack. Assigning one variable to another copies the value into a new memory space.
 
@@ -329,7 +372,12 @@ obj['a'] = 2;
 console.log(arr2, obj2); // [ 0, 1, 1 ] { a: 2, b: 2 }
 ```
 
+</details>
+
 ## 10. Pass by value vs pass by reference
+
+<details>
+<summary>Answer</summary>
 
 **Pass by value:** when a primitive is passed to a function, changing the parameter does not change the original variable.
 
@@ -369,7 +417,12 @@ doMore(b);
 console.log(b); // [ 1, 2, 4 ]
 ```
 
+</details>
+
 ## 11. IIFE (Immediately Invoked Function Expression)
+
+<details>
+<summary>Answer</summary>
 
 An IIFE (pronounced "iffy") is a function that runs as soon as it is defined.
 
@@ -379,7 +432,12 @@ An IIFE (pronounced "iffy") is a function that runs as soon as it is defined.
 })();
 ```
 
+</details>
+
 ## 12. What is the `NaN` property?
+
+<details>
+<summary>Answer</summary>
 
 `NaN` represents "Not-a-Number" — a value that is not a legal number. Use `isNaN()` to check for it.
 
@@ -396,7 +454,12 @@ isNaN(undefined); // true
 
 Why is `typeof NaN` equal to `"number"`? Because `NaN` is what numeric conversion returns for non-numeric input — for example, `Number("Hi")` returns `NaN`.
 
+</details>
+
 ## 13. Explain higher-order functions
+
+<details>
+<summary>Answer</summary>
 
 Functions that operate on other functions — either by taking them as arguments or by returning them — are called higher-order functions.
 
@@ -524,7 +587,12 @@ const chars = words.flatMap(function (word) {
 console.log(chars); // ["H", "e", "l", "l", "o", "W", "o", "r", "l", "d"]
 ```
 
+</details>
+
 ## 14. What is the `this` keyword?
+
+<details>
+<summary>Answer</summary>
 
 `this` refers to the context in which a function is executed. Its value depends on **how** the function is called.
 
@@ -574,7 +642,12 @@ const obj2 = {
 obj2.greet(); // { a: 1, greet: [Function: greet] } — the lexical scope's this
 ```
 
+</details>
+
 ## 15. Explain `call()`, `apply()`, and `bind()`
+
+<details>
+<summary>Answer</summary>
 
 **call()** — calls a function with a given `this` value and arguments passed individually.
 
@@ -625,7 +698,12 @@ const getGreet = person.greet.bind(obj);
 getGreet('hi', 'bye'); // hi, Akshaya 30 bye!
 ```
 
+</details>
+
 ## 16. What is currying?
+
+<details>
+<summary>Answer</summary>
 
 Currying is a functional programming technique where a function with multiple arguments is transformed into a sequence of functions, each taking a single argument. It lets you partially apply a function with some arguments and get back a new function that takes the rest.
 
@@ -661,7 +739,12 @@ const formatUSD = formatCurrency("$");
 console.log(formatUSD(10.5)); // $10.50
 ```
 
+</details>
+
 ## 17. What are closures?
+
+<details>
+<summary>Answer</summary>
 
 A closure is a function bundled together with references to its surrounding state (its lexical environment). It lets a function access and modify variables from its outer scope even after the outer function has finished executing.
 
@@ -680,7 +763,12 @@ const innerFunc = outerFunction(); // outerFunction has finished running
 innerFunc(); // still prints: I am from outer function
 ```
 
+</details>
+
 ## 18. Shallow copy vs deep copy
+
+<details>
+<summary>Answer</summary>
 
 **Shallow copy** — copies only one level deep. The object and its top-level properties are copied, but nested objects or arrays still reference the same memory as the original. Changing a nested object affects both the original and the copy.
 
@@ -708,7 +796,12 @@ console.log(originalObject2, deepCopy);
 // { a: 1, b: { c: 2, d: { e: 4 } } } { a: 2, b: { c: 3, d: { e: 5 } } }
 ```
 
+</details>
+
 ## 19. Spread operator vs rest operator
+
+<details>
+<summary>Answer</summary>
 
 > **Spread** expands an array (or string) into individual elements.
 > **Rest** collects individual values into an array.
@@ -786,7 +879,12 @@ spreadAndRest(...[1, 2, 3, 4, 5, 6]);
 console.log(...[1, 2, 3, 4, 5, 6]); // 1 2 3 4 5 6 (spread)
 ```
 
+</details>
+
 ## 20. `slice` vs `splice`
+
+<details>
+<summary>Answer</summary>
 
 **slice** — cuts elements out of an array **without** modifying the original.
 
@@ -821,7 +919,12 @@ console.log(arr1); // [ 145, 'hello', 'hey', 142 ] — original modified
 console.log(arr2); // [ 'hi' ] — splice returns the removed elements
 ```
 
+</details>
+
 ## 21. Event bubbling vs event capturing
+
+<details>
+<summary>Answer</summary>
 
 **Event bubbling** (the browser default) — events fire from the child up to the parent.
 
@@ -913,7 +1016,12 @@ document.querySelector("#child").addEventListener('click', (e) => {
 
 > When reasoning about `stopPropagation`, always work out the bubbling/capturing order first — capturing runs parent → child, then bubbling runs child → parent.
 
+</details>
+
 ## 22. What is a polyfill?
+
+<details>
+<summary>Answer</summary>
 
 A polyfill is a piece of code (usually JavaScript) that provides modern functionality in older browsers or environments that do not support it natively. It "fills the gap" by mimicking the newer feature's behavior.
 
@@ -936,7 +1044,12 @@ if (!Array.prototype.includes) {
 }
 ```
 
+</details>
+
 ## 23. Explain the `reduce` function
+
+<details>
+<summary>Answer</summary>
 
 ```js
 array.reduce(callback, initialValue)
@@ -962,7 +1075,12 @@ const res1 = nested.reduce((acc, curr) => {
 console.log(res1); // [ 1, 2, 2, 4 ]
 ```
 
+</details>
+
 ## 24. Write a polyfill for `reduce`
+
+<details>
+<summary>Answer</summary>
 
 ```js
 if (!Array.prototype.reduce1) {
@@ -986,7 +1104,12 @@ if (!Array.prototype.reduce1) {
 }
 ```
 
+</details>
+
 ## 25. Define classes in JavaScript
+
+<details>
+<summary>Answer</summary>
 
 A class is a blueprint for creating objects that share the same properties and methods. Classes encapsulate data (properties) and behavior (methods), making code more organized and reusable. In JavaScript, classes are primarily syntactic sugar over the existing prototype-based inheritance model.
 
@@ -1078,7 +1201,12 @@ const obj2 = new Example();
 console.log(obj2.staticProperty); // undefined — not accessible via an instance
 ```
 
+</details>
+
 ## 26. Inheritance in JavaScript
+
+<details>
+<summary>Answer</summary>
 
 Two forms: prototype-based inheritance and class-based inheritance.
 
@@ -1157,7 +1285,12 @@ child.greet();
 // I am 10 years old.
 ```
 
+</details>
+
 ## 27. `Object.create()` vs `Object.assign()`
+
+<details>
+<summary>Answer</summary>
 
 **Object.create()** — creates a new empty object and sets the given object as its **prototype** (methods live on the prototype, not on the object itself).
 
@@ -1189,7 +1322,12 @@ Object.assign(target, source);
 console.log(target); // { a: 1, b: 2, c: 3 }
 ```
 
+</details>
+
 ## 28. Explain the `new` keyword
+
+<details>
+<summary>Answer</summary>
 
 `new` creates instances of objects defined by constructor functions. It does four things: create a new object → set its prototype → bind `this` to it → return the object.
 
@@ -1228,7 +1366,12 @@ const regex = new RegExp("\\w+");
 console.log(regex.test("word")); // true
 ```
 
+</details>
+
 ## 29. Generator functions
+
+<details>
+<summary>Answer</summary>
 
 Generator functions are special functions that can pause and resume execution at specific points. They provide a powerful way to work with iterators and lazy evaluation.
 
@@ -1267,7 +1410,12 @@ console.log(numbers.next().value); // 3
 | Return value | Single value or `undefined` | Iterator object |
 | Syntax | `function` | `function*` |
 
+</details>
+
 ## 30. Promises
+
+<details>
+<summary>Answer</summary>
 
 A Promise is a guarantee that you'll get a result in the future. It is used to handle asynchronous tasks, like fetching data from an API.
 
@@ -1365,7 +1513,12 @@ Promise.any([promise1, promise2, promise3])
   });
 ```
 
+</details>
+
 ## 31. What is infinite currying?
+
+<details>
+<summary>Answer</summary>
 
 Infinite currying allows an indefinite number of function calls, where each call passes one argument. Calling with no argument returns the accumulated result.
 
@@ -1383,7 +1536,12 @@ console.log(add(1)(2)(3)(4)()); // 10
 console.log(add(10)(20)(30)()); // 60
 ```
 
+</details>
+
 ## 32. Array methods that modify (or don't modify) the original array
+
+<details>
+<summary>Answer</summary>
 
 **Methods that modify the array:**
 
@@ -1420,7 +1578,12 @@ console.log(add(10)(20)(30)()); // 60
 | `indexOf()` | Index of the first occurrence of a value | Index (or `-1`) |
 | `lastIndexOf()` | Index of the last occurrence of a value | Index (or `-1`) |
 
+</details>
+
 ## 33. Pure vs impure functions
+
+<details>
+<summary>Answer</summary>
 
 A **pure function** always produces the same output for the same input and has no side effects.
 
@@ -1446,3 +1609,5 @@ function incrementCounter() {
 console.log(incrementCounter()); // 1
 console.log(incrementCounter()); // 2
 ```
+
+</details>

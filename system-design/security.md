@@ -2,6 +2,9 @@
 
 ## 1. Cross-Site Scripting (XSS)
 
+<details>
+<summary>Answer</summary>
+
 XSS is a security vulnerability where an attacker injects malicious JavaScript into a website, and that script runs in the browsers of other users who visit the page.
 
 ### a) Stored XSS (persistent XSS)
@@ -45,7 +48,12 @@ element.innerHTML = userInput;
 
    This blocks an injected `<script>alert(1)</script>`.
 
+</details>
+
 ## 2. iFrame protection (clickjacking)
+
+<details>
+<summary>Answer</summary>
 
 iFrame protection prevents malicious websites from embedding your webpage inside an iframe to perform clickjacking attacks.
 
@@ -77,7 +85,12 @@ Content-Security-Policy: frame-ancestors 'none'  → no site can embed this page
 Content-Security-Policy: frame-ancestors 'self'  → only allow the same origin (or list specific domains)
 ```
 
+</details>
+
 ## 3. Content Security Policy (CSP)
+
+<details>
+<summary>Answer</summary>
 
 CSP is a browser security mechanism that restricts which resources (scripts, styles, images, etc.) are allowed to load on a webpage. It helps prevent Cross-Site Scripting (XSS), malicious script injection, and data injection attacks.
 
@@ -92,7 +105,12 @@ Content-Security-Policy:
   object-src 'none'
 ```
 
+</details>
+
 ## 4. CORS
+
+<details>
+<summary>Answer</summary>
 
 CORS (Cross-Origin Resource Sharing) is a browser security mechanism that allows or restricts web pages from making requests to a different origin than the one that served the page.
 
@@ -131,7 +149,12 @@ Security protections stop this:
 Same-Origin Policy + CORS + CSRF tokens + SameSite cookies
 ```
 
+</details>
+
 ## 5. CSRF (Cross-Site Request Forgery)
+
+<details>
+<summary>Answer</summary>
 
 CSRF is an attack where a malicious website tricks a logged-in user's browser into sending an unauthorized request to another website. It works because browsers automatically send cookies with requests to the cookie's domain.
 
@@ -173,7 +196,12 @@ If the token is missing/invalid → request rejected
 
 **3) Checking the Origin / Referer header**
 
+</details>
+
 ## 6. Server-Side Request Forgery (SSRF)
+
+<details>
+<summary>Answer</summary>
 
 SSRF is an attack where a malicious user tricks a server into sending requests to internal or external systems, potentially exposing sensitive data or internal services.
 
@@ -200,7 +228,12 @@ Attackers often try to reach internal services: `http://localhost`, `http://127.
 
 **Prevention:** validate URLs properly.
 
+</details>
+
 ## 7. Server-Side JavaScript Injection (SSJI)
+
+<details>
+<summary>Answer</summary>
 
 SSJI occurs when user input is executed as JavaScript on the server (e.g., via `eval()`), allowing attackers to run malicious code. Prevent it by avoiding dynamic code execution and validating inputs.
 
@@ -216,7 +249,12 @@ app.get("/calculate", (req, res) => {
 - Normal request: `/calculate?expression=2+2` → server returns `4`.
 - Attacker sends: `/calculate?expression=process.exit()` → the server executes malicious code, potentially crashing or exposing sensitive data.
 
+</details>
+
 ## 8. Subresource Integrity (SRI)
+
+<details>
+<summary>Answer</summary>
 
 SRI ensures that files loaded from external sources have not been modified, by verifying them against a cryptographic hash before execution.
 
@@ -226,7 +264,12 @@ SRI ensures that files loaded from external sources have not been modified, by v
 3. The browser downloads the file and calculates its hash.
 4. If the hashes match, the file executes; if not, the browser blocks the resource.
 
+</details>
+
 ## 9. HttpOnly, Secure, and SameSite cookies
+
+<details>
+<summary>Answer</summary>
 
 **HttpOnly cookie 🔐** — prevents JavaScript from accessing the cookie, protecting it from XSS.
 
@@ -262,13 +305,23 @@ Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Lax
 - `Secure` → sent only via HTTPS
 - `SameSite` → protected from CSRF
 
+</details>
+
 ## 10. Avoid exposing sensitive data
+
+<details>
+<summary>Answer</summary>
 
 Never include secret keys (API secrets, etc.) in frontend code — the browser environment is public and easily inspectable. Keep secrets on the backend and access external services through secure server APIs.
 
 > ✅ **Frontend security rule:** if the browser can download it, the user can read it.
 
+</details>
+
 ## 11. Why JWT tokens are stored in cookies (instead of localStorage)
+
+<details>
+<summary>Answer</summary>
 
 - Protection from XSS (via the `HttpOnly` flag — JS cannot read the token)
 - Automatic request handling (browser attaches the cookie)
@@ -277,7 +330,12 @@ Never include secret keys (API secrets, etc.) in frontend code — the browser e
 - Easy expiration control
 - Server-side control
 
+</details>
+
 ## 12. Refresh token & access token
+
+<details>
+<summary>Answer</summary>
 
 Using a single long-lived access token is a major security risk: if an attacker steals it, they can access the user's account for a long time. To reduce this risk, we use a **short-lived access token plus a refresh token**.
 
@@ -296,11 +354,21 @@ Send refresh token
 Server issues a new access token
 ```
 
+</details>
+
 ## 13. Authentication vs authorization
+
+<details>
+<summary>Answer</summary>
 
 **Authentication** verifies the identity of a user. **Authorization** determines what actions or resources that authenticated user is allowed to access.
 
+</details>
+
 ## 14. Session-based / JWT / OAuth authentication
+
+<details>
+<summary>Answer</summary>
 
 ### a) Session-based authentication
 
@@ -340,7 +408,12 @@ Client sends the token with requests
 
 OAuth allows users to log in using another service without sharing their password.
 
+</details>
+
 ## 15. Checking the Origin / Referer header
+
+<details>
+<summary>Answer</summary>
 
 **Origin header** — contains only the domain that initiated the request. If the server detects an invalid origin, the request is blocked.
 
@@ -352,7 +425,12 @@ Referer: https://mybank.com/account
 
 The server checks: does the Referer start with `https://mybank.com`? If yes, allow the request.
 
+</details>
+
 ## 16. HTTP vs HTTPS
+
+<details>
+<summary>Answer</summary>
 
 ### HTTP (port 80)
 
@@ -385,7 +463,12 @@ Browser ↔ Server (encrypted data)
 - Ensures data integrity
 - Verifies the server's identity using certificates
 
+</details>
+
 ## 17. JWT login flow
+
+<details>
+<summary>Answer</summary>
 
 ```text
 User login
@@ -406,3 +489,5 @@ Server verifies the token
     ↓
 Access granted
 ```
+
+</details>

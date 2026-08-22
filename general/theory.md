@@ -2,6 +2,9 @@
 
 ## 1. Cookies
 
+<details>
+<summary>Answer</summary>
+
 Small pieces of data stored in the browser and sent to the server with every HTTP request.
 
 - **Use case:** server communication (e.g., session management, authentication).
@@ -17,21 +20,36 @@ Small pieces of data stored in the browser and sent to the server with every HTT
 - `Secure` — the cookie is transmitted only over HTTPS connections.
 - `SameSite=None` — allows the cookie to be sent with requests originating from other domains. If `SameSite` is `None`, the `Secure` flag must also be set (a browser-enforced rule).
 
+</details>
+
 ## 2. Local Storage
+
+<details>
+<summary>Answer</summary>
 
 A key-value storage mechanism in the browser with no expiration time. Data persists even after the browser is closed and reopened.
 
 - **Storage limit:** typically 5–10 MB per origin.
 - **Access:** `window.localStorage`.
 
+</details>
+
 ## 3. Session Storage
+
+<details>
+<summary>Answer</summary>
 
 Similar to Local Storage, but data lives only for the duration of the page session (until the tab is closed). Useful for temporary data needed only during a single browsing session.
 
 - **Storage limit:** typically 5 MB per origin.
 - **Access:** `window.sessionStorage`.
 
+</details>
+
 ## 4. IndexedDB
+
+<details>
+<summary>Answer</summary>
 
 A low-level, client-side database that lets web applications store large amounts of structured data in the browser.
 
@@ -45,7 +63,12 @@ A low-level, client-side database that lets web applications store large amounts
 - **Offline applications:** store data locally for apps that must work offline (note-taking apps, task managers, email clients).
 - **Caching large resources:** cache assets like images, videos, or large datasets.
 
+</details>
+
 ## 5. Cache Storage
+
+<details>
+<summary>Answer</summary>
 
 Part of the Service Worker API — a storage mechanism for network requests and their responses. It is an asynchronous key-value store where:
 
@@ -58,7 +81,12 @@ Part of the Service Worker API — a storage mechanism for network requests and 
 - Caching images, fonts, and other static files to avoid repeated downloads.
 - Serving cached resources selectively, with a network fallback when data is unavailable.
 
+</details>
+
 ## 6. How to block the main thread in JS
+
+<details>
+<summary>Answer</summary>
 
 A busy-wait loop keeps the main thread occupied, blocking rendering and interaction:
 
@@ -73,7 +101,12 @@ while (Date.now() - start < 5000) {
 console.log("End blocking");
 ```
 
+</details>
+
 ## 7. Design patterns
+
+<details>
+<summary>Answer</summary>
 
 ### a) MVC (Model-View-Controller)
 
@@ -149,3 +182,5 @@ const withAuth = (Component) => {
 const Dashboard = () => <h2>Dashboard</h2>;
 const ProtectedDashboard = withAuth(Dashboard);
 ```
+
+</details>

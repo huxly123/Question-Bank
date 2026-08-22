@@ -2,23 +2,46 @@
 
 ## 1. Short polling
 
+<details>
+<summary>Answer</summary>
+
 The client repeatedly sends requests to the server at fixed intervals to check for new data.
+
+</details>
 
 ## 2. Long polling
 
+<details>
+<summary>Answer</summary>
+
 The client sends a request and the server keeps it open until new data is available. Instead of replying immediately, the server waits. When new data arrives, the server responds, and the client immediately sends another request.
 
+</details>
+
 ## 3. Server-Sent Events (SSE)
+
+<details>
+<summary>Answer</summary>
 
 SSE lets a server continuously push updates to the client over a single HTTP connection. The connection stays open and the server sends updates whenever needed.
 
 **Important:** SSE is one-way communication (server → client).
 
+</details>
+
 ## 4. WebSockets
+
+<details>
+<summary>Answer</summary>
 
 WebSockets provide a persistent, two-way communication channel between client and server. Once the connection is established, both sides can send data at any time.
 
+</details>
+
 ## 5. Webhooks
+
+<details>
+<summary>Answer</summary>
 
 A webhook is a way for one system to automatically notify another system when an event happens. Instead of the client repeatedly asking the server "did something happen?", the server pushes the information immediately to a predefined URL — so the receiving system doesn't need to poll.
 
@@ -42,3 +65,5 @@ Frontend detects the update
         ↓
 UI shows "Payment Success"
 ```
+
+</details>
