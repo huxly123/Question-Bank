@@ -21,15 +21,18 @@ Personal interview preparation notes — theory, output questions, code snippets
 - [Theory](react/theory.md) — virtual DOM, reconciliation, controlled/uncontrolled components, hooks, HOCs
 - [Code snippets](react/code-snippets.md) — debounce, throttle, infinite scroll
 
-### General / Browser
-- [Theory](general/theory.md) — browser storage (cookies, localStorage, IndexedDB, Cache Storage), design patterns
-- [Common experience questions](general/common-experience-questions.md) — behavioral and project questions
+### Browser
+- [Storage](browser/storage.md) — cookies, localStorage, sessionStorage, IndexedDB, Cache Storage, main-thread blocking
 
 ### System Design
 - [Security](system-design/security.md) — XSS, CSRF, CORS, CSP, cookies, HTTPS, JWT/OAuth/session auth
 - [Networking](system-design/networking.md) — how the web works, REST, GraphQL, gRPC, CDN, load balancer, API gateway
 - [Communication](system-design/communication.md) — polling, SSE, WebSockets, webhooks
 - [Performance](system-design/performance.md) — rendering pipeline, Core Web Vitals, code splitting
+- [Design patterns](system-design/design-patterns.md) — MVC, Atomic Design, module, singleton, HOC
+
+### Behavioral
+- [Experience questions](behavioral.md) — project stories and behavioral prep
 
 ### DSA
 - [DSA index](DSA/README.md) — solved problems in JavaScript with the pattern each one uses

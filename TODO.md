@@ -111,7 +111,7 @@ Merged checklist of topics still to cover, grouped by area.
 - [ ] Dependency graph
 - [ ] What happens when you load www.google.com
 
-## General / Browser
+## Browser
 
 - [ ] Shared storage
 - [ ] Service Worker API
