@@ -35,11 +35,11 @@ Personal interview preparation notes — theory, output questions, code snippets
 - [Experience questions](behavioral.md) — project stories and behavioral prep
 
 ### DSA
-- [DSA index](DSA/README.md) — patterns cheat sheet and links to every topic note
+- [DSA tracker](DSA/TODO.md) — every problem, solved and open, with a patterns cheat sheet; solved ones link to their write-up
 - [Array](DSA/array.md), [Binary Search](DSA/binary-search.md), [Recursion](DSA/recursion.md), [Stack and Queues](DSA/stack-queue.md), [String](DSA/string.md), [Two Pointers and Sliding Window](DSA/sliding-window.md) — self-quizzing problem notes with copyable JavaScript solutions
 
 ## Other
 
-- [TODO](TODO.md) — merged checklist of topics and DSA questions still to study
+- [TODO](TODO.md) — merged checklist of topics still to study (DSA has its own list in [DSA/TODO.md](DSA/TODO.md))
 - [Resources](resources.md) — interview question banks and job boards
 - [Template](template.md) — format and conventions for new notes
