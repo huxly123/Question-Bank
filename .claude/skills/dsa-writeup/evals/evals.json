@@ -1,0 +1,50 @@
+{
+  "skill_name": "dsa-writeup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "solved Move Zeroes just now, add it to the notes\n\nvar moveZeroes = function(nums) {\n    let j = 0\n    for(let i=0;i<nums.length;i++){\n        if(nums[i]!==0){\n            [nums[i],nums[j]] = [nums[j],nums[i]]\n            j++\n        }\n    }\n    console.log(nums)\n};\nmoveZeroes([0,1,0,3,12])",
+      "expected_output": "A new '## 10. Move Zeroes' entry at the end of DSA/array.md in the flashcard format with a cleaned-up function (no console.log, returns or mutates in place), Pattern names two pointers / write index, key insight and O(n)/O(1) complexity. DSA/TODO.md line becomes '- [x] [Move Zeroes](array.md#10-move-zeroes) \u2014 ... (N)' positioned among the solved lines. progress.js has been run so the header reads 35 / 146. One commit 'dsa: Move Zeroes'.",
+      "files": [],
+      "expectations": [
+        "array.md ends with a new entry headed '## 10. Move Zeroes'",
+        "Entry has <details><summary>Answer</summary> with Pattern, Key insight and Complexity lines",
+        "Code block is a named function moveZeroes with no console.log and no test call",
+        "TODO.md line is ticked and links to array.md#10-move-zeroes with an (N) tag",
+        "Ticked line sits in the solved block, before the first open item of the Arrays section",
+        "progress.js was run: header reads 35 / 146 and the Arrays section reads 10 / 15",
+        "A commit exists with subject 'dsa: Move Zeroes'"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "done with reverse linked list (iterative). here's my code, write it up and tick it\n\nfunction reverseList(head) {\n  let prev = null;\n  let curr = head;\n  while (curr) {\n    const next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n  }\n  return prev;\n}",
+      "expected_output": "DSA/linked-list.md is created with the standard two-line intro and '## 1. Reverse Linked List' in the flashcard format; the solution was verified with a scratch list-builder helper before writing. Tracker line under section 7 becomes ticked and linked to linked-list.md#1-reverse-linked-list with tag (N, B75). Progress bar for Linked List shows 1 / 12; header shows 35 / 146. Commit 'dsa: Reverse Linked List'.",
+      "files": [],
+      "expectations": [
+        "linked-list.md was created and starts with the standard two-line note intro",
+        "linked-list.md contains '## 1. Reverse Linked List' with a details block, Pattern, Key insight and Complexity",
+        "Reply states the solution was actually run/verified against examples before writing",
+        "TODO.md line is ticked and links to linked-list.md#1-reverse-linked-list with an (N, B75) tag",
+        "New note is linked from the root README DSA line and listed in the tracker intro",
+        "progress.js was run: header reads 35 / 146 and the Linked List section reads 1 / 12",
+        "A commit exists with subject 'dsa: Reverse Linked List'",
+        "No stray files were created (only linked-list.md, TODO.md and README.md changed)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "valid anagram done, add it\n\nfunction isAnagram(s, t) {\n  const count = {};\n  for (const c of s) count[c] = (count[c] || 0) + 1;\n  for (const c of t) {\n    if (!count[c]) return false;\n    count[c]--;\n  }\n  return true;\n}",
+      "expected_output": "The run detects that the code returns true for s='ab', t='a' (missing length check) by actually running it, adds the minimal fix (early return when lengths differ) while keeping the counting approach, and tells the user about the bug and the failing input in the reply. Entry '## 2. Valid Anagram' appended to DSA/string.md with Pattern frequency map, O(n) time and O(1) space over a fixed alphabet. Tracker line ticked with (N). progress.js run. Commit 'dsa: Valid Anagram'.",
+      "files": [],
+      "expectations": [
+        "Reply names the bug (missing length check) and a concrete failing input such as s='ab', t='a'",
+        "Code in the note contains a length check (s.length !== t.length) and still uses the counting-map approach",
+        "string.md contains '## 2. Valid Anagram' with a details block, Pattern, Key insight and Complexity",
+        "TODO.md line is ticked and links to string.md#2-valid-anagram with an (N, B75) tag",
+        "progress.js was run: header reads 35 / 146 and the Strings section reads 2 / 10",
+        "A commit exists with subject 'dsa: Valid Anagram'"
+      ]
+    }
+  ]
+}
