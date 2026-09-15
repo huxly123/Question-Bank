@@ -137,6 +137,46 @@ Merged checklist of topics still to cover, grouped by area.
 - [ ] Internationalization (i18n) strategy
 - [ ] Frontend error monitoring and analytics (Sentry-style: source maps, sampling)
 
+### Additional system design topics (commonly asked, not in the course)
+
+**Architecture & patterns**
+- [ ] Backend for Frontend (BFF) pattern — when to put an API layer in front of the client
+- [ ] Observer / Pub-Sub, Command (undo/redo), Factory, Facade patterns — design-patterns.md only has MVC, Atomic, Module, Singleton, HOC
+- [ ] Event-driven communication between modules / micro-frontends (custom events, message bus)
+- [ ] Monorepo tooling for frontend (Nx / Turborepo, shared packages, affected builds)
+- [ ] Collaborative editing fundamentals: Operational Transformation vs CRDT, presence, cursors
+
+**Data fetching & API design from the client's view**
+- [ ] Pagination API design: offset vs cursor vs keyset, and how each affects the UI
+- [ ] API versioning, error response contracts, idempotency keys for safe retries
+- [ ] Retry with exponential backoff + jitter; client-side circuit breaker; graceful degradation
+- [ ] Race conditions in async UI: AbortController, request sequencing, stale-response guards
+- [ ] Data fetching patterns: waterfall vs parallel, render-as-you-fetch, prefetch on hover / in viewport
+- [ ] Optimistic UI: rollback on failure, conflict handling, dedupe on retry
+- [ ] Large file upload: chunking, resumable uploads, presigned URLs, progress + cancel
+
+**Real-time & offline**
+- [ ] WebSocket resilience: reconnection with backoff, heartbeats, message ordering, at-least-once vs exactly-once delivery
+- [ ] Offline-first conflict resolution: last-write-wins vs merge, sync queue in IndexedDB, Background Sync API
+- [ ] Web Push notifications (Push API + service worker) and in-app notification system design
+- [ ] Cross-tab communication: BroadcastChannel, storage events, SharedWorker (e.g. logout in one tab logs out all)
+
+**Auth in SPAs**
+- [ ] OAuth 2.0 Authorization Code + PKCE for SPAs; refresh token rotation; silent refresh
+- [ ] SSO and single logout across multiple frontends / subdomains
+
+**Deployment & delivery**
+- [ ] Cache busting with content-hashed filenames; `Cache-Control: immutable` for assets vs no-cache for HTML
+- [ ] Deployment skew: old clients hitting new API / ChunkLoadError after deploy, and how to handle it
+- [ ] Rollout strategies for frontend: canary, blue-green, rollback; CI/CD pipeline for a web app
+- [ ] CDN cache invalidation and purge strategies
+
+**Runtime & browser internals**
+- [ ] Main-thread scheduling: long tasks, requestAnimationFrame vs requestIdleCallback vs scheduler.yield
+- [ ] Memory leaks in SPAs: detached DOM nodes, dangling listeners/timers, closures; heap snapshots in DevTools
+- [ ] Adaptive loading: `navigator.connection`, Save-Data header, device-class based bundles
+- [ ] Streams API for large downloads / progressive rendering of big responses
+
 ### Performance (deep-dive topics)
 
 **Network performance**
@@ -244,6 +284,80 @@ Merged checklist of topics still to cover, grouped by area.
 - [ ] Static Site Generation (SSG)
 - [ ] Incremental Static Regeneration (ISR)
 - [ ] Edge rendering
+
+## Namaste Frontend System Design — course topics not yet covered
+
+Lesson titles as listed in the course. Only lessons with no notes in this repo and no existing TODO entry.
+
+**Networking**
+- [ ] Communication Protocols
+
+**Security**
+- [ ] Security Headers (only CSP and X-Frame-Options covered so far)
+- [ ] Dependency Security
+- [ ] Compliance & Regulation
+- [ ] Input Validation and Sanitization
+- [ ] Feature Policy | Permissions-Policy
+
+**Testing**
+- [ ] Testing Overview
+- [ ] Performance Testing
+- [ ] Test-Driven Development Overview
+- [ ] Security Testing
+
+**Performance**
+- [ ] Performance Importance
+
+**Database & Caching**
+- [ ] Database & Caching Overview
+- [ ] Normalization
+- [ ] API Caching
+
+**Logging & Monitoring**
+- [ ] Logging & Monitoring Overview
+- [ ] Telemetry
+- [ ] Alerting
+- [ ] Fixing
+
+**Accessibility**
+- [ ] Accessibility Overview
+- [ ] Accessibility Tools
+- [ ] How to fix accessibility
+
+**Low Level Design**
+- [ ] Component Design
+- [ ] Config driven UI
+- [ ] Shimmer UI
+- [ ] Routing & Protected Routes
+- [ ] Accordion
+- [ ] Real-Time Updates
+- [ ] YouTube Live Stream Chat UI
+
+**High Level Design**
+- [ ] HLD Overview
+- [ ] HLD - Photo Sharing App (Instagram)
+- [ ] HLD - E-commerce App (Amazon, Flipkart)
+- [ ] HLD - Video Streaming (Netflix)
+- [ ] HLD - Music Streaming (Spotify)
+- [ ] HLD - Live Commentary (CricInfo, Crickbuzz)
+- [ ] HLD - Email Client
+- [ ] HLD - Diagram Tools (Excalidraw)
+- [ ] HLD - Analytics Dashboard (Google Analytics)
+- [ ] HLD - Google Docs
+- [ ] HLD - Google Sheets
+- [ ] HLD Kanban Board
+
+**System Design [Bonus]**
+- [ ] Real DOM vs Shadow DOM
+- [ ] SPA vs MPA
+- [ ] HTML Parsing vs CSS Parsing
+- [ ] Why Most Candidates Get Rejected in LLD Round
+- [ ] Time Breakups in System Design Interview
+- [ ] Radio Framework
+- [ ] How to approach LLD Machine Coding Problems
+- [ ] System Design Expectations from Early in Career Developers
+- [ ] System Design Expectations from Senior Developers
+- [ ] System Design Skills to Showcase on Your Resume
 
 ## Machine Coding (build live in 30–60 min — practice these end to end)
 
