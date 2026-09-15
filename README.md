@@ -35,7 +35,8 @@ Personal interview preparation notes — theory, output questions, code snippets
 - [Experience questions](behavioral.md) — project stories and behavioral prep
 
 ### DSA
-- [DSA index](DSA/README.md) — solved problems in JavaScript with the pattern each one uses
+- [DSA index](DSA/README.md) — patterns cheat sheet and links to every topic note
+- [Array](DSA/array.md), [Binary Search](DSA/binary-search.md), [Recursion](DSA/recursion.md), [Stack and Queues](DSA/stack-queue.md), [String](DSA/string.md), [Two Pointers and Sliding Window](DSA/sliding-window.md) — self-quizzing problem notes with copyable JavaScript solutions
 
 ## Other
 
