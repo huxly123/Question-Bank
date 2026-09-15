@@ -1,36 +1,40 @@
 # DSA — Problem Tracker
 
-**Progress: 34 / 146 solved.** Ticked items link to the write-up in the topic note. Open items are still to do.
+**Progress: 34 / 146 solved (23%)**
+
+`███████░░░░░░░░░░░░░░░░░░░░░░░` 23%
+
+Ticked items link to the write-up in the topic note. Open items are still to do.
 
 Merged from the [Namaste DSA Sheet](https://namastedev.com/namaste-dsa-sheet) (spine, trimmed) and [Blind 75](https://takeuforward.org/dsa/blind-75-leetcode-problems-detailed-video-solutions) (gap-fillers, marked **B75**). On solved items, **N** = Namaste, **B75** = Blind 75, no tag = neither. Work the sections in order: each builds on the one before. ⭐ marks the sections that come up most in frontend interview loops.
 
-When you solve one, write it up in the matching topic note (`array.md`, `binary-search.md`, `recursion.md`, `stack-queue.md`, `string.md`, `sliding-window.md`; format at the end of this file), tick it here, turn the name into a link to that section, and append the pattern after a dash.
+When you solve one, write it up in the matching topic note (`array.md`, `binary-search.md`, `recursion.md`, `stack-queue.md`, `string.md`, `sliding-window.md`; format at the end of this file), tick it here, turn the name into a link to that section, append the pattern after a dash, then run `node DSA/progress.js` to refresh the counts and bars.
 
 ## Sections
 
-| # | Section | Solved |
-| --- | --- | --- |
-| 1 | [Arrays](#1-arrays) | 9 / 15 |
-| 2 | [Two Pointers & Sliding Window ⭐](#2-two-pointers--sliding-window) | 5 / 10 |
-| 3 | [Strings ⭐](#3-strings) | 1 / 10 |
-| 4 | [Stack & Queues ⭐](#4-stack--queues) | 3 / 8 |
-| 5 | [Binary Search](#5-binary-search) | 8 / 12 |
-| 6 | [Recursion](#6-recursion) | 8 / 8 |
-| 7 | [Linked List ⭐](#7-linked-list) | 0 / 12 |
-| 8 | [Binary Tree ⭐](#8-binary-tree) | 0 / 16 |
-| 9 | [Binary Search Tree](#9-binary-search-tree) | 0 / 4 |
-| 10 | [Trie (all B75)](#10-trie) | 0 / 2 |
-| 11 | [Backtracking](#11-backtracking) | 0 / 7 |
-| 12 | [Heap](#12-heap) | 0 / 5 |
-| 13 | [Greedy & Intervals](#13-greedy--intervals) | 0 / 10 |
-| 14 | [Dynamic Programming](#14-dynamic-programming) | 0 / 12 |
-| 15 | [Graphs](#15-graphs) | 0 / 9 |
-| 16 | [Bit Manipulation (all B75)](#16-bit-manipulation) | 0 / 3 |
-| 17 | [Matrix (all B75)](#17-matrix) | 0 / 3 |
+| # | Section | Solved | Progress |
+| --- | --- | --- | --- |
+| 1 | [Arrays](#1-arrays) | 9 / 15 | `██████░░░░` 60% |
+| 2 | [Two Pointers & Sliding Window ⭐](#2-two-pointers--sliding-window) | 5 / 10 | `█████░░░░░` 50% |
+| 3 | [Strings ⭐](#3-strings) | 1 / 10 | `█░░░░░░░░░` 10% |
+| 4 | [Stack & Queues ⭐](#4-stack--queues) | 3 / 8 | `████░░░░░░` 38% |
+| 5 | [Binary Search](#5-binary-search) | 8 / 12 | `███████░░░` 67% |
+| 6 | [Recursion](#6-recursion) | 8 / 8 | `██████████` 100% |
+| 7 | [Linked List ⭐](#7-linked-list) | 0 / 12 | `░░░░░░░░░░` 0% |
+| 8 | [Binary Tree ⭐](#8-binary-tree) | 0 / 16 | `░░░░░░░░░░` 0% |
+| 9 | [Binary Search Tree](#9-binary-search-tree) | 0 / 4 | `░░░░░░░░░░` 0% |
+| 10 | [Trie (all B75)](#10-trie) | 0 / 2 | `░░░░░░░░░░` 0% |
+| 11 | [Backtracking](#11-backtracking) | 0 / 7 | `░░░░░░░░░░` 0% |
+| 12 | [Heap](#12-heap) | 0 / 5 | `░░░░░░░░░░` 0% |
+| 13 | [Greedy & Intervals](#13-greedy--intervals) | 0 / 10 | `░░░░░░░░░░` 0% |
+| 14 | [Dynamic Programming](#14-dynamic-programming) | 0 / 12 | `░░░░░░░░░░` 0% |
+| 15 | [Graphs](#15-graphs) | 0 / 9 | `░░░░░░░░░░` 0% |
+| 16 | [Bit Manipulation (all B75)](#16-bit-manipulation) | 0 / 3 | `░░░░░░░░░░` 0% |
+| 17 | [Matrix (all B75)](#17-matrix) | 0 / 3 | `░░░░░░░░░░` 0% |
 
 ## 1. Arrays
 
-_9 / 15_
+_9 / 15 · `██████░░░░` 60%_
 
 - [x] [Best Time to Buy and Sell Stock](array.md#1-best-time-to-buy-and-sell-stock) — Running minimum (N, B75)
 - [x] [Container With Most Water](array.md#2-container-with-most-water) — Two pointers (N, B75)
@@ -50,7 +54,7 @@ _9 / 15_
 
 ## 2. Two Pointers & Sliding Window
 
-_5 / 10_
+_5 / 10 · `█████░░░░░` 50%_
 
 - [x] [Maximum Sum Subarray of Size K](sliding-window.md#1-maximum-sum-subarray-of-size-k) — Fixed window
 - [x] [Longest Substring Without Repeating Characters](sliding-window.md#2-longest-substring-without-repeating-characters) — Variable window + last-seen map (N, B75)
@@ -65,7 +69,7 @@ _5 / 10_
 
 ## 3. Strings
 
-_1 / 10_
+_1 / 10 · `█░░░░░░░░░` 10%_
 
 - [x] [String to Integer (atoi)](string.md#1-string-to-integer-atoi) — Cursor parsing
 - [ ] Valid Palindrome
@@ -80,7 +84,7 @@ _1 / 10_
 
 ## 4. Stack & Queues
 
-_3 / 8_
+_3 / 8 · `████░░░░░░` 38%_
 
 - [x] [Valid Parentheses](stack-queue.md#1-valid-parentheses) — Stack matching (N, B75)
 - [x] [Next Greater Element](stack-queue.md#2-next-greater-element) — Monotonic stack (N)
@@ -93,7 +97,7 @@ _3 / 8_
 
 ## 5. Binary Search
 
-_8 / 12_
+_8 / 12 · `███████░░░` 67%_
 
 - [x] [Lower Bound](binary-search.md#1-lower-bound) — Boundary binary search (N, listed as Foundation: Binary Search)
 - [x] [Upper Bound](binary-search.md#2-upper-bound) — Boundary binary search (N, listed as Foundation: Binary Search)
@@ -110,7 +114,7 @@ _8 / 12_
 
 ## 6. Recursion
 
-_8 / 8_
+_8 / 8 · `██████████` 100%_
 
 - [x] [Print a Name N Times](recursion.md#1-print-a-name-n-times) — Base case + decrement
 - [x] [Print 1 to N, N to 1](recursion.md#2-print-1-to-n-and-n-to-1) — Parameter vs backtracking
@@ -123,7 +127,7 @@ _8 / 8_
 
 ## 7. Linked List
 
-_0 / 12_
+_0 / 12 · `░░░░░░░░░░` 0%_
 
 - [ ] Design Linked List
 - [ ] Middle of the Linked List
@@ -140,7 +144,7 @@ _0 / 12_
 
 ## 8. Binary Tree
 
-_0 / 16_
+_0 / 16 · `░░░░░░░░░░` 0%_
 
 - [ ] Preorder, Inorder, Postorder Traversal (recursive and iterative)
 - [ ] Level Order Traversal
@@ -161,7 +165,7 @@ _0 / 16_
 
 ## 9. Binary Search Tree
 
-_0 / 4_
+_0 / 4 · `░░░░░░░░░░` 0%_
 
 - [ ] Validate Binary Search Tree
 - [ ] Search in and Insert into a BST
@@ -170,14 +174,14 @@ _0 / 4_
 
 ## 10. Trie
 
-_0 / 2_
+_0 / 2 · `░░░░░░░░░░` 0%_
 
 - [ ] Implement Trie (Prefix Tree)
 - [ ] Design Add and Search Words Data Structure
 
 ## 11. Backtracking
 
-_0 / 7_
+_0 / 7 · `░░░░░░░░░░` 0%_
 
 - [ ] Subsets (the power set)
 - [ ] Permutations
@@ -189,7 +193,7 @@ _0 / 7_
 
 ## 12. Heap
 
-_0 / 5_
+_0 / 5 · `░░░░░░░░░░` 0%_
 
 - [ ] Kth Largest Element in an Array
 - [ ] Kth Largest Element in a Stream
@@ -199,7 +203,7 @@ _0 / 5_
 
 ## 13. Greedy & Intervals
 
-_0 / 10_
+_0 / 10 · `░░░░░░░░░░` 0%_
 
 - [ ] Assign Cookies
 - [ ] Best Time to Buy and Sell Stock II
@@ -214,7 +218,7 @@ _0 / 10_
 
 ## 14. Dynamic Programming
 
-_0 / 12_
+_0 / 12 · `░░░░░░░░░░` 0%_
 
 - [ ] Climbing Stairs
 - [ ] House Robber
@@ -231,7 +235,7 @@ _0 / 12_
 
 ## 15. Graphs
 
-_0 / 9_
+_0 / 9 · `░░░░░░░░░░` 0%_
 
 - [ ] Find if Path Exists in Graph
 - [ ] Clone Graph
@@ -245,7 +249,7 @@ _0 / 9_
 
 ## 16. Bit Manipulation
 
-_0 / 3_
+_0 / 3 · `░░░░░░░░░░` 0%_
 
 - [ ] Number of 1 Bits
 - [ ] Counting Bits
@@ -253,7 +257,7 @@ _0 / 3_
 
 ## 17. Matrix
 
-_0 / 3_
+_0 / 3 · `░░░░░░░░░░` 0%_
 
 - [ ] Set Matrix Zeroes
 - [ ] Spiral Matrix
