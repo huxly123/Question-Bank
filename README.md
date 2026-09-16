@@ -17,7 +17,7 @@ Personal interview preparation notes — theory, output questions, code snippets
 ### JavaScript
 - [Checklist](javascript/TODO.md) — JavaScript and TypeScript topics still to cover
 - [Theory](javascript/theory.md) — data types, hoisting, closures, `this`, promises, classes, and more (33 questions)
-- [Code snippets](javascript/code-snippets.md) — predict-the-output practice (35 snippets)
+- [Code snippets](javascript/code-snippets.md) — predict-the-output practice (45 snippets)
 
 ### React
 - [Checklist](react/TODO.md) — React and Next.js topics still to cover

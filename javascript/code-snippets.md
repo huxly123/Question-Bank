@@ -743,3 +743,308 @@ console.log(arr);
 `delete` leaves a hole; the array length is unchanged.
 
 </details>
+
+## 36. setTimeout vs Promise.then ordering
+
+```js
+console.log('start');
+setTimeout(() => console.log('timeout'), 0);
+Promise.resolve().then(() => console.log('promise 1'));
+Promise.resolve().then(() => console.log('promise 2'));
+console.log('end');
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+start
+end
+promise 1
+promise 2
+timeout
+```
+
+Synchronous code runs to completion first (`start`, `end`). When the call stack empties, the event loop drains the **microtask queue** completely (`promise 1`, `promise 2`) before taking one **macrotask** from the timer queue (`timeout`). A `setTimeout` of 0 never runs before a promise callback that was already queued, no matter how small the delay.
+
+</details>
+
+## 37. async function timing and nested microtasks
+
+```js
+async function foo() {
+  console.log('foo start');
+  await null;
+  console.log('foo after await');
+}
+console.log('script start');
+setTimeout(() => console.log('timeout'), 0);
+foo();
+Promise.resolve()
+  .then(() => {
+    console.log('then 1');
+    Promise.resolve().then(() => console.log('nested then'));
+  })
+  .then(() => console.log('then 2'));
+console.log('script end');
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+script start
+foo start
+script end
+foo after await
+then 1
+nested then
+then 2
+timeout
+```
+
+`foo()` runs synchronously until its first `await`, so `foo start` prints immediately, then control returns to the script (`script end`). `await null` queues the continuation as a microtask **before** the `.then` chain was registered, so `foo after await` beats `then 1`. Inside `then 1` a new microtask is queued; it runs before `then 2` because `then 2` is only queued once `then 1`'s callback returns. Everything in the microtask queue finishes before the timer fires.
+
+</details>
+
+## 38. Sequential awaits vs Promise.all
+
+```js
+const wait = (ms, v) => new Promise((r) => setTimeout(() => r(v), ms));
+const bucket = (start) => Math.round((Date.now() - start) / 100) * 100;
+
+async function sequential() {
+  const start = Date.now();
+  const a = await wait(100, 'a');
+  const b = await wait(100, 'b');
+  return `${a + b} in ~${bucket(start)}ms`;
+}
+
+async function parallel() {
+  const start = Date.now();
+  const [a, b] = await Promise.all([wait(100, 'a'), wait(100, 'b')]);
+  return `${a + b} in ~${bucket(start)}ms`;
+}
+
+sequential().then(console.log);
+parallel().then(console.log);
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+ab in ~100ms
+ab in ~200ms
+```
+
+Both functions produce the same value, but `sequential` waits for `a` to finish before even starting `b`, so it takes two full delays. `Promise.all` starts both timers at once and waits for the slower one, so it finishes in one delay and logs **first** even though it was called second. Awaiting inside a loop when the calls are independent is the most common async performance mistake in interviews.
+
+</details>
+
+## 39. Arrow function `this` in object methods
+
+```js
+const user = {
+  role: 'admin',
+  regular() { return this.role; },
+  arrow: () => this.role,
+  nested() {
+    const inner = () => this.role;
+    return inner();
+  },
+};
+console.log(user.regular());
+console.log(user.arrow());
+console.log(user.nested());
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+admin
+undefined
+admin
+```
+
+A regular method gets `this` from the call site (`user.regular()` → `user`). An arrow function has **no `this` of its own**; it captures `this` from the scope where it was *defined*, which here is the module or global scope, not `user`, so `this.role` is `undefined`. Inside `nested()` the arrow is defined inside a regular method, so it captures that method's `this`, which is `user`. Rule: arrows as object methods lose `this`; arrows as callbacks inside methods keep it.
+
+</details>
+
+## 40. Extracted method and `this` inside setTimeout
+
+```js
+'use strict';
+const counter = {
+  count: 0,
+  inc() { this.count++; return this.count; },
+  delayed() {
+    setTimeout(function () { console.log('function:', this.count); }, 0);
+    setTimeout(() => console.log('arrow:', this.count), 0);
+  },
+};
+console.log(counter.inc());
+const inc = counter.inc;
+try { inc(); } catch (e) { console.log(e.constructor.name); }
+counter.delayed();
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+1
+TypeError
+function: undefined
+arrow: 1
+```
+
+`counter.inc()` works because `this` is `counter`. Assigning the method to `inc` and calling it bare loses the receiver: in strict mode `this` is `undefined`, so `this.count++` throws `TypeError`. Without `'use strict'` it would silently write `NaN` onto the global object instead. Inside `delayed`, the `function` callback is invoked by the timer with no receiver, so `this.count` is `undefined`; the arrow callback captures `this` from `delayed()`, which is `counter`, so it prints `1`. Fix for the extracted case: `counter.inc.bind(counter)` or call it as `counter.inc()`.
+
+</details>
+
+## 41. Class method as callback; bind vs call vs apply
+
+```js
+class Button {
+  constructor(label) { this.label = label; }
+  click() { return this.label; }
+}
+const b = new Button('Save');
+const handlers = [b.click, b.click.bind(b), () => b.click()];
+console.log(JSON.stringify(handlers.map((h) => { try { return h(); } catch (e) { return e.constructor.name; } })));
+
+function greet(greeting, punct) { return `${greeting}, ${this.name}${punct}`; }
+const p = { name: 'Huxly' };
+console.log(greet.call(p, 'Hi', '!'));
+console.log(greet.apply(p, ['Hey', '?']));
+const bound = greet.bind(p, 'Yo');
+console.log(typeof bound, bound('.'));
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+["TypeError","Save","Save"]
+Hi, Huxly!
+Hey, Huxly?
+function Yo, Huxly.
+```
+
+Class bodies are always strict, so a class method passed around bare (`b.click`) runs with `this === undefined` and throws when it reads `this.label`. `bind` returns a **new function** permanently tied to `b`; wrapping in an arrow calls it as a method. `call` and `apply` invoke immediately with an explicit `this`, differing only in how arguments are passed (list vs array). `bind` does not invoke; it returns a function, which is why `typeof bound` is `function` and the remaining argument is supplied later (partial application).
+
+</details>
+
+## 42. Coercion classics
+
+```js
+console.log([] == ![]);
+console.log('b' + 'a' + +'a' + 'a');
+console.log(0.1 + 0.2, 0.1 + 0.2 === 0.3);
+console.log(null >= 0, null > 0, null == 0);
+console.log(undefined == null, undefined === null);
+console.log(typeof null, typeof NaN, typeof [], typeof function () {});
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+true
+baNaNa
+0.30000000000000004 false
+true false false
+true false
+object number object function
+```
+
+`![]` is `false` (arrays are truthy), then `[] == false` coerces both to numbers: `[]` → `''` → `0`, `false` → `0`, so `true`. `+'a'` is unary plus on a non-numeric string, giving `NaN`, which concatenates to `'baNaNa'`. `0.1 + 0.2` is binary floating point, never exactly `0.3`; compare with `Math.abs(a - b) < Number.EPSILON`. Relational operators convert `null` to `0`, so `null >= 0` is `true`, but `==` never converts `null` to a number: `null` only loosely equals `undefined`. `typeof null` is `'object'` (a historic bug), `typeof NaN` is `'number'`, arrays are objects, and functions are the one non-primitive with their own `typeof`.
+
+</details>
+
+## 43. Default sort and map(parseInt)
+
+```js
+console.log(String([10, 1, 3, 20].sort()));
+console.log(String([10, 1, 3, 20].sort((a, b) => a - b)));
+console.log(String(['1', '2', '3'].map(parseInt)));
+console.log(String(['1', '2', '3'].map(Number)));
+console.log(String(['1', '2', '3'].map((s) => parseInt(s, 10))));
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+1,10,20,3
+1,3,10,20
+1,NaN,NaN
+1,2,3
+1,2,3
+```
+
+`sort()` with no comparator converts elements to **strings** and compares UTF-16 code units, so `'10' < '3'`. Always pass `(a, b) => a - b` for numbers. `map` calls its callback with `(value, index, array)`, and `parseInt` takes `(string, radix)`, so the index becomes the radix: `parseInt('1', 0)` is `1` (radix 0 means auto), `parseInt('2', 1)` is `NaN` (radix 1 is invalid), `parseInt('3', 2)` is `NaN` (`3` is not a binary digit). Use `Number` or wrap the call so only the string is passed.
+
+</details>
+
+## 44. Object.freeze is shallow; spread vs Object.assign
+
+```js
+const config = Object.freeze({ theme: 'dark', flags: { beta: true } });
+config.theme = 'light';
+config.flags.beta = false;
+console.log(config.theme, config.flags.beta, Object.isFrozen(config), Object.isFrozen(config.flags));
+
+const original = { a: 1, nested: { b: 2 } };
+const spread = { ...original };
+const assigned = Object.assign({}, original);
+spread.a = 10;
+spread.nested.b = 20;
+console.log(original.a, original.nested.b, assigned.nested.b);
+console.log(spread.nested === original.nested);
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+dark false true false
+1 20 20
+true
+```
+
+`Object.freeze` only freezes the top level: reassigning `config.theme` fails silently (throws in strict mode), but `config.flags` is a separate, unfrozen object, so `beta` flips to `false`. Deep freezing needs recursion. Likewise both `{ ...original }` and `Object.assign({}, original)` are **shallow copies**: primitives are copied, nested objects are shared by reference, so mutating `spread.nested.b` changes `original` and `assigned` too. For a true deep copy use `structuredClone` or a recursive clone.
+
+</details>
+
+## 45. `??` vs `||`, and what JSON.stringify drops
+
+```js
+const settings = { retries: 0, label: '', enabled: false, timeout: null };
+console.log(JSON.stringify([settings.retries || 3, settings.retries ?? 3]));
+console.log(JSON.stringify([settings.label || 'untitled', settings.label ?? 'untitled']));
+console.log(JSON.stringify([settings.enabled || true, settings.enabled ?? true]));
+console.log(JSON.stringify([settings.timeout || 5000, settings.timeout ?? 5000]));
+
+const payload = { id: 1, name: undefined, greet() {}, when: new Date(0), tags: [undefined, () => {}], nan: NaN };
+console.log(JSON.stringify(payload));
+console.log(JSON.stringify(undefined), JSON.stringify(() => {}));
+```
+
+<details>
+<summary>Output & why</summary>
+
+```text
+[3,0]
+["untitled",""]
+[true,false]
+[5000,5000]
+{"id":1,"when":"1970-01-01T00:00:00.000Z","tags":[null,null],"nan":null}
+undefined undefined
+```
+
+`||` falls through on every **falsy** value (`0`, `''`, `false`, `null`, `undefined`, `NaN`), so it replaces legitimate zeros, empty strings and `false` flags. `??` falls through only on `null` or `undefined`, which is what "use a default when the value is missing" actually means. Use `??` for defaults, `||` for genuine boolean logic. `JSON.stringify` drops object properties whose value is `undefined` or a function, turns `undefined`/functions inside **arrays** into `null` (array length must be preserved), converts `Date` via `toJSON` to an ISO string, and serialises `NaN` and `Infinity` as `null`. Called directly on `undefined` or a function it returns `undefined`, not a string.
+
+</details>

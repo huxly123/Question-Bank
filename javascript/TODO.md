@@ -1,8 +1,8 @@
 # JavaScript & TypeScript — Topics To Study
 
-**Progress: 68 / 98 done (69%)**
+**Progress: 73 / 100 done (73%)**
 
-`█████████████████████░░░░░░░░░` 69%
+`██████████████████████░░░░░░░░` 73%
 
 Theory lives in [theory.md](theory.md), output questions in [code-snippets.md](code-snippets.md).
 
@@ -10,7 +10,7 @@ Theory lives in [theory.md](theory.md), output questions in [code-snippets.md](c
 
 ## JavaScript
 
-_33 / 56 · `██████░░░░` 59%_
+_33 / 54 · `██████░░░░` 61%_
 
 - [x] [What are the different data types in JavaScript?](theory.md#1-what-are-the-different-data-types-in-javascript)
 - [x] [Explain hoisting in JavaScript](theory.md#2-explain-hoisting-in-javascript)
@@ -45,47 +45,42 @@ _33 / 56 · `██████░░░░` 59%_
 - [x] [What is infinite currying?](theory.md#31-what-is-infinite-currying)
 - [x] [Array methods that modify (or don't modify) the original array](theory.md#32-array-methods-that-modify-or-dont-modify-the-original-array)
 - [x] [Pure vs impure functions](theory.md#33-pure-vs-impure-functions)
-- [ ] Strict mode in JavaScript
-- [ ] Call stacks
-- [ ] Execution context
-- [ ] Jobs and priority queues
-- [ ] Event loop
-- [ ] Shadowing
-- [ ] Memory management
-- [ ] Method chaining
-- [ ] Arrow functions vs normal functions
-- [ ] Flattening an object
-- [ ] Prototype chaining
-- [ ] Callback hell
-- [ ] async/await
-- [ ] ⭐ Event loop: microtasks vs macrotasks (setTimeout vs Promise ordering output questions)
-- [ ] ⭐ Implement debounce and throttle in plain JS (not just the React hooks you have)
-- [ ] ⭐ Write Promise.all / Promise.any polyfills
-- [ ] ⭐ Event delegation
-- [ ] Implement an EventEmitter (on / off / emit / once)
-- [ ] Implement memoize
-- [ ] Deep clone: JSON trick vs structuredClone vs recursive implementation
-- [ ] pipe / compose functions
-- [ ] ES Modules vs CommonJS
-- [ ] WeakMap / WeakSet and garbage collection
-
+- [ ] ⭐ Execution context and call stack: how the engine runs code (creation vs execution phase, V8 and JIT in one line)
+- [ ] ⭐ Scope chain and lexical environment; function declaration vs function expression
+- [ ] ⭐ `undefined` vs `null` vs undeclared; `typeof null` and other `typeof` traps
+- [ ] ⭐ Arrow functions vs normal functions: `this`, `arguments`, no `prototype`, not constructible
+- [ ] ⭐ Prototype chain: `__proto__` vs `prototype`; implement `new` and `instanceof` by hand
+- [ ] ⭐ Event loop: microtasks vs macrotasks, `setTimeout(0)` minimum delay, `queueMicrotask`
+- [ ] ⭐ Callbacks → Promises → async/await: chaining, `catch`/`finally` placement, unhandled rejections, sequential vs parallel awaits
+- [ ] ⭐ Event delegation; `preventDefault` vs `stopPropagation`; `target` vs `currentTarget`
+- [ ] Map vs Object, Set vs Array; iterators and `for...of` vs `for...in`
+- [ ] Garbage collection, memory leaks (listeners, timers, closures), WeakMap / WeakSet
+- [ ] ⭐ Polyfills: `map`, `filter`, `forEach` (reduce is done)
+- [ ] ⭐ Polyfills: `call`, `apply`, `bind`
+- [ ] ⭐ Polyfills: `Promise.all`, `allSettled`, `race`, `any`
+- [ ] ⭐ Debounce and throttle in plain JS, with leading / trailing options
+- [ ] ⭐ Deep clone (JSON trick vs `structuredClone` vs recursive) and deep equal
+- [ ] ⭐ LRU cache with `Map`
+- [ ] Memoize (generic, custom cache key)
+- [ ] EventEmitter (`on` / `off` / `emit` / `once`)
+- [ ] Flatten a nested object to dotted keys
+- [ ] `pipe` / `compose`
+- [ ] Promise helpers: promisify, run in sequence, concurrency limit, retry with backoff
 ## TypeScript
 
-_0 / 7 · `░░░░░░░░░░` 0%_
+_0 / 6 · `░░░░░░░░░░` 0%_
 
-- [ ] ⭐ type vs interface
-- [ ] ⭐ Generics (write a typed function/hook)
-- [ ] ⭐ Utility types: Partial, Pick, Omit, Record, ReturnType
-- [ ] any vs unknown vs never
-- [ ] Union and intersection types, type narrowing / type guards
-- [ ] Enums vs const objects (`as const`)
-- [ ] Typing React props, children, events, and refs
-
+- [ ] ⭐ `type` vs `interface`
+- [ ] ⭐ Generics (write a typed function / hook)
+- [ ] ⭐ Utility types: `Partial`, `Pick`, `Omit`, `Record`, `ReturnType`
+- [ ] ⭐ Typing React props, children, events, and refs
+- [ ] `any` vs `unknown` vs `never`
+- [ ] Union and intersection types, narrowing and type guards; discriminated unions with an exhaustive `switch`
 ## Output questions
 
-_35 / 35 · `██████████` 100%_
+_40 / 40 · `██████████` 100%_
 
-Predict-the-output snippets already written up in [code-snippets.md](code-snippets.md). Add new ones here as you collect them.
+Predict-the-output snippets already written up in [code-snippets.md](code-snippets.md). Open items are snippet groups still to collect and write up.
 
 - [x] [NaN equality](code-snippets.md#1-nan-equality)
 - [x] [Chained comparisons](code-snippets.md#2-chained-comparisons)
@@ -122,3 +117,8 @@ Predict-the-output snippets already written up in [code-snippets.md](code-snippe
 - [x] [null vs undefined equality](code-snippets.md#33-null-vs-undefined-equality)
 - [x] [Loose equality with objects and strings](code-snippets.md#34-loose-equality-with-objects-and-strings)
 - [x] [delete on an array element](code-snippets.md#35-delete-on-an-array-element)
+- [x] [Event loop ordering puzzles: `setTimeout` vs `Promise.then`, nested microtasks, `async` return timing, `await` in a loop](code-snippets.md#36-settimeout-vs-promisethen-ordering)
+- [x] [`this` puzzles: arrow in object method, extracted method, `this` inside `setTimeout`, class method as callback, `bind` vs `call`](code-snippets.md#39-arrow-function-this-in-object-methods)
+- [x] [Coercion classics: `[] == ![]`, `'b' + 'a' + +'a' + 'a'`, `0.1 + 0.2`, `null >= 0`, `[10, 1, 3].sort()`, `['1','2','3'].map(parseInt)`](code-snippets.md#42-coercion-classics)
+- [x] [`Object.freeze` is shallow; spread vs `Object.assign` on nested objects](code-snippets.md#44-objectfreeze-is-shallow-spread-vs-objectassign)
+- [x] [`??` vs `||` with `0` and `''`; `JSON.stringify` dropping `undefined` and functions](code-snippets.md#45--vs--and-what-jsonstringify-drops)
