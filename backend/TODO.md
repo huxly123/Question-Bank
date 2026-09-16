@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 19 / 83 done (23%)**
+**Progress: 37 / 83 done (45%)**
 
-`███████░░░░░░░░░░░░░░░░░░░░░░░` 23%
+`█████████████░░░░░░░░░░░░░░░░░` 45%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -39,21 +39,21 @@ Build
 
 ## 2. PostgreSQL
 
-_0 / 15 · `░░░░░░░░░░` 0%_
+_12 / 15 · `████████░░` 80%_
 
 Learn
-- [ ] ⭐ Schema design and normalisation for users, companies, prices; when to denormalise
-- [ ] ⭐ Indexes: B-tree basics, composite index column order, covering indexes, why an index is ignored
-- [ ] ⭐ Reading `EXPLAIN ANALYZE`: seq scan vs index scan, estimated vs actual rows
-- [ ] ⭐ The N+1 problem and how ORMs cause it; joins vs batched `IN` queries
-- [ ] ⭐ Transactions and isolation levels; optimistic vs pessimistic locking; deadlocks
-- [ ] Migrations: forward-only, safe column adds, backfills without downtime
-- [ ] ⭐ Connection pooling: why one connection per request kills the database; pool sizing
-- [ ] SQL vs NoSQL: when Postgres is the wrong choice, JSONB as the middle ground
-- [ ] ⭐ ACID in plain words, and what each letter protects you from
-- [ ] Read replicas and replication lag; sharding at vocabulary level; when to reach for either
-- [ ] Full-text search in Postgres (`tsvector`, GIN index) vs a dedicated search engine
-- [ ] `NULL` and three-valued logic; the SQL traps interviewers like (`NOT IN` with NULLs, `COUNT(col)` vs `COUNT(*)`)
+- [x] [Schema design and normalisation for users, companies, prices; when to denormalise](postgres.md#1-how-would-you-model-users-companies-and-prices-and-when-would-you-denormalise)
+- [x] [Indexes: B-tree basics, composite index column order, covering indexes, why an index is ignored](postgres.md#2-how-do-b-tree-indexes-work-and-why-might-postgres-ignore-one)
+- [x] [Reading `EXPLAIN ANALYZE`: seq scan vs index scan, estimated vs actual rows](postgres.md#3-how-do-you-read-explain-analyze-output-to-find-a-slow-query)
+- [x] [The N+1 problem and how ORMs cause it; joins vs batched `IN` queries](postgres.md#4-what-is-the-n1-query-problem-and-how-do-you-fix-it)
+- [x] [Transactions and isolation levels; optimistic vs pessimistic locking; deadlocks](postgres.md#5-how-do-isolation-levels-locking-and-deadlocks-work-in-postgres)
+- [x] [Migrations: forward-only, safe column adds, backfills without downtime](postgres.md#6-how-do-you-run-schema-migrations-without-downtime)
+- [x] [Connection pooling: why one connection per request kills the database; pool sizing](postgres.md#7-why-do-you-need-connection-pooling-and-how-do-you-size-the-pool)
+- [x] [SQL vs NoSQL: when Postgres is the wrong choice, JSONB as the middle ground](postgres.md#8-when-is-postgres-the-wrong-choice-and-where-does-jsonb-fit)
+- [x] [ACID in plain words, and what each letter protects you from](postgres.md#9-explain-acid-in-plain-words-and-what-does-each-letter-protect-against)
+- [x] [Read replicas and replication lag; sharding at vocabulary level; when to reach for either](postgres.md#10-what-are-read-replicas-and-sharding-and-when-do-you-need-each)
+- [x] [Full-text search in Postgres (`tsvector`, GIN index) vs a dedicated search engine](postgres.md#11-how-does-postgres-full-text-search-work-and-when-do-you-need-a-search-engine)
+- [x] [`NULL` and three-valued logic; the SQL traps interviewers like (`NOT IN` with NULLs, `COUNT(col)` vs `COUNT(*)`)](postgres.md#12-how-does-null-break-sql-logic-and-which-traps-should-you-know)
 
 Build
 - [ ] Prisma or Drizzle schema with migrations for the three tables and a seed script
@@ -62,15 +62,15 @@ Build
 
 ## 3. Redis
 
-_0 / 8 · `░░░░░░░░░░` 0%_
+_6 / 8 · `████████░░` 75%_
 
 Learn
-- [ ] ⭐ Cache-aside pattern with TTL; cache invalidation on write; stampede protection
-- [ ] ⭐ Rate limiting: fixed window vs sliding window vs token bucket, and where to enforce it
-- [ ] Distributed locks with `SET NX PX` and their failure modes
-- [ ] Sessions in Redis vs stateless JWT; when each fits
-- [ ] Data structures worth knowing: strings, hashes, sorted sets (leaderboards, sliding windows), pub/sub
-- [ ] Eviction policies and memory limits; Redis as cache vs Redis as store
+- [x] [Cache-aside pattern with TTL; cache invalidation on write; stampede protection](redis.md#1-how-does-cache-aside-work-and-how-do-you-stop-a-cache-stampede)
+- [x] [Rate limiting: fixed window vs sliding window vs token bucket, and where to enforce it](redis.md#2-how-do-fixed-window-sliding-window-and-token-bucket-rate-limiting-differ)
+- [x] [Distributed locks with `SET NX PX` and their failure modes](redis.md#3-how-does-a-set-nx-px-distributed-lock-work-and-how-can-it-fail)
+- [x] [Sessions in Redis vs stateless JWT; when each fits](redis.md#4-when-do-you-store-sessions-in-redis-and-when-is-a-stateless-jwt-better)
+- [x] [Data structures worth knowing: strings, hashes, sorted sets (leaderboards, sliding windows), pub/sub](redis.md#5-which-redis-data-structures-should-you-know-and-what-is-each-one-for)
+- [x] [Eviction policies and memory limits; Redis as cache vs Redis as store](redis.md#6-how-do-redis-eviction-policies-and-memory-limits-work-for-cache-versus-store)
 
 Build
 - [ ] Cache the expensive financials endpoint with TTL and invalidate on refresh
