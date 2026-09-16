@@ -1,6 +1,6 @@
 # DSA — Problem Tracker
 
-**Progress: 34 / 146 solved (23%)**
+**Progress: 34 / 146 done (23%)**
 
 `███████░░░░░░░░░░░░░░░░░░░░░░░` 23%
 
@@ -8,9 +8,11 @@ Ticked items link to the write-up in the topic note. Open items are still to do.
 
 Merged from the [Namaste DSA Sheet](https://namastedev.com/namaste-dsa-sheet) (spine, trimmed) and [Blind 75](https://takeuforward.org/dsa/blind-75-leetcode-problems-detailed-video-solutions) (gap-fillers, marked **B75**). On solved items, **N** = Namaste, **B75** = Blind 75, no tag = neither. Work the sections in order: each builds on the one before. ⭐ marks the sections that come up most in frontend interview loops.
 
-When you solve one, write it up in the matching topic note (`array.md`, `binary-search.md`, `recursion.md`, `stack-queue.md`, `string.md`, `sliding-window.md`; format at the end of this file), tick it here, turn the name into a link to that section, append the pattern after a dash, then run `node DSA/progress.js` to refresh the counts and bars.
+When you solve one, write it up in the matching topic note (`array.md`, `binary-search.md`, `recursion.md`, `stack-queue.md`, `string.md`, `sliding-window.md`; format at the end of this file), tick it here, turn the name into a link to that section, append the pattern after a dash, then run `node progress.js` from the repo root to refresh the counts and bars.
 
 ## Sections
+
+_0 / 0 · `░░░░░░░░░░` 0%_
 
 | # | Section | Solved | Progress |
 | --- | --- | --- | --- |
@@ -265,6 +267,8 @@ _0 / 3 · `░░░░░░░░░░` 0%_
 
 ## Patterns cheat sheet
 
+_0 / 0 · `░░░░░░░░░░` 0%_
+
 Interviews test the technique, not the data structure. When a new problem appears, match it to one of these first.
 
 | Pattern | Recognise it when | Problems |
@@ -287,10 +291,14 @@ Interviews test the technique, not the data structure. When a new problem appear
 
 ## Format for a new problem
 
+_0 / 0 · `░░░░░░░░░░` 0%_
+
 Same rules as [template.md](../template.md): the heading is the prompt, the answer is collapsed.
 
 ~~~md
 ## N. Problem Title
+
+_0 / 0 · `░░░░░░░░░░` 0%_
 
 One or two sentence statement.
 

@@ -1,6 +1,6 @@
 ---
 name: dsa-writeup
-description: Record a newly solved DSA problem in this Question-Bank repo — verify the user's JavaScript solution against the examples, append a flashcard entry to the right DSA/*.md note, tick and link the problem in DSA/TODO.md, refresh the progress bars with node DSA/progress.js, and commit. Use this whenever the user says they solved, finished, cracked or did a DSA / LeetCode / GfG problem, pastes a JavaScript solution, or says things like "add this to the notes", "write up <problem>", "tick <problem>", "mark <problem> done", "record this one" — even if they don't mention a file or the tracker. Also use it when they want an existing DSA note entry fixed, re-verified or improved.
+description: Record a newly solved DSA problem in this Question-Bank repo — verify the user's JavaScript solution against the examples, append a flashcard entry to the right DSA/*.md note, tick and link the problem in DSA/TODO.md, refresh the progress bars with node progress.js, and commit. Use this whenever the user says they solved, finished, cracked or did a DSA / LeetCode / GfG problem, pastes a JavaScript solution, or says things like "add this to the notes", "write up <problem>", "tick <problem>", "mark <problem> done", "record this one" — even if they don't mention a file or the tracker. Also use it when they want an existing DSA note entry fixed, re-verified or improved.
 ---
 
 # DSA write-up
@@ -13,7 +13,7 @@ The write-up is the study step, not paperwork. The user revises later by reading
 
 - The problem has a numbered entry at the end of the right `DSA/<topic>.md` note, in the exact format below.
 - Its line in `DSA/TODO.md` is ticked, links to that entry, and carries the pattern and sheet tag.
-- `node DSA/progress.js` has been run so every count and bar is current.
+- `node progress.js` has been run from the repo root so every count and bar is current.
 - One commit, message `dsa: <problem name>`, pushed to `main`.
 - A short reply: where it went, any bug you found in their code, and the new solved count.
 
@@ -135,10 +135,10 @@ Turn the open line into a solved line. The solved form is:
   - off-plan (not in the tracker) → no tag
 - **Position**: solved lines sit at the top of each section, before the open ones. Move the ticked line up to the end of the solved block.
 
-Then run the progress script from the repo root and check the number it prints went up by one:
+Then run the progress script from the repo root and check the DSA line it prints went up by one:
 
 ```bash
-node DSA/progress.js
+node progress.js
 ```
 
 ## Step 6: Commit and push

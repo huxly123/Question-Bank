@@ -1,6 +1,6 @@
 # Behavioral / Experience Questions
 
-See the [Behavioral / Experience Prep checklist](TODO.md#behavioral--experience-prep) in TODO.md.
+The prep checklist is at the [bottom of this file](#prep-checklist).
 
 ## 1. Tell me about a complex problem you solved
 
@@ -21,3 +21,11 @@ Looped over the user list and updated user details in batches to stay within mem
 - Tell me about other frameworks you have used.
 - Explain your projects.
 - Micro-frontend architecture (and monolith architecture as well).
+
+## Prep checklist
+
+- [ ] ⭐ Quantify the Gatsby→Next migration: exact build-time and page-speed numbers, before/after — your strongest story, make it STAR-shaped
+- [ ] ⭐ Flesh out the app↔web login issue story (what was the root cause, your role)
+- [ ] Batch user-list processing story: memory numbers, why batching, alternatives considered
+- [ ] A conflict/disagreement story and a failure story
+- [ ] Questions to ask the interviewer
