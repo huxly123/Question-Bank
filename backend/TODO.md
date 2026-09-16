@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 37 / 83 done (45%)**
+**Progress: 45 / 83 done (54%)**
 
-`█████████████░░░░░░░░░░░░░░░░░` 45%
+`████████████████░░░░░░░░░░░░░░` 54%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -78,17 +78,17 @@ Build
 
 ## 4. Auth & security
 
-_0 / 9 · `░░░░░░░░░░` 0%_
+_8 / 9 · `█████████░` 89%_
 
 Learn
-- [ ] ⭐ Sessions vs JWT; access and refresh tokens; refresh rotation; where the client stores them
-- [ ] ⭐ Password hashing (bcrypt / argon2), salting, why never encrypt passwords
-- [ ] OAuth 2.0 authorization code flow at whiteboard depth
-- [ ] Authorization: RBAC middleware, resource ownership checks
-- [ ] ⭐ OWASP top ten as it applies to an API: injection, broken auth, sensitive data exposure, SSRF
-- [ ] CORS, security headers, secrets in environment variables, dependency auditing
-- [ ] HTTPS and TLS mechanics, man-in-the-middle, session hijacking, CSRF for cookie-based APIs
-- [ ] Hashing vs encryption; encryption in transit vs at rest; where PII must be encrypted or masked
+- [x] [Sessions vs JWT; access and refresh tokens; refresh rotation; where the client stores them](auth-security.md#1-sessions-or-jwts-how-do-you-issue-refresh-and-store-tokens)
+- [x] [Password hashing (bcrypt / argon2), salting, why never encrypt passwords](auth-security.md#2-how-do-you-store-passwords-and-why-never-encrypt-them)
+- [x] [OAuth 2.0 authorization code flow at whiteboard depth](auth-security.md#3-walk-me-through-the-oauth-20-authorization-code-flow-on-a-whiteboard)
+- [x] [Authorization: RBAC middleware, resource ownership checks](auth-security.md#4-how-do-you-implement-rbac-middleware-and-resource-ownership-checks)
+- [x] [OWASP top ten as it applies to an API: injection, broken auth, sensitive data exposure, SSRF](auth-security.md#5-which-owasp-top-ten-risks-matter-most-for-an-api-and-how-do-you-defend-them)
+- [x] [CORS, security headers, secrets in environment variables, dependency auditing](auth-security.md#6-how-do-you-handle-cors-security-headers-secrets-and-dependency-audits-server-side)
+- [x] [HTTPS and TLS mechanics, man-in-the-middle, session hijacking, CSRF for cookie-based APIs](auth-security.md#7-how-does-tls-stop-mitm-and-how-do-you-protect-cookie-sessions-from-hijacking-and-csrf)
+- [x] [Hashing vs encryption; encryption in transit vs at rest; where PII must be encrypted or masked](auth-security.md#8-hashing-vs-encryption-in-transit-vs-at-rest-where-must-pii-be-protected)
 
 Build
 - [ ] Signup and login with refresh-token rotation and a protected, role-checked route
