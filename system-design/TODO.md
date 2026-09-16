@@ -168,6 +168,8 @@ The last three are lesson titles from the Namaste Frontend System Design course.
 
 _17 / 22 · `████████░░` 77%_
 
+Namaste course lessons not yet covered in [security.md](security.md).
+
 - [x] [Cross-Site Scripting (XSS)](security.md#1-cross-site-scripting-xss)
 - [x] [iFrame protection (clickjacking)](security.md#2-iframe-protection-clickjacking)
 - [x] [Content Security Policy (CSP)](security.md#3-content-security-policy-csp)
@@ -185,7 +187,6 @@ _17 / 22 · `████████░░` 77%_
 - [x] [Checking the Origin / Referer header](security.md#15-checking-the-origin--referer-header)
 - [x] [HTTP vs HTTPS](security.md#16-http-vs-https)
 - [x] [JWT login flow](security.md#17-jwt-login-flow)
-Namaste course lessons not yet covered in [security.md](security.md).
 
 - [ ] Security Headers (only CSP and X-Frame-Options covered so far)
 - [ ] Dependency Security
@@ -238,8 +239,9 @@ The last four are lesson titles from the Namaste Frontend System Design course.
 
 _8 / 79 · `█░░░░░░░░░` 10%_
 
-- [x] [Web rendering fundamentals](performance.md#1-web-rendering-fundamentals)
 Deep-dive topics. Core Web Vitals are already written up in [performance.md](performance.md).
+
+- [x] [Web rendering fundamentals](performance.md#1-web-rendering-fundamentals)
 
 **Network performance**
 - [ ] HTTP/1 vs HTTP/2 vs HTTP/3
