@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 45 / 83 done (54%)**
+**Progress: 53 / 83 done (64%)**
 
-`████████████████░░░░░░░░░░░░░░` 54%
+`███████████████████░░░░░░░░░░░` 64%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -95,17 +95,17 @@ Build
 
 ## 5. Async jobs & reliability
 
-_0 / 10 · `░░░░░░░░░░` 0%_
+_8 / 10 · `████████░░` 80%_
 
 Learn
-- [ ] ⭐ Why queues exist: decoupling, smoothing spikes, retries; queue vs cron vs event stream
-- [ ] ⭐ BullMQ: jobs, workers, retries with exponential backoff, dead-letter queue, concurrency
-- [ ] ⭐ Idempotent consumers: at-least-once delivery means every job may run twice
-- [ ] ⭐ Timeouts, retries with jitter, and circuit breakers for third-party calls
-- [ ] Long-running work: return 202 with a job ID, poll or push status
-- [ ] Kafka fundamentals only at the "what is it and when would I pick it over a queue" level
-- [ ] Eventual consistency and the CAP theorem at explain level; sagas and compensation for transactions across services
-- [ ] Race conditions and deadlocks in application code; DB row lock vs distributed lock vs queue serialisation
+- [x] [Why queues exist: decoupling, smoothing spikes, retries; queue vs cron vs event stream](async-jobs.md#1-why-use-a-queue-and-when-is-cron-or-an-event-stream-better)
+- [x] [BullMQ: jobs, workers, retries with exponential backoff, dead-letter queue, concurrency](async-jobs.md#2-how-do-bullmq-jobs-workers-retries-and-dead-letter-queues-fit-together)
+- [x] [Idempotent consumers: at-least-once delivery means every job may run twice](async-jobs.md#3-why-must-a-queue-consumer-be-idempotent-and-how-do-you-make-it-so)
+- [x] [Timeouts, retries with jitter, and circuit breakers for third-party calls](async-jobs.md#4-how-do-timeouts-jittered-retries-and-circuit-breakers-protect-third-party-calls)
+- [x] [Long-running work: return 202 with a job ID, poll or push status](async-jobs.md#5-how-do-you-expose-long-running-work-over-http-without-blocking-the-request)
+- [x] [Kafka fundamentals only at the "what is it and when would I pick it over a queue" level](async-jobs.md#6-what-is-kafka-and-when-would-you-pick-it-over-a-job-queue)
+- [x] [Eventual consistency and the CAP theorem at explain level; sagas and compensation for transactions across services](async-jobs.md#7-explain-cap-eventual-consistency-and-how-sagas-replace-cross-service-transactions)
+- [x] [Race conditions and deadlocks in application code; DB row lock vs distributed lock vs queue serialisation](async-jobs.md#8-how-do-you-prevent-race-conditions-row-lock-distributed-lock-or-queue)
 
 Build
 - [ ] Nightly price-refresh job: calls an external API with timeout and retry, safe to run twice, failures land in a dead-letter queue
