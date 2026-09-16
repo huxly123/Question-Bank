@@ -1,0 +1,55 @@
+{
+  "skill_name": "topic-writeup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "learned event delegation today, add it to js notes. my notes:\n\n- instead of adding listener to every li you add one listener on the parent ul\n- works because events bubble up from target to ancestors\n- in handler check e.target to see which child was clicked, e.target.matches('li') or closest()\n- good for lists that change dynamically, new items automatically handled, less memory\n- doesnt work for events that dont bubble like focus, blur (use focusin/focusout instead)\n- e.currentTarget is the ul, e.target is the actual clicked thing",
+      "expected_output": "javascript/theory.md gets '## 34. <interviewer question about event delegation>' with a collapsed Answer that opens with a direct one-to-three sentence answer, keeps the user's points (bubbling, e.target vs e.currentTarget, matches/closest, dynamic lists, focus does not bubble so use focusin), and a small js example. javascript/TODO.md line '- [ ] \u2b50 Event delegation' becomes '- [x] [Event delegation](theory.md#34-...)' moved into the ticked block. progress.js run (JavaScript 69 / 98). Commit 'notes: Event delegation'. Reply says the notes were reshaped, not drafted.",
+      "files": [],
+      "expectations": [
+        "theory.md gains a '## 34.' heading about event delegation with a collapsed Answer block",
+        "The answer opens with a direct prose sentence, not a list, code block or bold label",
+        "The user's points survive: bubbling, e.target vs e.currentTarget, matches()/closest(), focus does not bubble so use focusin",
+        "The entry includes a js code example",
+        "javascript/TODO.md ticks 'Event delegation' linking theory.md#34-..., star dropped, anchor resolves to the heading",
+        "The ticked line sits in the ticked block above the open items of the JavaScript section",
+        "progress.js was run: JavaScript & TypeScript header reads 69 / 98",
+        "A commit exists with subject 'notes: Event delegation'",
+        "Reply says the user's notes were reshaped (not drafted from scratch)",
+        "README.md JavaScript theory count bumped to 34 questions, and the root TODO.md dashboard is part of the commit"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "write up hydration for me, the next.js one",
+      "expected_output": "react/nextjs.md is created with '# Next.js' and '## 1. <question about hydration>' in theory format, drafted from scratch since no notes were given. The React checklist line '- [ ] \u2b50 Hydration: what it is, hydration mismatch errors, how to fix them' becomes ticked and linked to nextjs.md#1-... . README.md gains a '- [Next.js](react/nextjs.md) \u2014 ...' line under React. progress.js run (React & Next.js 17 / 48). Commit 'notes: Hydration'. Reply explicitly says the entry was drafted, not from the user's notes, so they should review it.",
+      "files": [],
+      "expectations": [
+        "react/nextjs.md is created and starts with '# Next.js'",
+        "nextjs.md has '## 1.' about hydration with a collapsed Answer block",
+        "The answer covers hydration mismatch and at least one concrete fix (suppressHydrationWarning, useEffect/client-only, dynamic import, typeof window)",
+        "react/TODO.md ticks the Hydration line linking nextjs.md#1-..., star dropped, anchor resolves",
+        "README.md links react/nextjs.md under React",
+        "progress.js was run: React & Next.js header reads 17 / 48",
+        "A commit exists whose subject starts with 'notes: Hydration'",
+        "Reply says the entry was drafted (not from user notes) and should be reviewed",
+        "The root TODO.md dashboard is part of the commit alongside nextjs.md, react/TODO.md and README.md"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "add this one to the js output questions, got it wrong in a mock today\n\nconsole.log([1, 2, 3] + [4, 5, 6]);\nconsole.log([] + {});\nconsole.log({} + []);",
+      "expected_output": "javascript/code-snippets.md gets '## 36. <label about array/object string coercion>' with the snippet visible and a collapsed 'Output & why' whose text block is the real node output (1,2,34,5,6 / [object Object] / [object Object]) plus an explanation of toString coercion with +. The run verified the output with node rather than guessing. javascript/TODO.md Output questions section gets a new ticked line linking code-snippets.md#36-... (the item was not in any checklist). progress.js run. Commit 'notes: <label>'.",
+      "files": [],
+      "expectations": [
+        "code-snippets.md gains '## 36.' with the three console.log lines visible in a js block and an 'Output & why' details block",
+        "The output block shows the real node output: '1,2,34,5,6' and '[object Object]' on two lines",
+        "Reply or entry shows the output was verified by running node rather than guessed",
+        "javascript/TODO.md Output questions section gains a ticked line linking code-snippets.md#36-..., anchor resolves",
+        "progress.js was run: JavaScript & TypeScript header reads 69 / 99",
+        "A commit exists whose subject starts with 'notes: '",
+        "README.md snippet count bumped to 36, and the root TODO.md dashboard is part of the commit"
+      ]
+    }
+  ]
+}
