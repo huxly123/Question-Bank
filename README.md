@@ -49,5 +49,6 @@ Personal interview preparation notes — theory, output questions, code snippets
 
 - [TODO](TODO.md) — progress dashboard linking every area checklist
 - [progress.js](progress.js) — refreshes all counts and bars: `node progress.js`
+- [Career context](career.md) — goal, roadmap, skill levels and advice rules that Claude loads every session
 - [Resources](resources.md) — interview question banks and job boards
 - [Template](template.md) — format and conventions for new notes
