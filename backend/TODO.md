@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 0 / 83 done (0%)**
+**Progress: 19 / 83 done (23%)**
 
-`░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` 0%
+`███████░░░░░░░░░░░░░░░░░░░░░░░` 23%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -10,28 +10,28 @@ Scoped to clear a full-stack interview round, not to master backend. Five layers
 
 ## 1. Node runtime & API design
 
-_0 / 21 · `░░░░░░░░░░` 0%_
+_19 / 21 · `█████████░` 90%_
 
 Learn
-- [ ] ⭐ Event loop phases, `process.nextTick` vs `setImmediate` vs `setTimeout`, why CPU work blocks the loop
-- [ ] ⭐ Worker threads vs cluster vs child processes: when each applies
-- [ ] Streams and buffers: readable/writable/transform, piping, backpressure
-- [ ] Module system: `require` vs `import`, module caching, `module.exports` vs `exports`
-- [ ] ⭐ REST design: resource naming, status codes, PUT vs PATCH, versioning strategies
-- [ ] ⭐ Pagination: offset vs cursor vs keyset and how each affects the client
-- [ ] ⭐ Idempotency keys for POST; safe retries
-- [ ] ⭐ Validation at the boundary (zod / joi), centralised error handling, error response contract
-- [ ] Express / Fastify middleware order, `next(err)`, sync vs async errors, `express.Router` structure
-- [ ] Structured logging with correlation IDs; what to log and what never to log
-- [ ] Graceful shutdown on SIGTERM; health and readiness endpoints
-- [ ] ⭐ HTTP fundamentals: request/response cycle, methods, status codes, headers, statelessness, keep-alive, HTTP/2
-- [ ] ⭐ Streaming responses: chunked transfer, Server-Sent Events, WebSockets on the server, backpressure to a slow client
-- [ ] HTTP caching from the server: `Cache-Control`, `ETag`, conditional requests (304)
-- [ ] `EventEmitter` and custom events; child processes (`exec`, `spawn`, `fork`)
-- [ ] Process-level error handling: `unhandledRejection`, `uncaughtException`, when to crash and restart vs recover
-- [ ] Secure file uploads: size limits, content-type checks, streaming to object storage instead of disk
-- [ ] Webhooks: signature verification, retries from the sender, idempotent handling on the receiver
-- [ ] Code design: layered architecture, dependency injection, repository pattern, composition over inheritance, DRY vs premature abstraction
+- [x] [Event loop phases, `process.nextTick` vs `setImmediate` vs `setTimeout`, why CPU work blocks the loop](node-api.md#1-how-does-the-node-event-loop-work-and-why-does-cpu-work-block-it)
+- [x] [Worker threads vs cluster vs child processes: when each applies](node-api.md#2-when-would-you-use-worker-threads-cluster-or-child-processes)
+- [x] [Streams and buffers: readable/writable/transform, piping, backpressure](node-api.md#3-how-do-node-streams-work-and-what-is-backpressure)
+- [x] [Module system: `require` vs `import`, module caching, `module.exports` vs `exports`](node-api.md#4-how-do-commonjs-and-es-modules-differ-and-how-does-caching-work)
+- [x] [REST design: resource naming, status codes, PUT vs PATCH, versioning strategies](node-api.md#5-how-do-you-design-a-clean-rest-api)
+- [x] [Pagination: offset vs cursor vs keyset and how each affects the client](node-api.md#6-how-do-offset-cursor-and-keyset-pagination-differ-for-the-client)
+- [x] [Idempotency keys for POST; safe retries](node-api.md#7-how-do-idempotency-keys-make-post-requests-safe-to-retry)
+- [x] [Validation at the boundary (zod / joi), centralised error handling, error response contract](node-api.md#8-how-do-you-validate-input-and-return-errors-consistently)
+- [x] [Express / Fastify middleware order, `next(err)`, sync vs async errors, `express.Router` structure](node-api.md#9-how-does-middleware-order-and-error-handling-work-in-express-and-fastify)
+- [x] [Structured logging with correlation IDs; what to log and what never to log](node-api.md#10-what-should-structured-logs-contain-and-what-must-never-be-logged)
+- [x] [Graceful shutdown on SIGTERM; health and readiness endpoints](node-api.md#11-how-do-you-shut-a-node-service-down-gracefully)
+- [x] [HTTP fundamentals: request/response cycle, methods, status codes, headers, statelessness, keep-alive, HTTP/2](node-api.md#12-walk-me-through-http-cycle-methods-status-codes-headers-keep-alive-http2)
+- [x] [Streaming responses: chunked transfer, Server-Sent Events, WebSockets on the server, backpressure to a slow client](node-api.md#13-how-do-you-stream-a-response-to-a-client-from-node)
+- [x] [HTTP caching from the server: `Cache-Control`, `ETag`, conditional requests (304)](node-api.md#14-how-does-a-server-control-http-caching-with-cache-control-and-etag)
+- [x] [`EventEmitter` and custom events; child processes (`exec`, `spawn`, `fork`)](node-api.md#15-how-do-eventemitter-and-child-processes-work-in-node)
+- [x] [Process-level error handling: `unhandledRejection`, `uncaughtException`, when to crash and restart vs recover](node-api.md#16-how-do-you-handle-unhandled-rejections-and-uncaught-exceptions-in-production)
+- [x] [Secure file uploads: size limits, content-type checks, streaming to object storage instead of disk](node-api.md#17-how-do-you-handle-file-uploads-securely)
+- [x] [Webhooks: signature verification, retries from the sender, idempotent handling on the receiver](node-api.md#18-how-do-you-receive-webhooks-reliably-and-securely)
+- [x] [Code design: layered architecture, dependency injection, repository pattern, composition over inheritance, DRY vs premature abstraction](node-api.md#19-what-code-design-principles-do-you-apply-in-a-backend-service)
 
 Build
 - [ ] Service skeleton: routes → controllers → services, request validation, error middleware, request-ID logging, `/health`

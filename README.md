@@ -35,6 +35,7 @@ Personal interview preparation notes — theory, output questions, code snippets
 
 ### Backend
 - [Checklist](backend/TODO.md) — Node runtime and API design, PostgreSQL, Redis, auth and security, async jobs, infrastructure; scoped to clear a full-stack round
+- [Node runtime & API design](backend/node-api.md) — event loop, workers, streams, REST and pagination, idempotency, validation and errors, logging, shutdown, HTTP, streaming responses, caching, uploads, webhooks, code design (19 questions)
 
 ### Behavioral
 - [Checklist](behavioral/TODO.md) — stories to finish and questions to be able to answer out loud
