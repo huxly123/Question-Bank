@@ -3,7 +3,7 @@
 Every area keeps its own checklist next to its notes. This page is the dashboard. After ticking anything anywhere, run `node progress.js` from the repo root and every bar below and in the area files is refreshed.
 
 <!-- progress:start -->
-**Overall: 173 / 549 done (32%)**
+**Overall: 173 / 548 done (32%)**
 
 `█████████░░░░░░░░░░░░░░░░░░░░░` 32%
 
@@ -13,7 +13,7 @@ Every area keeps its own checklist next to its notes. This page is the dashboard
 | [DSA](DSA/TODO.md) | 34 / 146 | `███░░░░░░░░░` 23% |
 | [JavaScript & TypeScript](javascript/TODO.md) | 73 / 100 | `█████████░░░` 73% |
 | [Machine Coding](machine-coding/TODO.md) | 0 / 17 | `░░░░░░░░░░░░` 0% |
-| [React & Next.js](react/TODO.md) | 16 / 48 | `████░░░░░░░░` 33% |
+| [React & Next.js](react/TODO.md) | 16 / 47 | `████░░░░░░░░` 34% |
 | [System Design](system-design/TODO.md) | 50 / 233 | `███░░░░░░░░░` 21% |
 <!-- progress:end -->
 

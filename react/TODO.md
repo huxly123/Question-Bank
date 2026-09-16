@@ -1,8 +1,8 @@
 # React & Next.js — Topics To Study
 
-**Progress: 16 / 48 done (33%)**
+**Progress: 16 / 47 done (34%)**
 
-`██████████░░░░░░░░░░░░░░░░░░░░` 33%
+`██████████░░░░░░░░░░░░░░░░░░░░` 34%
 
 Theory lives in [theory.md](theory.md), snippets in [code-snippets.md](code-snippets.md). Next.js is the migration story interviewers will drill into.
 
@@ -10,7 +10,7 @@ Theory lives in [theory.md](theory.md), snippets in [code-snippets.md](code-snip
 
 ## React
 
-_16 / 39 · `████░░░░░░` 41%_
+_16 / 38 · `████░░░░░░` 42%_
 
 - [x] [Stateless components](theory.md#1-stateless-components)
 - [x] [Stateful components](theory.md#2-stateful-components)
@@ -28,40 +28,38 @@ _16 / 39 · `████░░░░░░` 41%_
 - [x] [Debounce hook](code-snippets.md#1-debounce-hook)
 - [x] [Throttle hook](code-snippets.md#2-throttle-hook)
 - [x] [Infinite scroll with IntersectionObserver](code-snippets.md#3-infinite-scroll-with-intersectionobserver)
-- [ ] Browser Object Model (BOM)
-- [ ] Error boundaries
-- [ ] Hooks
-- [ ] Reference lifecycle events
-- [ ] React patterns
-- [ ] Redux and the Redux cycle
-- [ ] Web apps
-- [ ] React portal
-- [ ] How the DOM is traversed
-- [ ] Component lifecycle
-- [ ] Class vs functional components
-- [ ] CSRF and web security in React
-- [ ] Interceptors
-- [ ] React Fiber
-- [ ] Lazy loading in React
-- [ ] ⭐ useEffect vs useLayoutEffect (and useEffect cleanup, dependency pitfalls)
+- [ ] ⭐ JSX under the hood: what it compiles to, Fragments, conditional rendering pitfalls (`&&` with `0`)
+- [ ] ⭐ Class vs function components; lifecycle phases and their hook equivalents (mount, update, unmount)
+- [ ] ⭐ `useState`: batching, functional updates, stale closures in timeouts and effects
+- [ ] ⭐ `useEffect`: dependency array, cleanup, `useLayoutEffect`, why effects run twice in StrictMode
+- [ ] ⭐ `useRef`: DOM access vs mutable value vs state; `forwardRef` and `useImperativeHandle`
+- [ ] `useReducer` vs `useState`: when reducer logic pays off
 - [ ] ⭐ Custom hooks: rules of hooks, when to extract one
-- [ ] ⭐ Context API: how it works, why it re-renders, how to avoid the re-render trap
+- [ ] ⭐ Context API: prop drilling, how it works, why consumers re-render, splitting contexts to avoid it
+- [ ] ⭐ Why does a component re-render? Parent renders, prop identity, `React.memo`, finding it with the Profiler
 - [ ] ⭐ Keys in lists: why index keys break state
-- [ ] Concurrent React: useTransition, useDeferredValue
-- [ ] React Server Components vs client components
-- [ ] StrictMode (why effects run twice in dev)
-- [ ] State management comparison: Redux Toolkit vs Zustand vs Context — when to use which
-
+- [ ] ⭐ Synthetic events: delegation at the root, the event object, passing handlers vs calling them
+- [ ] ⭐ Data fetching in effects: race conditions, cleanup with `AbortController`, loading and error states; vs React Query / SWR
+- [ ] Error boundaries: what they catch and what they do not (event handlers, async, SSR)
+- [ ] Portals: modals and tooltips, how events bubble through a portal
+- [ ] ⭐ Code splitting: `React.lazy`, `Suspense`, route-based splitting
+- [ ] Concurrent rendering: Fiber, render vs commit phases, automatic batching, `useTransition`, `useDeferredValue`
+- [ ] ⭐ Server Components vs Client Components: the `'use client'` boundary and what can cross it
+- [ ] Component patterns: compound components, render props, HOC vs hooks
+- [ ] React Router: nested routes, dynamic params, protected routes, programmatic navigation
+- [ ] ⭐ State management: Redux data flow and Redux Toolkit vs Zustand vs Context, when to use which
+- [ ] React 19: `use()`, Actions, `useOptimistic`, `useFormStatus`
+- [ ] XSS in React: why JSX escapes, `dangerouslySetInnerHTML`, sanitising HTML
 ## Next.js ⭐
 
 _0 / 9 · `░░░░░░░░░░` 0%_
 
-- [ ] ⭐ CSR vs SSR vs SSG vs ISR — explain with your Gatsby→Next migration numbers (build time, page speed)
+- [ ] ⭐ CSR vs SSR vs SSG vs ISR, explained with your Gatsby→Next migration numbers (build time, page speed)
 - [ ] ⭐ Hydration: what it is, hydration mismatch errors, how to fix them
-- [ ] ⭐ App Router vs Pages Router (server components, layouts, loading/error files)
-- [ ] Data fetching: getStaticProps/getServerSideProps vs fetch + cache options in App Router
-- [ ] Server Actions
-- [ ] Middleware (auth, redirects, rewrites)
-- [ ] next/image and next/font optimization
-- [ ] Dynamic routes and catch-all routes
-- [ ] Caching layers in Next.js (full route cache, data cache, revalidation)
+- [ ] ⭐ App Router vs Pages Router: server components by default, nested layouts, `loading.tsx` / `error.tsx` / `not-found.tsx`, streaming
+- [ ] ⭐ Data fetching and caching: `getStaticProps` / `getServerSideProps` vs `fetch` cache options; full route cache, data cache, `revalidatePath` / `revalidateTag`
+- [ ] Server Actions: mutations without API routes, progressive enhancement, when not to use them
+- [ ] Middleware: auth checks, redirects, rewrites, and its Edge runtime limits
+- [ ] `next/image`, `next/font`, and `next/link` prefetching
+- [ ] Dynamic and catch-all routes; Route Handlers (API routes); Edge vs Node runtime
+- [ ] SEO: `metadata` and `generateMetadata`, sitemap and robots, Open Graph
