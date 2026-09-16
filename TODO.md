@@ -3,18 +3,19 @@
 Every area keeps its own checklist next to its notes. This page is the dashboard. After ticking anything anywhere, run `node progress.js` from the repo root and every bar below and in the area files is refreshed.
 
 <!-- progress:start -->
-**Overall: 180 / 480 done (38%)**
+**Overall: 180 / 560 done (32%)**
 
-`███████████░░░░░░░░░░░░░░░░░░░` 38%
+`██████████░░░░░░░░░░░░░░░░░░░░` 32%
 
 | Area | Done | Progress |
 | --- | --- | --- |
+| [Backend](backend/TODO.md) | 0 / 83 | `░░░░░░░░░░░░` 0% |
 | [Behavioral](behavioral/TODO.md) | 7 / 33 | `███░░░░░░░░░` 21% |
 | [DSA](DSA/TODO.md) | 34 / 146 | `███░░░░░░░░░` 23% |
 | [JavaScript & TypeScript](javascript/TODO.md) | 73 / 100 | `█████████░░░` 73% |
 | [Machine Coding](machine-coding/TODO.md) | 0 / 17 | `░░░░░░░░░░░░` 0% |
 | [React & Next.js](react/TODO.md) | 16 / 47 | `████░░░░░░░░` 34% |
-| [System Design](system-design/TODO.md) | 50 / 137 | `████░░░░░░░░` 36% |
+| [System Design](system-design/TODO.md) | 50 / 134 | `████░░░░░░░░` 37% |
 <!-- progress:end -->
 
 ## How the checklists work
@@ -26,4 +27,4 @@ Every area keeps its own checklist next to its notes. This page is the dashboard
 
 ⭐ marks items most likely to come up in frontend (React/Next.js) interview loops.
 
-**Where a topic lives:** an area gets its own `TODO.md` when it has a folder of notes or passes about twenty items. Smaller areas ride with their nearest neighbour: TypeScript with JavaScript, Next.js with React, and browser internals, storage, HTML/CSS, accessibility, build tools, testing and Node.js all inside [system design](system-design/TODO.md), which is how the Namaste course groups them too.
+**Where a topic lives:** an area gets its own `TODO.md` when it has a folder of notes or passes about twenty items. Smaller areas ride with their nearest neighbour: TypeScript with JavaScript, Next.js with React, browser internals, storage, HTML/CSS, accessibility, build tools and testing inside [system design](system-design/TODO.md), and Node.js with the rest of the server side in [backend](backend/TODO.md).

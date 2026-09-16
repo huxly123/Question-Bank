@@ -1,8 +1,8 @@
 # System Design — Topics To Study
 
-**Progress: 50 / 137 done (36%)**
+**Progress: 50 / 134 done (37%)**
 
-`███████████░░░░░░░░░░░░░░░░░░░` 36%
+`███████████░░░░░░░░░░░░░░░░░░░` 37%
 
 Notes live in this folder: [security](security.md), [networking](networking.md), [communication](communication.md), [performance](performance.md), [design patterns](design-patterns.md), [storage](storage.md). The two course sections (Namaste Frontend System Design) are merged in here by topic. Theory sections come first, ordered by how often they come up in frontend interview loops; the design-round sections (approach, design questions, HLD case studies) sit at the end and draw on everything above them.
 
@@ -195,16 +195,6 @@ _6 / 7 · `█████████░` 86%_
 _0 / 1 · `░░░░░░░░░░` 0%_
 
 - [ ] Frontend telemetry: what to log client-side, sampling, PII, alerting on error rate and Web Vitals
-
-## Node.js
-
-_0 / 3 · `░░░░░░░░░░` 0%_
-
-For full-stack rounds.
-
-- [ ] Node event loop phases (how it differs from the browser)
-- [ ] Express middleware pattern; REST API design and error handling
-- [ ] Streams and buffers
 
 ## Interview approach
 

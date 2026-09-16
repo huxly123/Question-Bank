@@ -33,6 +33,9 @@ Personal interview preparation notes — theory, output questions, code snippets
 - [Design patterns](system-design/design-patterns.md) — MVC, Atomic Design, module, singleton, HOC
 - [Storage](system-design/storage.md) — cookies, localStorage, sessionStorage, IndexedDB, Cache Storage, main-thread blocking
 
+### Backend
+- [Checklist](backend/TODO.md) — Node runtime and API design, PostgreSQL, Redis, auth and security, async jobs, infrastructure; scoped to clear a full-stack round
+
 ### Behavioral
 - [Checklist](behavioral/TODO.md) — stories to finish and questions to be able to answer out loud
 - [Stories](behavioral/stories.md) — STAR(R) story bank with a matrix of which story answers which question

@@ -1,6 +1,6 @@
 ---
 name: topic-writeup
-description: Record a learned interview topic in this Question-Bank repo (JavaScript, TypeScript, React, Next.js, system design, performance, security, storage, HTML/CSS, accessibility, testing, Node.js, machine coding) — write the question-and-answer flashcard into the right note, tick and link the item in that area's TODO.md checklist, refresh the bars with node progress.js, and commit. Use this whenever the user says they learned, read up on, studied or finished a topic, pastes rough notes or a paragraph they wrote, asks to "write up <topic>", "add notes on <topic>", "add <topic> to the notes", "tick <topic>", "add this output question", or wants an existing note entry expanded or corrected — even if they don't name a file or the checklist. Not for DSA problems: those go through the dsa-writeup skill.
+description: Record a learned interview topic in this Question-Bank repo (JavaScript, TypeScript, React, Next.js, system design, performance, security, storage, HTML/CSS, accessibility, machine coding, backend: Node runtime, REST API design, PostgreSQL, Redis, auth, queues and BullMQ, Docker and infra, backend testing; behavioral stories and HR / hiring-manager questions) — write the question-and-answer flashcard into the right note, tick and link the item in that area's TODO.md checklist, refresh the bars with node progress.js, and commit. Use this whenever the user says they learned, read up on, studied or finished a topic, pastes rough notes or a paragraph they wrote, asks to "write up <topic>", "add notes on <topic>", "add <topic> to the notes", "tick <topic>", "add this output question", "I built the rate limiter, tick it", "add my migration story", or wants an existing note entry expanded or corrected — even if they don't name a file or the checklist. Not for DSA problems: those go through the dsa-writeup skill.
 ---
 
 # Topic write-up
@@ -45,6 +45,13 @@ Grep every checklist for the topic: `grep -rn "<topic>" */TODO.md`. The open lin
 | system-design: Node.js | `system-design/nodejs.md` |
 | system-design: Interview approach | `system-design/interview-approach.md` |
 | machine-coding: any | `machine-coding/<kebab-name>.md`, one file per component |
+| backend: Node runtime & API design | `backend/node-api.md` |
+| backend: PostgreSQL | `backend/postgres.md` |
+| backend: Redis | `backend/redis.md` |
+| backend: Auth & security | `backend/auth-security.md` |
+| backend: Async jobs & reliability | `backend/async-jobs.md` |
+| backend: Infrastructure & deployment | `backend/infra.md` |
+| backend: Testing & debugging | `backend/testing.md` |
 | behavioral: Stories | `behavioral/stories.md` (STAR(R) shape, no collapse; see its neighbours) |
 | behavioral: any other section | `behavioral/questions.md` |
 
@@ -103,6 +110,10 @@ Why, in a few sentences, naming the rule that explains it.
 
 </details>
 ~~~
+
+**Backend Build items** (the `Build` lines in `backend/TODO.md`) are done when the thing exists in the project repo, not when a note is written. Tick the line and link it to the commit, PR or file in that repo (an absolute GitHub URL is fine); add a note entry only if there is a lesson worth revising, such as a query plan before and after an index.
+
+**Behavioral stories** (`behavioral/stories.md`) keep the STAR(R) shape already in that file: fill the italic prompts in place rather than appending a new numbered entry, and tick the story in `behavioral/TODO.md` only when it has real numbers and a spoken two-minute version. `behavioral/questions.md` entries use the theory shape.
 
 **Implementation (`react/code-snippets.md`, `machine-coding/*.md`):** heading, one line saying what it does, then the code, no collapse. Machine coding files also carry a `## Requirements`, `## Approach` and `## Gotchas` before the code, because the point of those is to rehearse the conversation with the interviewer, not just the code.
 
