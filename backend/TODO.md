@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 53 / 83 done (64%)**
+**Progress: 65 / 83 done (78%)**
 
-`███████████████████░░░░░░░░░░░` 64%
+`███████████████████████░░░░░░░` 78%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -113,21 +113,21 @@ Build
 
 ## 6. Infrastructure & deployment
 
-_0 / 15 · `░░░░░░░░░░` 0%_
+_12 / 15 · `████████░░` 80%_
 
 Learn
-- [ ] ⭐ Docker: image vs container, layers and caching, multi-stage builds, `.dockerignore`
-- [ ] ⭐ Docker Compose for app + Postgres + Redis with volumes and env files
-- [ ] ⭐ CI/CD: lint, test, build image, deploy; what runs on every push vs on merge
-- [ ] Environment and secrets management: `.env` locally, a secrets manager in production, never in the image
-- [ ] ⭐ Horizontal scaling: stateless app behind a load balancer, sticky sessions vs shared session store
-- [ ] Managed databases and object storage (RDS-style Postgres, S3-style buckets, presigned URLs)
-- [ ] Zero-downtime deploys: rolling, blue-green, health checks, running migrations first
-- [ ] Observability basics: logs, metrics, traces; what to alert on
-- [ ] Basic cloud vocabulary on one provider: compute, managed DB, object storage, load balancer, DNS. Kubernetes is not an immediate priority
-- [ ] ⭐ Monolith vs microservices: service boundaries, when to split, inter-service communication, what gets harder
-- [ ] Reverse proxy and API gateway (nginx-style): TLS termination, routing, rate limiting, request size limits
-- [ ] Finding a slow endpoint in production: APM, event-loop lag, heap snapshots, load testing with k6 or autocannon
+- [x] [Docker: image vs container, layers and caching, multi-stage builds, `.dockerignore`](infra.md#1-how-do-docker-images-layers-multi-stage-builds-and-dockerignore-fit-together)
+- [x] [Docker Compose for app + Postgres + Redis with volumes and env files](infra.md#2-how-would-you-run-an-app-with-postgres-and-redis-in-docker-compose)
+- [x] [CI/CD: lint, test, build image, deploy; what runs on every push vs on merge](infra.md#3-what-does-a-cicd-pipeline-run-on-every-push-versus-on-merge)
+- [x] [Environment and secrets management: `.env` locally, a secrets manager in production, never in the image](infra.md#4-how-do-you-manage-environment-config-and-secrets-across-local-and-production)
+- [x] [Horizontal scaling: stateless app behind a load balancer, sticky sessions vs shared session store](infra.md#5-how-do-you-scale-a-node-api-horizontally-and-where-do-sessions-go)
+- [x] [Managed databases and object storage (RDS-style Postgres, S3-style buckets, presigned URLs)](infra.md#6-why-use-managed-postgres-and-object-storage-and-what-are-presigned-urls)
+- [x] [Zero-downtime deploys: rolling, blue-green, health checks, running migrations first](infra.md#7-how-do-you-deploy-with-zero-downtime-including-database-migrations)
+- [x] [Observability basics: logs, metrics, traces; what to alert on](infra.md#8-what-are-logs-metrics-and-traces-and-what-should-you-alert-on)
+- [x] [Basic cloud vocabulary on one provider: compute, managed DB, object storage, load balancer, DNS. Kubernetes is not an immediate priority](infra.md#9-name-the-core-cloud-building-blocks-and-what-each-one-does)
+- [x] [Monolith vs microservices: service boundaries, when to split, inter-service communication, what gets harder](infra.md#10-monolith-or-microservices-when-do-you-split-and-what-gets-harder)
+- [x] [Reverse proxy and API gateway (nginx-style): TLS termination, routing, rate limiting, request size limits](infra.md#11-what-does-a-reverse-proxy-or-api-gateway-do-in-front-of-node)
+- [x] [Finding a slow endpoint in production: APM, event-loop lag, heap snapshots, load testing with k6 or autocannon](infra.md#12-how-do-you-find-and-fix-a-slow-endpoint-in-production)
 
 Build
 - [ ] Dockerfile with a multi-stage build and a Compose file that brings up the whole stack
