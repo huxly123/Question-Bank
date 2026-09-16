@@ -34,7 +34,9 @@ Personal interview preparation notes — theory, output questions, code snippets
 - [Storage](system-design/storage.md) — cookies, localStorage, sessionStorage, IndexedDB, Cache Storage, main-thread blocking
 
 ### Behavioral
-- [Experience questions](behavioral.md) — project stories, behavioral prep, and the prep checklist
+- [Checklist](behavioral/TODO.md) — stories to finish and questions to be able to answer out loud
+- [Stories](behavioral/stories.md) — STAR(R) story bank with a matrix of which story answers which question
+- [Questions](behavioral/questions.md) — HR screen, hiring manager, behavioral categories, and questions to ask them, answers collapsed
 
 ### Machine Coding
 - [Checklist](machine-coding/TODO.md) — components to build live, plus the course's low-level design lessons

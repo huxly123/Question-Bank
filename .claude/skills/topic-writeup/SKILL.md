@@ -45,6 +45,8 @@ Grep every checklist for the topic: `grep -rn "<topic>" */TODO.md`. The open lin
 | system-design: Node.js | `system-design/nodejs.md` |
 | system-design: Interview approach | `system-design/interview-approach.md` |
 | machine-coding: any | `machine-coding/<kebab-name>.md`, one file per component |
+| behavioral: Stories | `behavioral/stories.md` (STAR(R) shape, no collapse; see its neighbours) |
+| behavioral: any other section | `behavioral/questions.md` |
 
 Files that do not exist yet are created on first use with a one-line `# Title` heading (look at `javascript/theory.md` for the plain form, `javascript/code-snippets.md` for one with an intro line). When you create a note, link it from the root `README.md` under that area, in the same `- [Title](path) — what it covers` shape as its neighbours. The checklist's own intro paragraph lists its note files too where one exists; keep that in step.
 
