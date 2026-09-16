@@ -36,6 +36,7 @@ Personal interview preparation notes — theory, output questions, code snippets
 ### Backend
 - [Checklist](backend/TODO.md) — Node runtime and API design, PostgreSQL, Redis, auth and security, async jobs, infrastructure; scoped to clear a full-stack round
 - [Node runtime & API design](backend/node-api.md) — event loop, workers, streams, REST and pagination, idempotency, validation and errors, logging, shutdown, HTTP, streaming responses, caching, uploads, webhooks, code design (19 questions)
+- [PostgreSQL](backend/postgres.md) — schema design, indexes and EXPLAIN, N+1, transactions and locking, migrations, pooling, JSONB, ACID, replicas and sharding, full-text search, NULL traps (12 questions)
 - [Redis](backend/redis.md) — cache-aside and stampedes, rate limiting algorithms, distributed locks, sessions vs JWT, data structures, eviction (6 questions)
 
 ### Behavioral
