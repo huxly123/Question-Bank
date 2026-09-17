@@ -1,8 +1,8 @@
 # Backend — Full-Stack Round Checklist
 
-**Progress: 65 / 83 done (78%)**
+**Progress: 69 / 83 done (83%)**
 
-`███████████████████████░░░░░░░` 78%
+`█████████████████████████░░░░░` 83%
 
 Scoped to clear a full-stack interview round, not to master backend. Five layers, each with what to be able to explain (**Learn**) and what to have built once (**Build**). One project runs through all of them: the backend of the AI Financial Analyst from [career.md](../career.md), without the LLM layer. Notes go in this folder, one file per section (`node-api.md`, `postgres.md`, `redis.md`, `auth-security.md`, `async-jobs.md`, `infra.md`, `testing.md`). Then run `node progress.js` from the repo root.
 
@@ -136,13 +136,13 @@ Build
 
 ## 7. Testing & debugging
 
-_0 / 5 · `░░░░░░░░░░` 0%_
+_4 / 5 · `████████░░` 80%_
 
 Learn
-- [ ] ⭐ API tests with supertest; unit vs integration for a backend; test database strategy (transaction rollback or a throwaway container)
-- [ ] Mocking external calls and time: stubs, spies, fake timers, `nock`-style HTTP interception
-- [ ] Debugging Node: the inspector, reading a heap snapshot for a leak, detecting a blocked event loop
-- [ ] Contract testing between frontend and API at the "why it exists" level
+- [x] [API tests with supertest; unit vs integration for a backend; test database strategy (transaction rollback or a throwaway container)](testing.md#1-how-do-you-write-api-tests-and-what-do-you-do-about-the-database)
+- [x] [Mocking external calls and time: stubs, spies, fake timers, `nock`-style HTTP interception](testing.md#2-how-do-you-mock-external-http-calls-and-time-in-backend-tests)
+- [x] [Debugging Node: the inspector, reading a heap snapshot for a leak, detecting a blocked event loop](testing.md#3-how-do-you-debug-a-node-process-inspector-memory-leaks-blocked-event-loop)
+- [x] [Contract testing between frontend and API at the "why it exists" level](testing.md#4-what-is-contract-testing-between-frontend-and-api-and-why-bother)
 
 Build
 - [ ] Test suite for the auth routes and the price-refresh job with the external API mocked, running in CI
