@@ -35,13 +35,13 @@ Personal interview preparation notes — theory, output questions, code snippets
 
 ### Backend
 - [Checklist](backend/TODO.md) — Node runtime and API design, PostgreSQL, Redis, auth and security, async jobs, infrastructure; scoped to clear a full-stack round
-- [Node runtime & API design](backend/node-api.md) — event loop, workers, streams, REST and pagination, idempotency, validation and errors, logging, shutdown, HTTP, streaming responses, caching, uploads, webhooks, code design (19 questions)
-- [Testing & debugging](backend/testing.md) — API tests with supertest and test databases, mocking HTTP and time, the inspector and heap snapshots, contract testing (4 questions)
-- [Infrastructure & deployment](backend/infra.md) — Docker and Compose, CI/CD, secrets, horizontal scaling, managed DB and object storage, zero-downtime deploys, observability, cloud building blocks, monolith vs microservices, reverse proxy, finding a slow endpoint (12 questions)
-- [Async jobs & reliability](backend/async-jobs.md) — why queues, BullMQ retries and dead letters, idempotent consumers, timeouts and circuit breakers, 202 and polling, Kafka vs queue, CAP and sagas, race conditions and locks (8 questions)
-- [Auth & security](backend/auth-security.md) — sessions vs JWT and refresh rotation, password hashing, OAuth code flow, RBAC, OWASP for APIs, headers and secrets, TLS and CSRF, hashing vs encryption (8 questions)
-- [PostgreSQL](backend/postgres.md) — schema design, indexes and EXPLAIN, N+1, transactions and locking, migrations, pooling, JSONB, ACID, replicas and sharding, full-text search, NULL traps (12 questions)
-- [Redis](backend/redis.md) — cache-aside and stampedes, rate limiting algorithms, distributed locks, sessions vs JWT, data structures, eviction (6 questions)
+- [Node runtime & API design](backend/node-api.md) — event loop, workers, streams, REST and pagination, idempotency, validation and errors, logging, shutdown, HTTP, streaming responses, caching, uploads, webhooks, code design (21 questions)
+- [Testing & debugging](backend/testing.md) — API tests with supertest and test databases, mocking HTTP and time, the inspector and heap snapshots, contract testing (5 questions)
+- [Infrastructure & deployment](backend/infra.md) — Docker and Compose, CI/CD, secrets, horizontal scaling, managed DB and object storage, zero-downtime deploys, observability, cloud building blocks, monolith vs microservices, reverse proxy, finding a slow endpoint (13 questions)
+- [Async jobs & reliability](backend/async-jobs.md) — why queues, BullMQ retries and dead letters, idempotent consumers, timeouts and circuit breakers, 202 and polling, Kafka vs queue, CAP and sagas, race conditions and locks (9 questions)
+- [Auth & security](backend/auth-security.md) — sessions vs JWT and refresh rotation, password hashing, OAuth code flow, RBAC, OWASP for APIs, headers and secrets, TLS and CSRF, hashing vs encryption (9 questions)
+- [PostgreSQL](backend/postgres.md) — schema design, indexes and EXPLAIN, N+1, transactions and locking, migrations, pooling, JSONB, ACID, replicas and sharding, full-text search, NULL traps (13 questions)
+- [Redis](backend/redis.md) — cache-aside and stampedes, rate limiting algorithms, distributed locks, sessions vs JWT, data structures, eviction (7 questions)
 
 ### Behavioral
 - [Checklist](behavioral/TODO.md) — stories to finish and questions to be able to answer out loud

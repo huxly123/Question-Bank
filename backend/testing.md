@@ -2,7 +2,37 @@
 
 This note covers how to test a Node backend (API tests with supertest, the unit/integration split, test databases, mocking HTTP and time), how to debug a running Node process (inspector, heap snapshots, event-loop lag) and why contract tests exist between a frontend and its API; revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped.
 
-## 1. How do you write API tests, and what do you do about the database?
+## 1. Why test a backend, and what are the kinds of tests?
+
+<details>
+<summary>Answer</summary>
+
+Backend tests exist to prove that an endpoint does what the contract says, keeps doing it after a refactor, and fails loudly when a dependency changes. The kinds differ by how much real machinery they touch.
+
+| Kind | What it exercises | Speed | Typical count |
+| --- | --- | --- | --- |
+| Unit | One function in isolation: a price calculation, a validator | Milliseconds | Many |
+| Integration | A route through the real app, often with a real test database | Hundreds of ms | Dozens |
+| Contract | The shape of a response the frontend depends on | Fast | A few per endpoint |
+| End-to-end | Frontend plus API plus database, driven like a user | Seconds | Few |
+
+What a backend test looks like: start the app in-process, send a request with a tool like supertest, assert on the status code and body, and check the side effect (a row exists, a job was enqueued).
+
+```js
+const res = await request(app).post('/companies').send({ name: 'Infosys', ticker: 'INFY' });
+expect(res.status).toBe(201);
+expect(await db.company.findUnique({ where: { ticker: 'INFY' } })).not.toBeNull();
+```
+
+The two decisions every team makes: how to handle the database (a real one that is reset between tests, or a mock), and how to handle external services (never call them for real in tests; intercept or mock them). Both are covered in the next two entries.
+
+Why frontend testing experience transfers: the same Jest or Vitest runner, the same `jest.fn` and `jest.spyOn`, the same idea of testing behaviour through the public surface rather than internals. What is new is that the public surface is HTTP and the state lives in a database.
+
+In an AI product: the model provider is always mocked in tests, with recorded responses, so the suite is deterministic and free to run.
+
+</details>
+
+## 2. How do you write API tests, and what do you do about the database?
 
 <details>
 <summary>Answer</summary>
@@ -55,7 +85,7 @@ In an AI product: inject the LLM client so integration tests pass a fake that re
 
 </details>
 
-## 2. How do you mock external HTTP calls and time in backend tests?
+## 3. How do you mock external HTTP calls and time in backend tests?
 
 <details>
 <summary>Answer</summary>
@@ -116,7 +146,7 @@ In an AI product: record real provider responses once into JSON fixtures and rep
 
 </details>
 
-## 3. How do you debug a Node process: inspector, memory leaks, blocked event loop?
+## 4. How do you debug a Node process: inspector, memory leaks, blocked event loop?
 
 <details>
 <summary>Answer</summary>
@@ -165,7 +195,7 @@ Trade-off probed: profiling has overhead. A heap snapshot pauses the process for
 
 </details>
 
-## 4. What is contract testing between frontend and API, and why bother?
+## 5. What is contract testing between frontend and API, and why bother?
 
 <details>
 <summary>Answer</summary>

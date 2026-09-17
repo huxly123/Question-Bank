@@ -2,7 +2,69 @@
 
 This note covers how Node actually runs your code (event loop, workers, streams, modules, process lifecycle) and how to design HTTP APIs on top of it (REST, pagination, idempotency, validation, streaming, caching, webhooks); revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped.
 
-## 1. How does the Node event loop work, and why does CPU work block it?
+## 1. What is Node.js, and how is it different from JavaScript in the browser?
+
+<details>
+<summary>Answer</summary>
+
+Node.js is a runtime that lets JavaScript run outside the browser, on a server or your laptop, using the same V8 engine Chrome uses plus a library called libuv that gives it access to files, networks and the operating system.
+
+In the browser, JavaScript's job is to manipulate a page: it has the DOM, `window`, `fetch`, and it is sandboxed so a web page cannot read your disk. Node removes the sandbox and swaps the browser APIs for server ones.
+
+| | Browser JavaScript | Node.js |
+| --- | --- | --- |
+| Global object | `window` | `globalThis` (with `process`, `Buffer`) |
+| Can it read files, open sockets, spawn processes? | No | Yes (`fs`, `net`, `http`, `child_process`) |
+| Modules | ES modules via `<script type="module">` | CommonJS (`require`) and ES modules |
+| Typical job | Render UI, handle clicks | Serve HTTP requests, talk to databases, run jobs |
+
+What stays the same: the language, promises, `async`/`await`, closures, and the single-threaded event loop. That is why a frontend engineer already knows most of Node; what is new is the environment, not the language.
+
+Why Node exists: one language across frontend and backend, and a non-blocking model that handles many concurrent connections cheaply, which suits APIs that spend most of their time waiting on databases and other services.
+
+When not to use it: heavy CPU work such as image processing or number crunching blocks its single thread. Push that to worker threads or a different service.
+
+```js
+// A complete Node server in six lines, no framework
+import http from 'node:http';
+http.createServer((req, res) => {
+  res.writeHead(200, { 'content-type': 'application/json' });
+  res.end(JSON.stringify({ ok: true, path: req.url }));
+}).listen(3000);
+```
+
+In an AI product: Node is the layer that receives the user's request, calls the LLM provider, and streams the answer back to the React frontend; the event-loop model is a good fit because that work is almost all waiting on the network.
+
+</details>
+
+## 2. What is a REST API, and what does a request look like end to end?
+
+<details>
+<summary>Answer</summary>
+
+A REST API is a way for a client to read and change data over HTTP using URLs that name resources (nouns like `/companies/42`) and HTTP methods that name the action (GET to read, POST to create, PATCH or PUT to update, DELETE to remove). The server replies with a status code and usually a JSON body.
+
+REST stands for Representational State Transfer. The idea: the client never holds a live connection to the database; it asks for a *representation* of a resource and sends back a new representation when it wants a change. Each request carries everything the server needs (statelessness), so any server behind a load balancer can answer it.
+
+An end-to-end request:
+
+```text
+1. React calls fetch('/api/companies?limit=20', { headers: { Authorization: 'Bearer ...' } })
+2. DNS resolves the host, TLS connects, the HTTP request is sent
+3. Node receives it, middleware runs: parse JSON, check the token, validate the query
+4. The route handler asks the service layer for companies
+5. The service queries Postgres (maybe checks Redis first)
+6. Node serialises the rows to JSON and responds 200 with the body
+7. React receives it, updates state, re-renders
+```
+
+Vocabulary you will hear: **endpoint** (one URL plus method), **resource** (the noun), **payload** (the body), **status code** (200 OK, 201 Created, 400 your fault, 401 not logged in, 403 not allowed, 404 not found, 500 our fault), **idempotent** (safe to repeat: GET, PUT, DELETE; POST is not).
+
+When REST is the wrong tool: real-time push (use WebSockets or SSE), or a client that needs many differently shaped views of the same data (GraphQL fits better). The detailed design rules, pagination, versioning and error contracts are entries 7 to 10 below.
+
+</details>
+
+## 3. How does the Node event loop work, and why does CPU work block it?
 
 <details>
 <summary>Answer</summary>
@@ -41,7 +103,7 @@ In an AI product: token streaming from an LLM is pure I/O and fits the loop perf
 
 </details>
 
-## 2. When would you use worker threads, cluster, or child processes?
+## 4. When would you use worker threads, cluster, or child processes?
 
 <details>
 <summary>Answer</summary>
@@ -76,7 +138,7 @@ In an AI product: PDF text extraction or local embedding models run in worker th
 
 </details>
 
-## 3. How do Node streams work, and what is backpressure?
+## 5. How do Node streams work, and what is backpressure?
 
 <details>
 <summary>Answer</summary>
@@ -125,7 +187,7 @@ In an AI product: an LLM provider's response is a readable stream of tokens; you
 
 </details>
 
-## 4. How do CommonJS and ES modules differ, and how does caching work?
+## 6. How do CommonJS and ES modules differ, and how does caching work?
 
 <details>
 <summary>Answer</summary>
@@ -163,7 +225,7 @@ Circular imports: CommonJS gives the second module a partially filled `exports` 
 
 </details>
 
-## 5. How do you design a clean REST API?
+## 7. How do you design a clean REST API?
 
 <details>
 <summary>Answer</summary>
@@ -202,7 +264,7 @@ Interview probe: "should a GET ever change state?" No. Safe methods let caches, 
 
 </details>
 
-## 6. How do offset, cursor and keyset pagination differ for the client?
+## 8. How do offset, cursor and keyset pagination differ for the client?
 
 <details>
 <summary>Answer</summary>
@@ -246,7 +308,7 @@ In an AI product: conversation history and message lists are cursor-paginated; a
 
 </details>
 
-## 7. How do idempotency keys make POST requests safe to retry?
+## 9. How do idempotency keys make POST requests safe to retry?
 
 <details>
 <summary>Answer</summary>
@@ -287,7 +349,7 @@ In an AI product: a "generate report" job that costs money per call gets an idem
 
 </details>
 
-## 8. How do you validate input and return errors consistently?
+## 10. How do you validate input and return errors consistently?
 
 <details>
 <summary>Answer</summary>
@@ -341,7 +403,7 @@ Interview probe: "validation in the DB or the app?" Both: the schema stops bad i
 
 </details>
 
-## 9. How does middleware order and error handling work in Express and Fastify?
+## 11. How does middleware order and error handling work in Express and Fastify?
 
 <details>
 <summary>Answer</summary>
@@ -388,7 +450,7 @@ Choose Express for ubiquity and ecosystem; Fastify when you want built-in valida
 
 </details>
 
-## 10. What should structured logs contain, and what must never be logged?
+## 12. What should structured logs contain, and what must never be logged?
 
 <details>
 <summary>Answer</summary>
@@ -437,7 +499,7 @@ In an AI product: log prompt and completion token counts, model, latency and cos
 
 </details>
 
-## 11. How do you shut a Node service down gracefully?
+## 13. How do you shut a Node service down gracefully?
 
 <details>
 <summary>Answer</summary>
@@ -487,7 +549,7 @@ In an AI product: a long streaming response may outlive your grace period; on `S
 
 </details>
 
-## 12. Walk me through HTTP: cycle, methods, status codes, headers, keep-alive, HTTP/2
+## 14. Walk me through HTTP: cycle, methods, status codes, headers, keep-alive, HTTP/2
 
 <details>
 <summary>Answer</summary>
@@ -530,7 +592,7 @@ In an AI product: token streaming over a single long-lived response is a normal 
 
 </details>
 
-## 13. How do you stream a response to a client from Node?
+## 15. How do you stream a response to a client from Node?
 
 <details>
 <summary>Answer</summary>
@@ -572,7 +634,7 @@ In an AI product: SSE is the default for LLM token streaming (it is what most pr
 
 </details>
 
-## 14. How does a server control HTTP caching with Cache-Control and ETag?
+## 16. How does a server control HTTP caching with Cache-Control and ETag?
 
 <details>
 <summary>Answer</summary>
@@ -621,7 +683,7 @@ Trade-off the interviewer probes: long `max-age` means fast pages but stale data
 
 </details>
 
-## 15. How do EventEmitter and child processes work in Node?
+## 17. How do EventEmitter and child processes work in Node?
 
 <details>
 <summary>Answer</summary>
@@ -673,7 +735,7 @@ In an AI product: an event emitter is a convenient in-process way to fan out `to
 
 </details>
 
-## 16. How do you handle unhandled rejections and uncaught exceptions in production?
+## 18. How do you handle unhandled rejections and uncaught exceptions in production?
 
 <details>
 <summary>Answer</summary>
@@ -716,7 +778,7 @@ In an AI product: a provider returning a 529 or a malformed stream is an expecte
 
 </details>
 
-## 17. How do you handle file uploads securely?
+## 19. How do you handle file uploads securely?
 
 <details>
 <summary>Answer</summary>
@@ -766,7 +828,7 @@ In an AI product: users upload PDFs for retrieval; stream to storage, enqueue an
 
 </details>
 
-## 18. How do you receive webhooks reliably and securely?
+## 20. How do you receive webhooks reliably and securely?
 
 <details>
 <summary>Answer</summary>
@@ -822,7 +884,7 @@ In an AI product: a provider's batch job completion or a fine-tune finished call
 
 </details>
 
-## 19. What code-design principles do you apply in a backend service?
+## 21. What code-design principles do you apply in a backend service?
 
 <details>
 <summary>Answer</summary>

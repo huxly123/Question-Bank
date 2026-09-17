@@ -2,7 +2,33 @@
 
 This note covers the machinery for work that does not fit inside one HTTP request (queues, BullMQ, idempotent consumers, retries and circuit breakers, 202 + polling, Kafka, eventual consistency and sagas, locks); revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped.
 
-## 1. Why use a queue, and when is cron or an event stream better?
+## 1. What is a background job, and what is a message queue?
+
+<details>
+<summary>Answer</summary>
+
+A background job is work the server does *after* replying to the user instead of during the request: sending an email, generating a report, refreshing prices. A message queue is the buffer that holds those jobs until a worker picks them up, so the web server and the worker can run at different speeds and even on different machines.
+
+Without a queue, a slow task blocks the HTTP response, times out on mobile networks, and is lost if the process crashes halfway. With one:
+
+```text
+HTTP request -> API validates, pushes a job {type: "refreshPrices", companyId: 42} onto the queue
+            -> replies 202 Accepted with a job id in a few milliseconds
+Worker process -> pulls the job, does the slow work, marks it done (or failed and retried)
+Frontend       -> polls /jobs/:id or receives a push when the status changes
+```
+
+The pieces: **producer** (the API that enqueues), **queue** (Redis with BullMQ, or a managed service like SQS), **worker** or **consumer** (a process that runs jobs), **job** (a small JSON payload describing the work, never the work itself), **retry** and **dead-letter queue** (where jobs go after they keep failing).
+
+Why it exists: it turns "do this now and hope" into "record that this must happen, then make sure it does". That gives you retries, rate control, and the ability to scale workers independently of web servers.
+
+When you do not need one: work that finishes in tens of milliseconds and must be in the response anyway. Adding a queue there only adds latency and moving parts.
+
+In an AI product: almost every LLM call that takes more than a couple of seconds, or that costs money and may need a retry, belongs in a job, with the frontend showing status while it runs.
+
+</details>
+
+## 2. Why use a queue, and when is cron or an event stream better?
 
 <details>
 <summary>Answer</summary>
@@ -28,13 +54,13 @@ Pick cron when the work is naturally periodic and does not care about individual
 
 When NOT to use a queue: when the caller needs the result synchronously and the work is fast (under ~100 ms); when you cannot tolerate the operational cost of a Redis or broker; when a single process with an in-memory array is honestly enough (a prototype). Every queue adds a failure mode: the job may run late, twice, or never, and you now need monitoring for queue depth and age.
 
-Trade-off probed: latency and simplicity versus resilience and throughput. The interviewer wants to hear that the moment work leaves the request, you own visibility (job status), duplication (entry 3) and ordering (jobs are not guaranteed to run in order once you have more than one worker).
+Trade-off probed: latency and simplicity versus resilience and throughput. The interviewer wants to hear that the moment work leaves the request, you own visibility (job status), duplication (entry 4) and ordering (jobs are not guaranteed to run in order once you have more than one worker).
 
-In an AI product: "generate report" calls an LLM for 30 to 90 seconds. Run it as a job; the request returns a job ID (entry 5), the worker retries on provider errors (entry 4), and a burst of users does not turn into a burst of 429s from the provider.
+In an AI product: "generate report" calls an LLM for 30 to 90 seconds. Run it as a job; the request returns a job ID (entry 6), the worker retries on provider errors (entry 5), and a burst of users does not turn into a burst of 429s from the provider.
 
 </details>
 
-## 2. How do BullMQ jobs, workers, retries and dead-letter queues fit together?
+## 3. How do BullMQ jobs, workers, retries and dead-letter queues fit together?
 
 <details>
 <summary>Answer</summary>
@@ -66,12 +92,12 @@ worker.on('failed', (job, err) => log.error({ jobId: job?.id, attempts: job?.att
 How the pieces behave:
 
 - Jobs: a row in Redis with data, options, `attemptsMade`, progress, return value and a stack trace on failure. `jobId` lets you deduplicate: adding a job with an id that already exists is a no-op while that job is still in Redis.
-- Workers: one `Worker` instance per process; `concurrency: 5` means five processor calls in flight at once inside that process. Scale horizontally by running more processes on the same queue name. The worker holds a lock on an active job and renews it; if the process dies the lock expires and the job is marked stalled and picked up again, which is the at-least-once behaviour from entry 3.
+- Workers: one `Worker` instance per process; `concurrency: 5` means five processor calls in flight at once inside that process. Scale horizontally by running more processes on the same queue name. The worker holds a lock on an active job and renews it; if the process dies the lock expires and the job is marked stalled and picked up again, which is the at-least-once behaviour from entry 4.
 - Retries: when the processor throws, BullMQ moves the job to delayed, waits per the backoff, and retries until `attempts` is exhausted. Throwing `UnrecoverableError` skips the remaining retries for permanent errors such as bad input.
 - Failed set and dead letters: after the last attempt the job sits in the `failed` state. BullMQ does not name a "dead-letter queue" as a first-class object; the pattern is to treat the failed set as your DLQ, or listen to the `failed` event and `add` the job to a separate `reports-dead` queue for inspection and manual `retry()`. Use a dashboard (Bull Board or similar) to see counts.
 - Rate limiting: `limiter: { max: 10, duration: 1000 }` on the Worker caps throughput for a downstream API.
 
-When NOT to use BullMQ: you have no Redis and do not want one; you need multi-consumer fan-out or replay (Kafka, entry 6); or messages must survive Redis loss without persistence configured. Redis persistence and memory limits are your durability story.
+When NOT to use BullMQ: you have no Redis and do not want one; you need multi-consumer fan-out or replay (Kafka, entry 7); or messages must survive Redis loss without persistence configured. Redis persistence and memory limits are your durability story.
 
 Trade-off probed: retries are free only if the processor is idempotent. Also, `concurrency` is per process and per event loop, so CPU-heavy processors gain nothing from raising it.
 
@@ -79,7 +105,7 @@ In an AI product: one queue per cost class. Cheap classification jobs get `concu
 
 </details>
 
-## 3. Why must a queue consumer be idempotent, and how do you make it so?
+## 4. Why must a queue consumer be idempotent, and how do you make it so?
 
 <details>
 <summary>Answer</summary>
@@ -93,10 +119,10 @@ Techniques, cheapest first:
 - Natural idempotency: "set status to `sent`" is safe to repeat; "increment sent_count" is not. Prefer absolute writes (set, upsert) over relative ones (increment, append).
 - Unique constraints: insert the result with a unique key derived from the job (`report_id`), catch the duplicate-key error and treat it as success. The database becomes the dedup store.
 - Processed-jobs table: before doing side effects, `INSERT INTO processed_jobs (job_id)`; if it conflicts, return early. Write this row in the same transaction as the business rows so they commit or roll back together.
-- Pass the key downstream: when the side effect is an external call, forward an idempotency key (the job ID) so the provider deduplicates for you. The HTTP side of this is covered in [node-api.md entry 7](node-api.md#7-how-do-idempotency-keys-make-post-requests-safe-to-retry).
+- Pass the key downstream: when the side effect is an external call, forward an idempotency key (the job ID) so the provider deduplicates for you. The HTTP side of this is covered in [node-api.md entry 9](node-api.md#9-how-do-idempotency-keys-make-post-requests-safe-to-retry).
 - Producer dedup: BullMQ `jobId` stops the same logical job being enqueued twice while the first is still in Redis. This is a filter, not a guarantee; the consumer still needs its own check.
 
-Ordering is the other trap. Two workers may process "update address" then "delete account" in the wrong order. Fixes: put a version number on the entity and ignore stale jobs, or serialise per entity (entry 8).
+Ordering is the other trap. Two workers may process "update address" then "delete account" in the wrong order. Fixes: put a version number on the entity and ignore stale jobs, or serialise per entity (entry 9).
 
 When NOT to bother: truly harmless duplicates (recomputing a cache entry). Everything with money, email, or an external write needs the check.
 
@@ -106,7 +132,7 @@ In an AI product: a user double-clicks "generate" and the mobile app retries the
 
 </details>
 
-## 4. How do timeouts, jittered retries and circuit breakers protect third-party calls?
+## 5. How do timeouts, jittered retries and circuit breakers protect third-party calls?
 
 <details>
 <summary>Answer</summary>
@@ -145,7 +171,7 @@ In an AI product: LLM providers throw 429 and 529-style overload errors in burst
 
 </details>
 
-## 5. How do you expose long-running work over HTTP without blocking the request?
+## 6. How do you expose long-running work over HTTP without blocking the request?
 
 <details>
 <summary>Answer</summary>
@@ -191,7 +217,7 @@ In an AI product: report generation returns 202 and a job ID; the UI polls for s
 
 </details>
 
-## 6. What is Kafka, and when would you pick it over a job queue?
+## 7. What is Kafka, and when would you pick it over a job queue?
 
 <details>
 <summary>Answer</summary>
@@ -227,7 +253,7 @@ In an AI product: every LLM call emits a `completion.recorded` event with model,
 
 </details>
 
-## 7. Explain CAP, eventual consistency, and how sagas replace cross-service transactions
+## 8. Explain CAP, eventual consistency, and how sagas replace cross-service transactions
 
 <details>
 <summary>Answer</summary>
@@ -252,7 +278,7 @@ Sagas: an order flow touches Orders, Payments and Inventory, each with its own d
 
 Two coordination styles: choreography, where each service emits an event and the next reacts (simple, hard to follow past five services); and orchestration, where one orchestrator (a workflow engine such as Temporal, or your own state machine in a job) calls each step and runs compensations. Orchestration is easier to observe.
 
-Rules: every step and compensation is idempotent (entry 3) because the orchestrator retries; irreversible actions (an email was sent) go last.
+Rules: every step and compensation is idempotent (entry 4) because the orchestrator retries; irreversible actions (an email was sent) go last.
 
 When NOT to: if everything lives in one Postgres, use a transaction. Sagas are the price of splitting services; do not pay it early.
 
@@ -262,7 +288,7 @@ In an AI product: "create workspace, provision vector index, run first embedding
 
 </details>
 
-## 8. How do you prevent race conditions: row lock, distributed lock or queue?
+## 9. How do you prevent race conditions: row lock, distributed lock or queue?
 
 <details>
 <summary>Answer</summary>

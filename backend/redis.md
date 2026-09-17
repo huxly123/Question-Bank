@@ -2,7 +2,33 @@
 
 This note covers the Redis patterns a full-stack round actually asks about (cache-aside and stampedes, rate limiting, distributed locks, sessions versus JWT, the data structures worth knowing, eviction and memory); revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped.
 
-## 1. How does cache-aside work, and how do you stop a cache stampede?
+## 1. What is Redis, and why is it so fast?
+
+<details>
+<summary>Answer</summary>
+
+Redis is an in-memory data store: a server that keeps its data in RAM instead of on disk and lets clients read and write it over the network with simple commands. Because RAM is thousands of times faster than disk and Redis processes commands on a single thread with no locking, a read or write usually takes well under a millisecond.
+
+Think of it as a very fast shared dictionary that all your Node instances can reach. A key is a string like `company:42:financials`; the value can be a string, a hash (object), a list, a set, or a sorted set. Every key can carry a TTL (time to live) so it deletes itself.
+
+```text
+SET   company:42:financials '{"revenue": 1200}' EX 300   # store for 300 seconds
+GET   company:42:financials
+INCR  ratelimit:user:7:login                             # atomic counter
+DEL   company:42:financials
+```
+
+Why it exists: the database is the slow, expensive part of a backend. Redis lets you keep frequently read or short-lived data next to the application so most requests never touch Postgres, and gives you atomic counters and expiring keys that are awkward to build in SQL.
+
+What it is used for in practice: caching query results, rate-limit counters, sessions, short-lived locks, job queues (BullMQ is built on it), and pub/sub between processes.
+
+What it is not: a replacement for Postgres. It is memory-limited, its persistence is optional and delayed, and it has no joins or rich queries. Treat anything in Redis as something you can afford to lose or rebuild, unless you have deliberately configured it as a durable store (entry 7).
+
+In an AI product: caching an LLM response by a hash of the prompt saves the cost of calling the model twice for the same question, and per-user counters keep you under the provider's rate limits.
+
+</details>
+
+## 2. How does cache-aside work, and how do you stop a cache stampede?
 
 <details>
 <summary>Answer</summary>
@@ -58,7 +84,7 @@ In an AI product: cache LLM responses under a hash of model, system prompt, norm
 
 </details>
 
-## 2. How do fixed window, sliding window and token bucket rate limiting differ?
+## 3. How do fixed window, sliding window and token bucket rate limiting differ?
 
 <details>
 <summary>Answer</summary>
@@ -115,7 +141,7 @@ In an AI product: a token bucket per user protects the provider quota, and the d
 
 </details>
 
-## 3. How does a SET NX PX distributed lock work, and how can it fail?
+## 4. How does a SET NX PX distributed lock work, and how can it fail?
 
 <details>
 <summary>Answer</summary>
@@ -164,7 +190,7 @@ In an AI product: three worker replicas share a cron that re-embeds changed docu
 
 </details>
 
-## 4. When do you store sessions in Redis, and when is a stateless JWT better?
+## 5. When do you store sessions in Redis, and when is a stateless JWT better?
 
 <details>
 <summary>Answer</summary>
@@ -184,7 +210,7 @@ SADD user:42:sessions 9f3a           # for "log out everywhere"
 - The cookie holds only the ID (`Set-Cookie: sid=9f3a; HttpOnly; Secure; SameSite=Lax`); the client never sees or holds user data.
 - Any instance can serve any request because the state lives in Redis, so no sticky sessions.
 - Revocation is `DEL`. Role changes take effect on the next request.
-- Cost: one Redis round trip per request, and Redis down means everyone is logged out. Run it as a store (see entry 6), not on a cache instance that may evict sessions.
+- Cost: one Redis round trip per request, and Redis down means everyone is logged out. Run it as a store (see entry 7), not on a cache instance that may evict sessions.
 - In Node: `express-session` with a Redis store such as `connect-redis`.
 
 Stateless JWT:
@@ -209,7 +235,7 @@ Interview probe: "JWTs are stateless, so they scale better." Reply that verifica
 
 </details>
 
-## 5. Which Redis data structures should you know, and what is each one for?
+## 6. Which Redis data structures should you know, and what is each one for?
 
 <details>
 <summary>Answer</summary>
@@ -225,7 +251,7 @@ INCRBY credits:42 -5
 MGET user:42 user:43                  # batch read
 ```
 
-Use for cache entries, counters, flags, locks (entry 3). Atomic `INCR` is why Redis is the default for counters across instances.
+Use for cache entries, counters, flags, locks (entry 4). Atomic `INCR` is why Redis is the default for counters across instances.
 
 Hashes: a map of field to value under one key.
 
@@ -250,7 +276,7 @@ ZRANGEBYSCORE due 0 1726480000000     # delayed jobs whose run-at has passed
 ZREMRANGEBYSCORE rl:u42 -inf (1726479940000  # trim a sliding window
 ```
 
-Use for leaderboards, sliding-window rate limits (score = timestamp, entry 2), delayed or scheduled jobs (score = run-at; BullMQ does this), and "top N by anything numeric". Not for arbitrary ordering by a string field.
+Use for leaderboards, sliding-window rate limits (score = timestamp, entry 3), delayed or scheduled jobs (score = run-at; BullMQ does this), and "top N by anything numeric". Not for arbitrary ordering by a string field.
 
 Pub/sub: `SUBSCRIBE chat:room:7` on one connection, `PUBLISH chat:room:7 "hi"` on another. Delivery is fire-and-forget: no persistence, no acknowledgement, a subscriber that is offline misses the message. Use it to fan out across instances (Socket.IO's Redis adapter, cache-invalidation broadcasts), never as a job queue. For durable messaging use Streams: `XADD` appends to a log, `XREADGROUP` hands entries to consumers in a group, `XACK` confirms them, and unacknowledged entries can be reclaimed.
 
@@ -260,7 +286,7 @@ In an AI product: pub/sub carries streamed LLM tokens from the worker that holds
 
 </details>
 
-## 6. How do Redis eviction policies and memory limits work for cache versus store?
+## 7. How do Redis eviction policies and memory limits work for cache versus store?
 
 <details>
 <summary>Answer</summary>

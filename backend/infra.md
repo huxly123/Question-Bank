@@ -2,7 +2,35 @@
 
 This note covers how a Node service gets packaged, shipped and run (Docker, Compose, CI/CD, secrets, scaling, managed cloud services, zero-downtime deploys, observability, proxies, production debugging); revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped.
 
-## 1. How do Docker images, layers, multi-stage builds and .dockerignore fit together?
+## 1. What does deploying a backend actually involve?
+
+<details>
+<summary>Answer</summary>
+
+Deploying means taking the code on your laptop and running it on a machine that is always on and reachable from the internet, with a database, secrets, a domain name and a way to update it without breaking users. Everything in this note is one of those pieces.
+
+The minimum path, in order:
+
+```text
+Code in git
+  -> CI runs tests and builds a Docker image (a frozen copy of your app plus its runtime)
+  -> The image is pushed to a registry (a storage service for images)
+  -> A host pulls and runs the image as a container: a cloud VM, a container service, or a platform like Render or Fly
+  -> A managed Postgres and a managed Redis run beside it; the app reaches them over a private network
+  -> Secrets (database URL, API keys) are injected as environment variables at start, never baked into the image
+  -> A load balancer or reverse proxy owns the public HTTPS domain and forwards traffic to one or more containers
+  -> Logs and metrics flow to a dashboard so you find out when it breaks
+```
+
+Vocabulary: **environment** (dev, staging, production: same code, different config), **container** (an isolated running instance of an image), **managed service** (the cloud runs the database for you: backups, patches, failover), **horizontal scaling** (more containers behind the balancer rather than a bigger machine), **rollback** (redeploy the previous image when the new one misbehaves).
+
+Why it is its own skill: the code is the same, but the failure modes are new. A working app can be down because a secret is missing, a migration ran after the code that needs it, or a health check pointed at the wrong port. Interviewers ask about deployment to see whether you have felt those failures.
+
+In an AI product: the LLM provider key is the secret you protect most carefully, and job workers that call the model are usually deployed and scaled separately from the API containers.
+
+</details>
+
+## 2. How do Docker images, layers, multi-stage builds and .dockerignore fit together?
 
 <details>
 <summary>Answer</summary>
@@ -49,7 +77,7 @@ In an AI product: never bake an LLM provider key into an image with `ENV`; it en
 
 </details>
 
-## 2. How would you run an app with Postgres and Redis in Docker Compose?
+## 3. How would you run an app with Postgres and Redis in Docker Compose?
 
 <details>
 <summary>Answer</summary>
@@ -101,7 +129,7 @@ Probe: "why does the API connect to `db:5432` but you use `localhost:5433` from 
 
 </details>
 
-## 3. What does a CI/CD pipeline run on every push versus on merge?
+## 4. What does a CI/CD pipeline run on every push versus on merge?
 
 <details>
 <summary>Answer</summary>
@@ -157,7 +185,7 @@ In an AI product: tests that call a real LLM are slow, flaky and cost money. Moc
 
 </details>
 
-## 4. How do you manage environment config and secrets across local and production?
+## 5. How do you manage environment config and secrets across local and production?
 
 <details>
 <summary>Answer</summary>
@@ -183,7 +211,7 @@ In an AI product: LLM provider keys are the highest-value secret you hold becaus
 
 </details>
 
-## 5. How do you scale a Node API horizontally, and where do sessions go?
+## 6. How do you scale a Node API horizontally, and where do sessions go?
 
 <details>
 <summary>Answer</summary>
@@ -221,7 +249,7 @@ In an AI product: scale the stateless HTTP workers on request count and the LLM 
 
 </details>
 
-## 6. Why use managed Postgres and object storage, and what are presigned URLs?
+## 7. Why use managed Postgres and object storage, and what are presigned URLs?
 
 <details>
 <summary>Answer</summary>
@@ -255,7 +283,7 @@ Benefits: Node instances never buffer large files, so they stay small and statel
 
 </details>
 
-## 7. How do you deploy with zero downtime, including database migrations?
+## 8. How do you deploy with zero downtime, including database migrations?
 
 <details>
 <summary>Answer</summary>
@@ -292,7 +320,7 @@ Trade-off probed: blue-green buys instant rollback at double cost; rolling is ch
 
 </details>
 
-## 8. What are logs, metrics and traces, and what should you alert on?
+## 9. What are logs, metrics and traces, and what should you alert on?
 
 <details>
 <summary>Answer</summary>
@@ -318,7 +346,7 @@ In an AI product: record tokens in and out and provider latency as metrics per m
 
 </details>
 
-## 9. Name the core cloud building blocks and what each one does.
+## 10. Name the core cloud building blocks and what each one does.
 
 <details>
 <summary>Answer</summary>
@@ -337,7 +365,7 @@ Compute runs your code, a managed database holds relational data, object storage
 | Load balancer | ALB (HTTP), NLB (TCP) | Cloud Load Balancing | TLS termination, health checks, routing by path or host |
 | DNS | Route 53 | Cloud DNS, Cloudflare | Maps `api.example.com` to the ALB; weighted records enable blue-green |
 | Registry | ECR | Artifact Registry, GHCR, Docker Hub | Stores built images by tag |
-| Secrets | Secrets Manager, SSM | Secret Manager, Key Vault | See entry 4 |
+| Secrets | Secrets Manager, SSM | Secret Manager, Key Vault | See entry 5 |
 | Identity | IAM | Cloud IAM | Roles that let a container call S3 without a key |
 
 Glue vocabulary:
@@ -352,7 +380,7 @@ Kubernetes (EKS on AWS) is the general-purpose orchestrator: it runs containers 
 
 </details>
 
-## 10. Monolith or microservices: when do you split, and what gets harder?
+## 11. Monolith or microservices: when do you split, and what gets harder?
 
 <details>
 <summary>Answer</summary>
@@ -402,7 +430,7 @@ In an AI product: the common first split is the HTTP API versus an LLM job worke
 
 </details>
 
-## 11. What does a reverse proxy or API gateway do in front of Node?
+## 12. What does a reverse proxy or API gateway do in front of Node?
 
 <details>
 <summary>Answer</summary>
@@ -449,7 +477,7 @@ In an AI product: streaming LLM responses over SSE means turning off proxy buffe
 
 </details>
 
-## 12. How do you find and fix a slow endpoint in production?
+## 13. How do you find and fix a slow endpoint in production?
 
 <details>
 <summary>Answer</summary>

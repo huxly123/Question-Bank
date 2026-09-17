@@ -4,7 +4,44 @@ This note covers the Postgres knowledge a full-stack round probes (schema design
 
 Running example: a financial-data app with `users`, `companies` and `prices` (one row per company per trading day).
 
-## 1. How would you model users, companies and prices, and when would you denormalise?
+## 1. What is PostgreSQL, and what is a relational database?
+
+<details>
+<summary>Answer</summary>
+
+PostgreSQL (Postgres) is an open-source relational database: it stores data in tables of rows and columns, enforces a schema so every row of a table has the same shape, and lets you combine tables with SQL queries. It is the default choice for most backends because it is reliable, free, and handles both strict relational data and flexible JSON.
+
+The relational model in plain words:
+
+- A **table** is like a typed spreadsheet: `companies` has columns `id`, `name`, `ticker`.
+- A **row** is one record. A **primary key** (`id`) identifies it uniquely.
+- A **foreign key** in one table points at a primary key in another: `prices.company_id` refers to `companies.id`. That link is the "relation".
+- A **join** follows the link in a query so you can ask "give me every price with its company name".
+- A **transaction** groups several changes so they all happen or none do.
+
+```sql
+CREATE TABLE companies (id serial PRIMARY KEY, name text NOT NULL, ticker text UNIQUE);
+CREATE TABLE prices (
+  id bigserial PRIMARY KEY,
+  company_id int REFERENCES companies(id),
+  day date NOT NULL,
+  close numeric(12,2) NOT NULL
+);
+
+SELECT c.name, p.day, p.close
+FROM prices p JOIN companies c ON c.id = p.company_id
+WHERE c.ticker = 'INFY' ORDER BY p.day DESC LIMIT 5;
+```
+
+Why it exists: files and key-value stores cannot guarantee consistency across related records or answer arbitrary questions efficiently. A relational database gives you both, plus concurrency control so many users can write at once safely.
+
+Where it sits in your stack: Node talks to it through a driver or ORM (Prisma, Drizzle) over a pooled connection. Redis sits beside it for caching; it does not replace it.
+
+In an AI product: Postgres also stores conversation history, job records, and, with the pgvector extension, embedding vectors for retrieval, so one database covers the whole application.
+
+</details>
+
+## 2. How would you model users, companies and prices, and when would you denormalise?
 
 <details>
 <summary>Answer</summary>
@@ -21,7 +58,7 @@ Normalisation means removing duplicated facts so an update has one row to change
 CREATE TABLE users (
   id          bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   email       text NOT NULL UNIQUE,
-  referred_by bigint REFERENCES users(id),          -- nullable, used in entry 12
+  referred_by bigint REFERENCES users(id),          -- nullable, used in entry 13
   created_at  timestamptz NOT NULL DEFAULT now()
 );
 
@@ -66,7 +103,7 @@ In an AI product: an `embeddings` table (`id`, `company_id`, `chunk_text`, `embe
 
 </details>
 
-## 2. How do B-tree indexes work, and why might Postgres ignore one?
+## 3. How do B-tree indexes work, and why might Postgres ignore one?
 
 <details>
 <summary>Answer</summary>
@@ -119,7 +156,7 @@ In an AI product: pgvector similarity queries do not use B-tree at all; they use
 
 </details>
 
-## 3. How do you read EXPLAIN ANALYZE output to find a slow query?
+## 4. How do you read EXPLAIN ANALYZE output to find a slow query?
 
 <details>
 <summary>Answer</summary>
@@ -172,7 +209,7 @@ Practical habits: `EXPLAIN ANALYZE` on an `UPDATE` or `DELETE` really runs it, s
 
 </details>
 
-## 4. What is the N+1 query problem and how do you fix it?
+## 5. What is the N+1 query problem and how do you fix it?
 
 <details>
 <summary>Answer</summary>
@@ -227,7 +264,7 @@ In an AI product: rendering a conversation list with the last message of each th
 
 </details>
 
-## 5. How do isolation levels, locking and deadlocks work in Postgres?
+## 6. How do isolation levels, locking and deadlocks work in Postgres?
 
 <details>
 <summary>Answer</summary>
@@ -277,11 +314,11 @@ Avoiding them:
 
 Interview probe: "which level would you use for a balance transfer?" Read Committed plus `FOR UPDATE` on both rows in ID order, or Serializable with retries. Explain that Serializable is simplest to reason about and costs more aborts under contention.
 
-In an AI product: an idempotency table for paid completion calls (entry 7 in the Node note) relies on the `INSERT` and the business write sharing one transaction; if the transaction stays open while the model call runs, you are holding row locks for many seconds, so write the key first, run the call outside any transaction, then store the result.
+In an AI product: an idempotency table for paid completion calls (entry 9 in the Node note) relies on the `INSERT` and the business write sharing one transaction; if the transaction stays open while the model call runs, you are holding row locks for many seconds, so write the key first, run the call outside any transaction, then store the result.
 
 </details>
 
-## 6. How do you run schema migrations without downtime?
+## 7. How do you run schema migrations without downtime?
 
 <details>
 <summary>Answer</summary>
@@ -330,7 +367,7 @@ Tooling (Prisma Migrate, Drizzle Kit, node-pg-migrate, plain SQL files with a `s
 
 </details>
 
-## 7. Why do you need connection pooling, and how do you size the pool?
+## 8. Why do you need connection pooling, and how do you size the pool?
 
 <details>
 <summary>Answer</summary>
@@ -382,7 +419,7 @@ In an AI product: serverless API routes plus long-running model calls are the wo
 
 </details>
 
-## 8. When is Postgres the wrong choice, and where does JSONB fit?
+## 9. When is Postgres the wrong choice, and where does JSONB fit?
 
 <details>
 <summary>Answer</summary>
@@ -398,7 +435,7 @@ When to reach for something else:
 | Cache, session store, rate limits | sub-millisecond reads, TTL per key, hot in memory | Redis |
 | Millions of writes per second, append-only, queried by time | write amplification, index maintenance | Cassandra, ClickHouse, a time-series database |
 | Documents with wildly varying shape, sharded across regions, no cross-document transactions needed | manual sharding, joins not needed anyway | MongoDB, DynamoDB |
-| Full-text search with typo tolerance, facets, relevance tuning | basic ranking, no fuzzy matching without extensions | Elasticsearch, Meilisearch (see entry 11) |
+| Full-text search with typo tolerance, facets, relevance tuning | basic ranking, no fuzzy matching without extensions | Elasticsearch, Meilisearch (see entry 12) |
 
 The honest interview answer: most products never hit those limits, and "we might need to scale" is not a reason to give up joins and transactions on day one.
 
@@ -423,7 +460,7 @@ In an AI product: store each chat message as a row with typed columns (`conversa
 
 </details>
 
-## 9. Explain ACID in plain words, and what does each letter protect against?
+## 10. Explain ACID in plain words, and what does each letter protect against?
 
 <details>
 <summary>Answer</summary>
@@ -444,7 +481,7 @@ Consistency
 
 Isolation
 
-- Guarantee: concurrent transactions behave as if they ran alone, to the degree the isolation level promises (entry 5).
+- Guarantee: concurrent transactions behave as if they ran alone, to the degree the isolation level promises (entry 6).
 - Protects you from: reading a balance mid-transfer, two requests both seeing "seat available" and both booking it, a report summing rows while half of them are being updated.
 - How: MVCC snapshots for reads, row locks for writes, and serialization checks at the strict levels.
 
@@ -469,7 +506,7 @@ In an AI product: writing the user message, the assistant reply and the token-us
 
 </details>
 
-## 10. What are read replicas and sharding, and when do you need each?
+## 11. What are read replicas and sharding, and when do you need each?
 
 <details>
 <summary>Answer</summary>
@@ -478,7 +515,7 @@ A read replica is a copy of the database that receives every change from the pri
 
 Replication in Postgres:
 
-- Streaming replication ships WAL records (entry 9) from the primary to replicas, which replay them. Physical replication copies the whole cluster byte for byte; logical replication publishes selected tables as row changes and can feed a different version or a different system.
+- Streaming replication ships WAL records (entry 10) from the primary to replicas, which replay them. Physical replication copies the whole cluster byte for byte; logical replication publishes selected tables as row changes and can feed a different version or a different system.
 - It is asynchronous by default. The primary commits and returns before the replica has applied the change.
 
 Replication lag is the delay between commit on the primary and visibility on the replica, usually milliseconds, sometimes seconds under heavy write load or long-running replica queries. The bug it causes is read-your-own-writes: the user saves a watchlist item, the next request reads from the replica, and the item is missing.
@@ -518,7 +555,7 @@ In an AI product: retrieval (vector search over embeddings) is read-heavy and to
 
 </details>
 
-## 11. How does Postgres full-text search work, and when do you need a search engine?
+## 12. How does Postgres full-text search work, and when do you need a search engine?
 
 <details>
 <summary>Answer</summary>
@@ -563,7 +600,7 @@ In an AI product: hybrid search combines a `tsvector` match (exact terms, ticker
 
 </details>
 
-## 12. How does NULL break SQL logic, and which traps should you know?
+## 13. How does NULL break SQL logic, and which traps should you know?
 
 <details>
 <summary>Answer</summary>

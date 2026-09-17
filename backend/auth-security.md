@@ -2,7 +2,35 @@
 
 This note covers the server side of authentication and security (sessions and tokens, password storage, OAuth, authorization, the OWASP list as it hits an API, headers and secrets, TLS, and encryption of data); revise by reading each question, answering aloud before opening the answer, then expanding on any point you skipped. Browser-side basics (XSS, CSP, CORS from the client's view, cookie flags, CSRF) live in [../system-design/security.md](../system-design/security.md) and are linked rather than repeated.
 
-## 1. Sessions or JWTs: how do you issue, refresh and store tokens?
+## 1. What is the difference between authentication and authorization?
+
+<details>
+<summary>Answer</summary>
+
+Authentication answers "who are you?" and authorization answers "what are you allowed to do?". Login is authentication; checking that the logged-in user may delete this particular watchlist is authorization. Every secure endpoint does the first once and the second on every request.
+
+The flow in a typical API:
+
+```text
+1. Authenticate: the user proves identity (password, OAuth login, magic link)
+2. The server issues a credential: a session ID in a cookie, or a signed token (JWT)
+3. On each request the client sends that credential
+4. The server verifies it and learns the user's id and roles      <- authentication
+5. The handler checks: may this user do this action on this resource?  <- authorization
+6. Yes: proceed. No: 403 Forbidden (401 Unauthorized means "not authenticated at all")
+```
+
+Vocabulary: **credential** (what proves identity), **session** (server-side record of a logged-in user), **token** (a self-contained credential the server can verify without a lookup), **role** (a named bundle of permissions such as `admin`), **principal** (the authenticated identity making the request).
+
+Why keep them separate: authentication is solved once, in one middleware, and is usually delegated to a library or provider. Authorization is business logic that changes per feature, so it lives next to the handlers and must be tested like any other rule. The most common real-world bug is doing the first and forgetting the second: an authenticated user reading another user's data by changing an id in the URL.
+
+Where the browser-side details live: cookies, CSRF, CORS and where to store a JWT are covered in [../system-design/security.md](../system-design/security.md). This note covers what the server does.
+
+In an AI product: a tool the model can call (send an email, run a query) must be authorised against the *user's* permissions, not the model's; the model is never a principal.
+
+</details>
+
+## 2. Sessions or JWTs: how do you issue, refresh and store tokens?
 
 <details>
 <summary>Answer</summary>
@@ -49,7 +77,7 @@ In an AI product: long-lived API keys for programmatic access are stored hashed 
 
 </details>
 
-## 2. How do you store passwords, and why never encrypt them?
+## 3. How do you store passwords, and why never encrypt them?
 
 <details>
 <summary>Answer</summary>
@@ -95,7 +123,7 @@ Do not use MD5, SHA-1, or plain SHA-256, do not write your own scheme, and do no
 
 </details>
 
-## 3. Walk me through the OAuth 2.0 authorization code flow on a whiteboard
+## 4. Walk me through the OAuth 2.0 authorization code flow on a whiteboard
 
 <details>
 <summary>Answer</summary>
@@ -144,7 +172,7 @@ In an AI product: an assistant that reads a user's Gmail or Slack gets a provide
 
 </details>
 
-## 4. How do you implement RBAC middleware and resource ownership checks?
+## 5. How do you implement RBAC middleware and resource ownership checks?
 
 <details>
 <summary>Answer</summary>
@@ -190,7 +218,7 @@ In an AI product: each tool the model can call carries the calling user's identi
 
 </details>
 
-## 5. Which OWASP Top Ten risks matter most for an API, and how do you defend them?
+## 6. Which OWASP Top Ten risks matter most for an API, and how do you defend them?
 
 <details>
 <summary>Answer</summary>
@@ -210,7 +238,7 @@ Broken authentication (identification and authentication failures):
 - Weak or default JWT secrets, accepting `alg: none`, not checking `exp` and `aud`.
 - Long-lived tokens with no rotation, session IDs in URLs, no invalidation on logout or password change.
 - Password reset links that are guessable or reusable.
-- Fix: entries 1 and 2 of this note, plus MFA for admin accounts.
+- Fix: entries 2 and 3 of this note, plus MFA for admin accounts.
 
 Sensitive data exposure:
 
@@ -218,9 +246,9 @@ Sensitive data exposure:
 - Stack traces and SQL text in error responses; return a generic message and a correlation ID.
 - Tokens, passwords and PII in logs, URLs or query strings (which end up in proxy logs).
 - Verbose 404 vs 403 telling attackers what exists.
-- Weak or missing TLS, weak hashing. See entry 8 and [../system-design/security.md#10-avoid-exposing-sensitive-data](../system-design/security.md#10-avoid-exposing-sensitive-data).
+- Weak or missing TLS, weak hashing. See entry 9 and [../system-design/security.md#10-avoid-exposing-sensitive-data](../system-design/security.md#10-avoid-exposing-sensitive-data).
 
-Broken access control: the IDOR/BOLA problem in entry 4. OWASP ranks it number one for web apps; for APIs it is the most common finding in bug bounties.
+Broken access control: the IDOR/BOLA problem in entry 5. OWASP ranks it number one for web apps; for APIs it is the most common finding in bug bounties.
 
 SSRF (server-side request forgery): the server fetches a URL the user supplied (webhook URL, image import, link preview) and the attacker points it at internal services or the cloud metadata endpoint (`169.254.169.254`) to steal credentials.
 
@@ -230,7 +258,7 @@ SSRF (server-side request forgery): the server fetches a URL the user supplied (
 - On AWS, require IMDSv2 so a plain GET cannot read instance credentials.
 - Client-side view in [../system-design/security.md#6-server-side-request-forgery-ssrf](../system-design/security.md#6-server-side-request-forgery-ssrf).
 
-Also on the list and worth one line each: security misconfiguration (debug mode on, default creds, open S3 bucket), vulnerable and outdated components (entry 6), insecure deserialization (do not `JSON.parse` then spread into a model without validation; never deserialize with libraries that instantiate classes from user data), insufficient logging and monitoring (failed logins and 403s should be visible and alertable).
+Also on the list and worth one line each: security misconfiguration (debug mode on, default creds, open S3 bucket), vulnerable and outdated components (entry 7), insecure deserialization (do not `JSON.parse` then spread into a model without validation; never deserialize with libraries that instantiate classes from user data), insufficient logging and monitoring (failed logins and 403s should be visible and alertable).
 
 Trade-off probed: input validation at the edge versus parameterisation at the sink. Do both. Validation rejects obviously wrong shapes early; parameterisation guarantees safety even when validation has a gap.
 
@@ -238,7 +266,7 @@ In an AI product: prompt injection is an input validation problem with no comple
 
 </details>
 
-## 6. How do you handle CORS, security headers, secrets and dependency audits server-side?
+## 7. How do you handle CORS, security headers, secrets and dependency audits server-side?
 
 <details>
 <summary>Answer</summary>
@@ -285,7 +313,7 @@ In an AI product: the LLM provider API key is the most expensive secret you hold
 
 </details>
 
-## 7. How does TLS stop MITM, and how do you protect cookie sessions from hijacking and CSRF?
+## 8. How does TLS stop MITM, and how do you protect cookie sessions from hijacking and CSRF?
 
 <details>
 <summary>Answer</summary>
@@ -322,7 +350,7 @@ Trade-off probed: cookies (CSRF risk, XSS-safe with `HttpOnly`) versus header to
 
 </details>
 
-## 8. Hashing vs encryption, in transit vs at rest: where must PII be protected?
+## 9. Hashing vs encryption, in transit vs at rest: where must PII be protected?
 
 <details>
 <summary>Answer</summary>
@@ -337,7 +365,7 @@ Hashing vs encryption vs HMAC:
 | Needs a key | no (salt only) | yes | yes |
 | Use for | passwords (slow hash), integrity checks, dedupe, cache keys | webhook signatures, JWT HS256, blind indexes | anything you must read back: tokens, PII fields, backups |
 
-Use authenticated encryption (AES-256-GCM) so tampering is detected. Symmetric vs asymmetric is covered in entry 7.
+Use authenticated encryption (AES-256-GCM) so tampering is detected. Symmetric vs asymmetric is covered in entry 8.
 
 In transit: TLS from client to edge, and also between services, to the database (`sslmode=verify-full`) and to Redis, because "inside the VPC" is where lateral movement happens. mTLS (both sides present certificates) gives service-to-service identity.
 
@@ -352,7 +380,7 @@ Where PII must be encrypted or masked:
 - Card numbers: PCI DSS requires the PAN to be unreadable wherever stored; in practice tokenize with the payment provider and keep a token plus the last four digits.
 - Government IDs, bank accounts, health data: field-level encryption, and a legal basis for holding them at all (GDPR, India's DPDP Act). Storing less is the strongest control.
 - Emails and phone numbers must stay searchable, so store a blind index (HMAC of the normalised value) beside the ciphertext and query on that.
-- Logs, error trackers, analytics, LLM prompts: redact before the data leaves the handler (`****1234`, hashed user IDs). Logging rules are in the Node note entry 10.
+- Logs, error trackers, analytics, LLM prompts: redact before the data leaves the handler (`****1234`, hashed user IDs). Logging rules are in the Node note entry 12.
 - Responses: mask (`+91 ******7890`) unless the endpoint exists to reveal the value; gate that with re-authentication.
 
 Key management is the hard part: keys live in a KMS or HSM, never beside the ciphertext; rotate them and be able to re-encrypt old rows. Encryption with the key next to the data is theatre.
