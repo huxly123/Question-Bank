@@ -10,9 +10,9 @@ Frontend engineer with 4+ years building scalable, high-performance web applicat
 
 ## CoinSwitch — Senior Software Engineer (Feb 2022 – present)
 
-**Product and users:** CoinSwitch crypto trading platform (web), including the Futures and Options trading surfaces, and the Lemonn stock exchange platform. _Fill in: team size, monthly active users or traffic, which surfaces are mine day to day._
+**Product and users:** CoinSwitch crypto trading platform: the marketing website, the CoinSwitch Pro web trading app (futures and options), the React Native mobile app with its Flutter add-to-app Pro Futures module, and the Lemonn stock exchange platform. _Fill in: team size, monthly active users or traffic, which surfaces are mine day to day._
 
-**Tech stack I worked in:** TypeScript, JavaScript, React, Next.js, Remix, GraphQL, Node.js, Express, Redux, Jotai, Tailwind, Sass, Material UI, D3.js; Firebase, AWS (CodePipeline, CloudFront, S3), Cloudflare, Redis; Webpack, Jest, Storybook, Jenkins, Amplitude.
+**Tech stack I worked in:** TypeScript, JavaScript, React, React Native, Next.js, Remix, GraphQL, Node.js, Express, Redux, Jotai, Tailwind, Sass, Material UI, D3.js; Flutter and Dart (Riverpod, GoRouter, Shorebird OTA) for the Pro Futures migration; Firebase, AWS (CodePipeline, CloudFront, S3), GCP (GKE, Artifact Registry), Cloudflare, Redis; Webpack, Jest, Storybook, Jenkins, Argo Workflows, Amplitude, Last9.
 
 ### Projects and achievements
 
@@ -54,6 +54,20 @@ Frontend engineer with 4+ years building scalable, high-performance web applicat
 - Lazy loading of components and assets, script loading optimisation (defer/async), code splitting, bundle size optimisation.
 - Content Security Policy, XSS protection, secure handling of API requests.
 - Result: improved page load performance and a more secure client-side architecture. _Fill in: bundle size and load-time numbers._
+
+**React WebView → Flutter migration of CoinSwitch Pro Futures inside the crypto app (2026)**
+- Context: the CoinSwitch crypto app is React Native. CoinSwitch Pro, the futures and options trading UI, was a separate React web app (`coinswitch.co/pro/futures`) that the app opened inside a WebView through a bridge layer (`WebViewLauncher`, `WebViewStackManager`). I had been one of the main contributors to that Pro web app since July 2022: 700+ commits covering futures, options, order pad, PnL, partial exits, the Kuber (INR) futures flows and the trading terminal.
+- The migration: the Pro Futures screens (home, trade, orders, positions, order pad, adjust leverage, candle chart) were rebuilt natively in Flutter as an add-to-app module (`coinswitch_app`) hosted by the React Native app over a MethodChannel bridge (`FlutterBridge`, `onFlutterNavigateHandler`), with Riverpod for state, GoRouter for navigation, design-system parity with the GenesisUI component library, Shorebird OTA for Dart-only patches, and a canary → stable release gate.
+- My role (from the repo history, Aug–Sep 2026): 73 commits in the Flutter module, about 200 file changes in `lib/platform/pro`, plus Kuber futures, the shared platform layer, the candle chart and tests. Concretely: ported the Adjust Leverage money math (liquidation price with buffered initial margin, cost-to-close, fee sourcing) from the React web implementation to Flutter and aligned it with the backend, including four rounds of review fixes around REST fallback, cancel confirmation and concurrency; visual-QA parity fixes against the mobile web version; scalper (Bolt) and expert-picks fixes; DEX scale-down feature flags implemented across React Native, Flutter and the GraphQL BFF; funds-shortfall and leverage-slider behaviour for Pro and Kuber. Around the migration I also built release tooling: OTA patch scoping, release-line parity checks, pre-release gap audits, on-device screenshot test suites and frame-jank profiling.
+- Why it matters for interviews: it is a cross-stack story (React web → Flutter → React Native host → Node BFF) about parity, money-critical calculations and release safety, not a UI rewrite.
+- _Fill in: why the team moved off the WebView (jank? native feel? OTA control? cold start?), which screens you owned end to end vs contributed to, the timeline and team size, and any measured result (frame drops, crash-free rate, load time, adoption)._
+- Related team context, not mine: a colleague's proof of concept rebuilt the crypto home screen with server-driven UI (Stac) inside the same RN host plus Flutter add-to-app setup, and concluded Shorebird OTA covered most of the "ship without a release" goal with fewer moving parts.
+
+**AWS → GCP migration (2026)**
+- I worked on CoinSwitch's migration from AWS to Google Cloud.
+- Company context (from the internal migration docs): a code-change audit across 39 exchange (CSX) repos and 68 CSK repos mapped AWS services to GCP equivalents (SQS/SNS → Pub/Sub, S3 → Cloud Storage, Lambda → Cloud Run, Secrets Manager → Secret Manager, CloudWatch → Cloud Logging and Monitoring); infrastructure moved to GKE with a drain-and-switch cutover grouped by data domain and a two-week AWS parallel run for rollback; CI built images once with Argo Workflows and Kaniko and pushed to both ECR and Artifact Registry; the Helm charts repo routed GCP deployments by a `gcp/` path prefix so AWS pipelines stayed untouched.
+- _Fill in precisely, this is the part interviewers will probe: which services or repos you migrated (the web servers for the CoinSwitch website and Pro? the GraphQL BFF? the Lemonn platform?), what you changed (Dockerfiles and registry paths, environment and secrets config, storage or CDN wiring, internal service endpoints), how you tested and cut over, and what broke._
+- Possibly related evidence in the BFF repo, August 2026, to confirm: I moved the broker gateway base URL and the TradingView sub-account call to internal gateway endpoints across all environment files and fixed the internal gateway being plain HTTP rather than HTTPS.
 
 **Code reviews and mentoring**
 - Conducted code reviews and gave technical guidance to junior developers on code quality, modular architecture and performance; worked with cross-functional teams on scalable, maintainable frontend implementations.
