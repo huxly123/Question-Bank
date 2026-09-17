@@ -11,5 +11,6 @@ Rules:
 ## Career context
 
 @career.md
+@experience.md
 
-Read it before advising on learning, courses, projects, skills, job preparation, or career decisions. It sets the goal (frontend engineer → AI product / full-stack AI engineer), the current skill levels, what not to recommend, and the required shape of learning explanations (what / why / problem / how / when / when not / career fit / example, ending with a **Notes** section).
+Read both before advising on learning, courses, projects, skills, job preparation, or career decisions, and before writing or reviewing behavioral stories. career.md sets the goal (frontend engineer → AI product / full-stack AI engineer), the current skill levels, what not to recommend, and the required shape of learning explanations (what / why / problem / how / when / when not / career fit / example, ending with a **Notes** section).

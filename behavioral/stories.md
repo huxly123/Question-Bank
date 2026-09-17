@@ -31,13 +31,15 @@ Answers: most complex problem you solved · biggest impact · a technical decisi
 
 **Task.** Reduce build time and improve page speed by moving to Static Site Generation, and keep pages fresh without full rebuilds using Incremental Static Regeneration.
 
+See [experience.md](../experience.md) for the resume-level detail on this and the other CoinSwitch projects (options exchange, INR trading, Lemonn referral programme, API proxy and middleware, security hardening).
+
 **Action.**
 - _Fill in: why Next.js over staying on Gatsby or another option. What was the alternative you rejected and why?_
 - _Fill in: how you sequenced the migration (page by page? behind a flag? big bang?) and how you kept the site live meanwhile._
 - _Fill in: the hardest part (data fetching rewrite, image handling, routing, hydration mismatches?) and how you solved it._
 - _Fill in: how you rolled out and measured._
 
-**Result.** _Fill in with numbers: build time X → Y, Lighthouse or Core Web Vitals before → after, any business metric. This is the line the whole story exists for._
+**Result.** Build time reduced by about 70% (resume figure). _Fill in: build time before → after in minutes, Lighthouse or Core Web Vitals before → after, any business metric. This is the line the whole story exists for._
 
 **Reflection.** _Fill in: what you would do differently, and what you would watch for at ten times the traffic._
 
