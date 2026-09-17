@@ -9,13 +9,39 @@ Flashcards for the non-technical rounds, grouped by who asks them. Read the ques
 <details>
 <summary>Answer</summary>
 
-Ninety seconds, three beats, present → past → future. No life history, no hobbies unless asked.
+Ninety seconds, three beats: who I am → proof → why here. Every claim below is backed by [experience.md](../experience.md); nothing needs inventing under follow-up.
 
-1. **Now:** role, company, what you own. "I'm a frontend engineer at _X_ where I own _Y_ for _N_ users."
-2. **Proof:** one or two results with numbers. "Recently I led our Gatsby to Next.js migration, which cut build times from _A_ to _B_ and improved _metric_ by _C_."
-3. **Why here:** what you want next and why this role fits. "I'm looking for _scope_, and this role's _thing from the job post_ is exactly that."
+**Full version (about 90 seconds)**
 
-_Fill in and practise until it sounds spoken, not recited._
+> I'm a senior frontend engineer who has spent the last four and a half years building trading products at CoinSwitch, and I've deliberately grown from the UI outward into the full stack.
+>
+> Day to day I own the frontend of CoinSwitch Pro, the futures and options platform, so I work on money-critical interfaces: an options chain and strategy builder, real-time order pads, and calculations like liquidation price where a rounding mistake costs a user real money.
+>
+> Three things I'm proud of. I led our website's migration from Gatsby to Next.js, which cut build time by about seventy percent and let us update content without redeploying. I built our trade-on-behalf access control end to end, from the API contract with backend, through the Node middleware, to a security review where I closed fifteen findings. And I led the move of our observability from New Relic to Last9 on OpenTelemetry, including the sampling design and the production dashboard the team triages from.
+>
+> Right now I'm porting our Pro Futures screens from a React WebView into a native Flutter module inside the app, which means keeping web, Flutter and the backend in exact numerical parity.
+>
+> Where I'm heading is building AI products end to end. I've already shipped one on my own: an AI stock research assistant on Next.js with tool calling for live market data, deployed and rate-limited. That's the work I want to do at scale, and it's why this role stood out.
+
+**Short version (about 30 seconds)**, for a panel that has read your resume or when time is tight:
+
+> Senior frontend engineer, four and a half years at CoinSwitch building trading products. I own the Pro futures and options frontend, led a Gatsby-to-Next.js migration that cut build time about seventy percent, and increasingly work full stack: access control, observability, and a WebView-to-Flutter migration. I've shipped an AI research assistant end to end and want to build AI products at scale, which is why I'm here.
+
+**How to deliver it**
+
+- Say the numbers slowly: seventy percent, fifteen findings. Numbers are what they remember and what they follow up on.
+- Pause after "three things I'm proud of" and after each one. It signals structure and lets them pick the thread they want.
+- The last beat changes per company. Swap "building AI products end to end" for whatever the role actually is: a frontend-heavy role gets "building product surfaces that stay fast and correct under real-time data"; a full-stack role gets the AI line as written.
+- If they ask "why leave", this answer already set it up: growth toward full stack and AI is the honest reason.
+- Do not mention chemical engineering or Masai unless asked about your background; if asked, one line: "I came into software from chemical engineering through a full-stack bootcamp in 2021 and joined CoinSwitch straight after, so everything I know about production I learned here."
+
+**Follow-ups this answer invites, and where the material lives**
+
+- Migration numbers → experience.md, Gatsby → Next.js block; the exact before and after minutes are still to fill in.
+- RBAC design → experience.md, RBAC block: fail-closed gate, second authorization check, security findings.
+- Last9 → experience.md, Last9 block: taxonomy, 1% sampling, dashboard layout.
+- Flutter parity → experience.md, Flutter block: Adjust Leverage money math.
+- AI project → live URL and repo; be ready to explain why the LLM never produces the market numbers itself.
 
 </details>
 
