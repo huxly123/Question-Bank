@@ -11,7 +11,19 @@ Flashcards for the non-technical rounds, grouped by who asks them. Read the ques
 
 Ninety seconds, three beats: who I am → proof → why here. Every claim below is backed by [experience.md](../experience.md); nothing needs inventing under follow-up.
 
-**Full version (about 90 seconds)**
+**Generic version (about 60 seconds), the default.** Who I am and how I work, with only light proof; the projects stay in reserve for the follow-ups.
+
+> I'm Huxly, a senior software engineer with about four and a half years of experience, all of it at CoinSwitch, building the frontend of a crypto trading platform.
+>
+> I started on the frontend side, with React, Next.js and TypeScript, and I've spent those years in a product where correctness matters as much as polish: people trade real money through the screens I build, so I've learned to care about performance, edge cases and what happens when something goes wrong in production.
+>
+> Over time I stopped staying inside the frontend box. When a problem needed a backend change, an infrastructure fix or a monitoring setup, I picked it up, and that's turned me into someone who can take a feature from the API contract to the screen and keep it healthy after launch.
+>
+> What I enjoy most is owning a problem end to end and being the person the team trusts to ship it safely. Outside work I've been building AI-powered products on my own, because that's where I see my next few years going.
+>
+> That's the short version. I'm happy to go deeper on any part of it.
+
+**Detailed version (about 90 seconds)**, when the panel wants specifics up front or has not read the resume:
 
 > I'm a senior frontend engineer who has spent the last four and a half years building trading products at CoinSwitch, and I've deliberately grown from the UI outward into the full stack.
 >
