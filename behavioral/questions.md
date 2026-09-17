@@ -28,6 +28,8 @@ Forward-looking, never a complaint. Name what you want that you cannot get where
 
 _Fill in your one-line reason._
 
+CoinSwitch is my first and only company, so expect the follow-up "why leave after four years, and why now?" A good shape: gratitude for the range I got (trading UI, a full-stack referral platform, a migration I led), then the specific thing I want next that it cannot give me.
+
 </details>
 
 ## 3. Why do you want to work here?

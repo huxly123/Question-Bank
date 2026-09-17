@@ -74,4 +74,4 @@ _Fill in; one line per project above becomes the "what would you change" answer.
 
 ## Earlier roles
 
-_Fill in if any before CoinSwitch; the resume lists CoinSwitch only._
+None. CoinSwitch is my first and only company; I joined in February 2022 straight after the Masai School programme. When an interviewer asks about "other companies" or "different environments", the honest framing is breadth inside one company: crypto trading (Futures, Options), the Lemonn stock platform, the marketing website, and both frontend and backend work.
